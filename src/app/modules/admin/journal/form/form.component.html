@@ -1,0 +1,89 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="!this.Id">
+                    เพิ่มวารสาร
+                </h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="this.Id">
+                    แก้ไขวารสาร
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <form [formGroup]="addForm">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>หัวข้อวารสาร</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ฉบับที่</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'no'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="md:flex mb-4">
+
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages">เลือกรูปภาพปกวารสาร</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages" src="{{ uploadedImages }}" class="w-[120px]" alt="Default Image">
+
+                                <div *ngFor="let f of files">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+
+                        </div>
+                    </div>
+                    <div class="md:flex mb-4">
+
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect2($event)" [accept]="'application/pdf'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedFile">เลือกไฟล์เอกสาร</ngx-dropzone-label>
+                                <img *ngIf="uploadedFile" src="assets/images/PDF_file_icon.svg.png" class="w-[120px]" alt="Default Image">
+
+                                <!-- <div *ngFor="let f of files2">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" style="background-image: url('https://picsum.photos/200/300');" (removed)="onRemove2(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div> -->
+                            </ngx-dropzone>
+
+                        </div>
+                    </div>
+                    <div class="mb-4 mt-4">
+                        <label class=" block text-sm font-medium text-gray-700  pl-4">สถานะ</label>
+                        <div class="mt-1 ">
+                            <mat-radio-group formControlName="notify_status">
+                                <mat-radio-button value="1">แจ้งเตือน</mat-radio-button>
+                                <mat-radio-button value="0">ไม่แจ้งเตือน</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <div mat-dialog-actions class="flex justify-start md-4">
+                        <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400" (click)="backTo()">ยกเลิก</button>
+                        <button mat-button class="px-4 py-2 bg-[#0a1c3a] text-white rounded-md hover:bg-gray-600 ml-2" (click)="Submit()">บันทึก</button> &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,73 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-black-500">การจัดการผู้ใช้งาน</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-card m-5 p-5 rounded-lg">
+        <div class="flex justify-between">
+            <div class="text-xl font-extrabold tracking-tight sm:ml-4">รายชื่อผู้ใช้งานระบบ</div>
+
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+
+                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
+                    <mat-select>
+                        <mat-option [value]="''">
+                            เลือกสถานะ
+                        </mat-option>
+                        <mat-option [value]="'active'">
+                            Active
+                        </mat-option>
+                        <mat-option [value]="'inactive'">
+                            Inactive
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="ml-4 w-full rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">เพิ่มผู้ใช้งาน</span>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-auto overflow-auto rounded-lg sm:rounded-lg mt-5">
+            <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
+                <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                    <thead>
+                        <tr class="text-center bg-slate-50 mt-10">
+                            <th class="border-bottom-0 w-50">ชื่อผู้ใช้งาน</th>
+                            <th class="border-bottom-0 w-50">อีเมล</th>
+                            <th class="border-bottom-0 w-50">เบอร์ติดต่อ</th>
+                            <th class="border-bottom-0 w-50">สังกัดโรงงาน</th>
+                            <th class="border-bottom-0 w-50">สถานะ</th>
+                            <th class="border-bottom-0 w-50"></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="dataRow?.length != 0">
+                        <tr *ngFor="let item of dataRow; let i = index">
+                            <td>{{item.name}}</td>
+                            <td>{{item.email ? item.email : '-'}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>สระบุรี</td>
+                            <td>{{item.username}}</td>
+
+                            <td>
+                                <button class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50">
+                                    <span class="ml-2 mr-1">แก้ไข</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="dataRow?.length == 0">
+                        <tr>
+                            <td colspan="" class="no-data-available text-center">ไม่มีข้อมูล !</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

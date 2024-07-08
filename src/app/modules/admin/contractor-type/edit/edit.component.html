@@ -1,0 +1,156 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    แก้ไขข้อมูลพาร์ทเนอร์
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <form [formGroup]="addForm">
+
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                    <div class="md:w-full px-3">
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect($event)"
+                                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label>เลือกรูปภาพ</ngx-dropzone-label>
+                                <div *ngFor="let f of files">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)"
+                                        class="h-auto max-w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-6 mt-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ชื่อพาร์ทเนอร์</mat-label>
+                                <input matInput [placeholder]="'กรอกชื่อพาร์ทเนอร์'" [formControlName]="'name'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เลขประจำตัวผู้เสียภาษี</mat-label>
+                                <input matInput [placeholder]="'กรอกเลขประจำตัวผู้เสียภาษี'" formControlName="tax_id">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:min-w-full px-3 mb-6 md:mb-0">
+                            <mat-form-field class="w-full">
+                                <mat-label>ที่อยู่</mat-label>
+                                <textarea matInput [placeholder]="'กรอกข้อมูลที่อยู่'" [rows]="5"
+                                    formControlName="address"></textarea>
+                                <mat-icon class="icon-size-5" matPrefix>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                        aria-hidden="true" fit="" height="100%" width="100%"
+                                        preserveAspectRatio="xMidYMid meet" focusable="false">
+                                        <path fill-rule="evenodd"
+                                            d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                                            clip-rule="evenodd"></path>
+                                    </svg></mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>อีเมล</mat-label>
+                                <input matInput [placeholder]="'กรอกอีเมล'" formControlName="email">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>อีเมลสำรอง</mat-label>
+                                <input matInput [placeholder]="'กรอกอีเมลสำรอง'" formControlName="email2">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เบอร์โทรศัพท์</mat-label>
+                                <input matInput [placeholder]="'กรอกเบอร์โทรศัพท์'" formControlName="tel">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เบอร์โทรศัพท์สำรอง</mat-label>
+                                <input matInput [placeholder]="'กรอกเบอร์โทรศัพท์สำรอง'" formControlName="tel2">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>รายละเอียดเบอร์โทรศัพท์</mat-label>
+                                <input matInput [placeholder]="'กรอกรายละเอียดเบอร์โทรศัพท์'" formControlName="tel_remark">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3  md:mb-0">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ไอดีไลน์</mat-label>
+                                <input matInput [placeholder]="'กรอกไอดีไลน์'" formControlName="line_id">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:min-w-full px-3 mb-6 md:mb-0">
+                            <mat-form-field class="w-full">
+                                <mat-label>รายละเอียดติดต่อ</mat-label>
+                                <textarea matInput [placeholder]="'กรอกรายละเอียดติดต่อ'" [rows]="5"
+                                    formControlName="note_contact"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ชื่อผู้ติดต่อ</mat-label>
+                                <input matInput [placeholder]="'กรอกชื่อผู้ติดต่อ'" formControlName="contact_name">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3  md:mb-0">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เบอร์โทรศัพท์ผู้ติดต่อ</mat-label>
+                                <input matInput [placeholder]="'กรอกเบอร์ติดต่อ'" formControlName="contact_tel">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mb-4 ">
+                        <label class=" block text-sm font-medium text-gray-700 pl-2">สถานะ</label>
+                        <div class="mt-1  justify-center">
+                            <mat-radio-group formControlName="status">
+                                <mat-radio-button [value]="1">ใช้งานได้</mat-radio-button>
+                                <mat-radio-button [value]="0">ระงับการใช้งาน</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+
+                    <div mat-dialog-actions class="flex justify-end mt-2">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Submit()">
+                            ตกลง
+                        </button>
+                        <button class="px-6 ml-3" mat-flat-button [color]="'warn'" (click)="backTo()">
+                            ยกเลิก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

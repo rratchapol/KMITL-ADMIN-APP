@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+  }
+
+  /* สีของสถานะ "active" */
+.text-success {
+    color: green;
+  }
+
+  /* สีของสถานะ "inactive" */
+  .text-danger {
+    color: red;
+  }
+
+  /* สีพื้นหลังของหัวคอลัมน์ */
+  .bg-slate-400 {
+    background-color: #657487;
+  }
+
+  /* สีของข้อความของหัวคอลัมน์ */
+  .text-white {
+    color: white;
+  }
+
+  th.mat-sort-header-sorted {
+    color: black;
+  }

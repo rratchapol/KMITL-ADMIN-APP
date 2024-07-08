@@ -1,0 +1,21 @@
+.img {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    align-items: center;
+    background: #fff;
+    color: #717386;
+    border: 2px solid #717386;
+    border-radius: 5px;
+    font-size: 16px;
+    overflow-x: auto;
+    cursor: pointer;
+}
+
+#file {
+    display: none;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 5px !important;
+}

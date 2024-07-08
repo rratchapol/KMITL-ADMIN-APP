@@ -1,0 +1,70 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    เพิ่มสิทธิ์การใช้งาน
+                </h2>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main -->
+    <form [formGroup]="formData">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+
+                    <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                        <mat-form-field class="w-full">
+                            <mat-label class=" font-bold mb-2">Name</mat-label>
+
+                            <input matInput [formControlName]="'name'">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 p-8" formArrayName="menu">
+                        <div class=" flex flex-col w-full lg:w-full sm:pl-8 my-2"
+                            *ngFor="depo; of: permission().controls; let i = index" [formGroupName]="i">
+                            <section class="example-section">
+                                <h4 class="text-2xl font-bold">{{this.formData.value.menu[i].name}}</h4>
+                                &nbsp;
+                                &nbsp;
+                                <p><mat-checkbox name="SelectAll" formControlName="select_all"
+                                    (change)="toggleAllSelection($event, i)">All</mat-checkbox></p>
+                            &nbsp;
+                                <p><mat-checkbox formControlName="view">View</mat-checkbox></p>
+                                &nbsp;
+                                <p><mat-checkbox formControlName="save">Save</mat-checkbox></p>
+                                &nbsp;
+                                <p><mat-checkbox formControlName="edit">Edit</mat-checkbox></p>
+                                &nbsp;
+                                <p><mat-checkbox formControlName="delete">Delete</mat-checkbox></p>
+                            </section>
+                        </div>
+
+                    </div>
+                    <div mat-dialog-actions class="flex justify-end mt-2">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="create()">
+                            ตกลง
+                        </button>
+                        <button class="px-6 ml-3" mat-flat-button [color]="'warn'" (click)="backTo()">
+                            ยกเลิก
+                        </button>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </form>
+</div>

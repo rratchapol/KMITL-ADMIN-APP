@@ -1,0 +1,56 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+    <!-- Header -->
+    <!-- <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b"> -->
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 ">
+        <!-- Loader -->
+        <!-- <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading"> -->
+        <!-- <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar> -->
+    </div>
+    <!-- Title -->
+    <div class="mx-5 flex justify-between">
+        <div class="text-4xl font-extrabold tracking-tight">รายชื่อผู้ใช้งาน</div>
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml- justify-between">
+            <a (click)="nextpage()" mat-flat-button [color]="'primary'" class="w-full rounded-md" [hidden]="hiddenSave()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">เพิ่มผู้ใช้</span>
+            </a>
+        </div>
+    </div>
+    <div class="flex flex-auto overflow-auto rounded-lg sm:rounded-lg mt-5">
+        <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
+            <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                <thead>
+                    <tr class="text-center bg-slate-50 mt-10">
+                        <th class="border-bottom-0 w-50">ชื่อผู้ใช้งาน</th>
+                        <th class="border-bottom-0 w-50">อีเมล</th>
+                        <th class="border-bottom-0 w-50">เบอร์ติดต่อ</th>
+                        <th class="border-bottom-0 w-50">สังกัดโรงงาน</th>
+                        <th class="border-bottom-0 w-50">สถานะ</th>
+                        <th class="border-bottom-0 w-50"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataRow; let i = index">
+                        <td>{{item.name}}</td>
+                        <td>{{item.email ? item.email : '-'}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>สระบุรี</td>
+                        <td>{{item.username}}</td>
+
+                        <td>
+                            <button mat-flat-button [color]="'primary'" class="w-full rounded-md">แก้ไข</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="dataRow?.length == 0">
+                    <tr>
+                        <td colspan="13" class="no-data-available text-center">
+                            ไม่มีข้อมูล !
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

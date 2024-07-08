@@ -1,0 +1,94 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-black-500">ผู้รับเหมา</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">/
+                    <a class="ml-1 text-black-500">รายการผู้รับเหมา</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-card m-5 p-5 rounded-lg">
+        <div class="flex justify-between">
+            <div class="text-xl font-extrabold tracking-tight sm:ml-4">รายชื่อผู้รับเหมา</div>
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
+                    <mat-select [formControl]="factory" (selectionChange)="getData()">
+                        <mat-option [value]="''">
+                            เลือกโรงงาน
+                        </mat-option>
+                        <mat-option [value]="item.id" *ngFor="let item of factoryData; let i = index">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
+                    <mat-select [formControl]="status" (selectionChange)="getData()">
+                        <mat-option [value]="''">
+                            เลือกสถานะ
+                        </mat-option>
+                        <mat-option [value]="'Yes'">
+                            Active
+                        </mat-option>
+                        <mat-option [value]="'No'">
+                            Inactive
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="ml-4 w-full rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addDialog()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">เพิ่มรายชื่อผู้รับเหมา</span>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-auto overflow-auto rounded-lg sm:rounded-lg mt-5">
+            <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
+                <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                    <thead>
+                        <tr class="text-center bg-slate-50 mt-10">
+                            <th class="border-bottom-0 w-50">ชื่อผู้ใช้งาน</th>
+                            <th class="border-bottom-0 w-50">ประเภทผู้รับเหมา</th>
+                            <th class="border-bottom-0 w-50">เบอร์ติดต่อ</th>
+                            <th class="border-bottom-0 w-50">พิกัดโรงงาน</th>
+                            <th class="border-bottom-0 w-50">สถานะ</th>
+                            <th class="border-bottom-0 w-50"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataRow; let i = index">
+                            <td>{{item.name}}</td>
+                            <td>{{item.contractor_type_id ? item.contractor : '-'}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>โรงงานสระบุรี</td>
+                            <td>
+                                <span class="bg-[#1bb394] rounded-xl p-1 px-5 text-xs text-white" *ngIf="item.status === 'Yes'">
+                                    เปิดใช้งาน
+                                </span>
+                                <span class="bg-[#ed5666] rounded-xl p-1 px-5 text-xs text-white" *ngIf="item.status === 'No'">
+                                    ปิดใช้งาน
+                                </span>
+                            </td>
+                            <td>
+                                <button
+                                    class="border-2 border-green-200 w-fit rounded-md p-2 font-black hover:bg-slate-50" (click)="editDialog(item)">
+                                    <span class="ml-2 mr-1">รายละเอียด</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="dataRow?.length == 0">
+                        <tr>
+                            <td colspan="13" class="no-data-available text-center">
+                                ไม่มีข้อมูล !
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

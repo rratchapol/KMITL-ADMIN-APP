@@ -1,0 +1,158 @@
+<div class="md:max-w-lg mx-auto">
+  <h1 mat-dialog-title class="text-xl font-semibold mb-4">เพิ่มพาร์ทเนอร์</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="editForm">
+      <!-- <div class="mb-4">
+        <label for="no" class="block text-sm font-medium text-gray-700">No.</label>
+        <input type="text" id="no" class="mt-1 form-input rounded-md shadow-sm block w-full" formControlName="no" placeholder="No.">
+      </div> -->
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>ไอดี</mat-label>
+            <input matInput [placeholder]="'ไอดี'" [formControlName]="'id'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>ชื่อพาร์ทเนอร์</mat-label>
+            <input matInput [placeholder]="'กรอกชื่อพาร์ทเนอร์'" [formControlName]="'name'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>เลขภาษี</mat-label>
+            <input matInput [placeholder]="'กรอกเลขภาษี'" [formControlName]="'tax_id'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>ที่อยู่</mat-label>
+            <input matInput [placeholder]="'กรอกที่อยู่'" [formControlName]="'address'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>อีเมล</mat-label>
+            <input matInput [placeholder]="'กรอกอีเมล'" [formControlName]="'contact_name'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>อีเมลสำรอง</mat-label>
+            <input matInput [placeholder]="'กรอกอีเมลสำรอง'" [formControlName]="'contact_tel'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>เบอร์โทรศัพท์</mat-label>
+            <input matInput [placeholder]="'กรอกเบอร์โทรศัพท์'" [formControlName]="'tel'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>รายละเอียดเบอร์โทรศัพท์</mat-label>
+            <textarea type="text" matInput [placeholder]="'กรอกรายละเอียดเบอร์โทรศัพท์ ถ้ามี'"
+              [formControlName]="'tel_remark'"></textarea>
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>เบอร์โทรศัพท์สำรอง</mat-label>
+            <input matInput [placeholder]="'กรอกเบอร์โทรศัพท์สำรอง'" [formControlName]="'tel2'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>ไลน์ไอดี</mat-label>
+            <input matInput [placeholder]="'กรอกไลน์ไอดี'" [formControlName]="'line_id'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>note ติดต่อ</mat-label>
+            <textarea type="text" matInput [placeholder]="'กรอก note ติดต่อ'"
+              [formControlName]="'note_contact'"></textarea>
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>ชื่อผู้ติดต่อ</mat-label>
+            <input matInput [placeholder]="'กรอกชื่อผู้ติดต่อ'" [formControlName]="'contact_name'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-full px-3">
+          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+            <mat-label>เบอร์โทรศัพท์ผู้ติดต่อ</mat-label>
+            <input matInput [placeholder]="'กรอกเบอร์โทรศัพท์ผู้ติดต่อ'" [formControlName]="'contact_tel'">
+            <!-- <mat-hint>This is a hint text</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">สถานะ</label>
+        <div class="mt-1">
+          <mat-radio-group formControlName="status">
+            <mat-radio-button [value]="1">เข้าใช้งานได้</mat-radio-button>
+            <mat-radio-button [value]="0">ระงับการใช้งาน</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="md:w-full px-3">
+        <div class="flex items-center justify-center w-full">
+          <ngx-dropzone (change)="onSelect($event)"
+            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <ngx-dropzone-label>เลือกรูปภาพ</ngx-dropzone-label>
+            <div *ngFor="let f of files">
+              <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)"
+                class="h-auto max-w-full"></ngx-dropzone-image-preview>
+            </div>
+          </ngx-dropzone>
+        </div>
+      </div>
+    </form>
+    <div mat-dialog-actions class="flex justify-end mt-4">
+      <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
+        (click)="update()">Save</button>
+      &nbsp;
+      <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded hover:bg-gray-400"
+        (click)="onCancelClick()">Cancel</button>
+    </div>
+  </div>

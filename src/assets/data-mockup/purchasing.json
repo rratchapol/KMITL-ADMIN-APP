@@ -1,0 +1,104 @@
+{
+    "code": "200",
+    "status": true,
+    "message": "เรียกดูข้อมูลสำเร็จ",
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "doc_id": "PO66070001",
+                "vendor": {
+                    "id": 1,
+                    "code": "JTNEN-6010ST",
+                    "name": "บริษัท เจ.ที.เอ็น. เอ็นเตอร์ไพรส์ (2016) จำกัด",
+                    "address": "33/24 ซ.บางกระดี่ 16 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10510"
+                },
+                "created_at": "2023-08-25T15:27:56.000000Z",
+                "create_by": "AOM",
+                "status": "อนุมัติ"
+            },
+            {
+                "id": 2,
+                "doc_id": "PO66070002",
+                "vendor": {
+                    "id": 2,
+                    "code": "JTNEN-6011ST",
+                    "name": "บริษัท สุ่มข้อมูล จำกัด",
+                    "address": "33/25 ซ.บางกระดี่ 17 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10511"
+                },
+                "created_at": "2023-08-25T15:28:56.000000Z",
+                "create_by": "AOM",
+                "status": "อนุมัติ"
+            },
+            {
+                "id": 3,
+                "doc_id": "PO66070003",
+                "vendor": {
+                    "id": 3,
+                    "code": "JTNEN-6012ST",
+                    "name": "บริษัท สุ่มข้อมูล2 จำกัด",
+                    "address": "33/26 ซ.บางกระดี่ 18 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10512"
+                },
+                "created_at": "2023-08-25T15:29:56.000000Z",
+                "create_by": "AOM",
+                "status": "อนุมัติ"
+            },
+
+            {
+                "id": 9,
+                "doc_id": "PO66070009",
+                "vendor": {
+                    "id": 9,
+                    "code": "JTNEN-6018ST",
+                    "name": "บริษัท สุ่มข้อมูล8 จำกัด",
+                    "address": "33/32 ซ.บางกระดี่ 24 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10518"
+                },
+                "created_at": "2023-08-25T15:35:56.000000Z",
+                "create_by": "AOM",
+                "status": "อนุมัติ"
+            },
+            {
+                "id": 10,
+                "doc_id": "PO66070010",
+                "vendor": {
+                    "id": 10,
+                    "code": "JTNEN-6019ST",
+                    "name": "บริษัท สุ่มข้อมูล9 จำกัด",
+                    "address": "33/33 ซ.บางกระดี่ 25 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10519"
+                },
+                "created_at": "2023-08-25T15:36:56.000000Z",
+                "create_by": "AOM",
+                "status": "อนุมัติ"
+            }
+        ],
+
+        "first_page_url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "https://sic-api.dev-asha.com/api/permission/page",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 5
+    }
+}

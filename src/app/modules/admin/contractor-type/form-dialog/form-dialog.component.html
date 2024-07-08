@@ -1,0 +1,29 @@
+<div class="md:max-w-lg mx-auto">
+    <h1 mat-dialog-title class="text-xl font-semibold mb-4">เพิ่มประเภทผู้รับเหมา</h1>
+    <div mat-dialog-content>
+        <form [formGroup]="addForm">
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-full px-3">
+                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                        <mat-label>ชื่อประเภท</mat-label>
+                        <input matInput [placeholder]="'กรอกชื่อพาร์ทเนอร์'" [formControlName]="'name'">
+                        <!-- <mat-hint>This is a hint text</mat-hint> -->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-full px-3">
+                    <ngx-dropzone (change)="onSelect($event)" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <ngx-dropzone-label>เลือกรูปภาพ</ngx-dropzone-label>
+                        <div *ngFor="let f of files">
+                            <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)" class="h-auto max-w-full"></ngx-dropzone-image-preview>
+                        </div>
+                    </ngx-dropzone>
+                </div>
+            </div>
+        </form>
+        <div mat-dialog-actions class="flex justify-center md-4">
+            <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400" (click)="onCancelClick()">ยกเลิก</button>
+            <button mat-button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 ml-2" (click)="Submit()">บันทึก</button> &nbsp;
+        </div>
+    </div>

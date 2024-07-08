@@ -1,0 +1,79 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-black-500">วารสาร</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">/
+                    <a class="ml-1 text-black-500">ข้อมูลวารสารทั้งหมด</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-card m-5 p-5 rounded-lg">
+        <div class="flex justify-between">
+            <div class="text-xl font-extrabold tracking-tight sm:ml-4">ข้อมูลวารสารทั้งหมด</div>
+
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
+                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
+                    <mat-select [formControl]="status">
+                        <mat-option [value]="''">
+                            เลือกสถานะ
+                        </mat-option>
+                        <mat-option [value]="'active'">
+                            Active
+                        </mat-option>
+                        <mat-option [value]="'inactive'">
+                            Inactive
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="ml-4 w-full rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">เพิ่มข่าวสาร</span>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-auto overflow-hidden">
+
+            <!-- Products list -->
+            <div class="flex flex-col flex-auto p-5 overflow-hidden sm:overflow-y-auto">
+                <table datatable [dtOptions]="dtOptions" class="table row-border hover" style="width: 100%">
+                    <thead>
+                        <tr class="text-center bg-slate-50 mt-10">
+                            <th class="border-bottom-0 w-190">หัวข้อ</th>
+                            <th class="border-bottom-0 w-20">คนดู</th>
+                            <th class="border-bottom-0 w-20">สถานะ</th>
+                            <th class="border-bottom-0 w-50">วันที่ลงวารสาร</th>
+                            <th class="border-bottom-0 w-20">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="dataRow?.length != 0">
+                        <tr *ngFor="let item of dataRow; let i = index">
+                            <td>{{item.title}}</td>
+                            <td>500</td>
+                            <td>Active</td>
+                            <td>
+                                {{item.created_at | date : 'dd/mm/yyyy hh:mm aa'}}
+                            </td>
+                            <td>
+                                <button mat-icon-button color="accent" (click)="editData()">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="dataRow?.length == 0">
+                        <tr>
+                            <td colspan="5" class="no-data-available text-center">
+                                ไม่มีข้อมูล !
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+{
+    "code": "200",
+    "status": true,
+    "message": "เรียกดูข้อมูลสำเร็จ",
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "name": "หัวหน้าเซลล์",
+                "created_at": "2023-08-25T15:27:56.000000Z",
+                "updated_at": "2023-08-25T15:27:56.000000Z",
+                "active": 1
+            },
+            {
+                "id": 2,
+                "name": "ช่าง",
+                "created_at": "2023-09-05T07:25:52.000000Z",
+                "updated_at": "2023-09-05T07:25:52.000000Z",
+                "active": 1
+            },
+            {
+                "id": 3,
+                "name": "Super Admin",
+                "created_at": "2023-09-22T03:34:48.000000Z",
+                "updated_at": "2023-09-22T03:34:48.000000Z",
+                "active": 1
+            },
+            {
+                "id": 4,
+                "name": "หัวหน้าฝ่ายขาย",
+                "created_at": "2023-09-22T03:45:21.000000Z",
+                "updated_at": "2023-09-22T03:45:21.000000Z",
+                "active": 1
+            },
+            {
+                "id": 5,
+                "name": "พนักงานขาย",
+                "created_at": "2023-09-22T03:45:29.000000Z",
+                "updated_at": "2023-09-22T03:45:29.000000Z",
+                "active": 1
+            },
+            {
+                "id": 6,
+                "name": "จัดซื้อ",
+                "created_at": "2023-09-22T03:45:37.000000Z",
+                "updated_at": "2023-09-22T03:45:37.000000Z",
+                "active": 1
+            },
+            {
+                "id": 7,
+                "name": "พนักงานบัญชี",
+                "created_at": "2023-09-22T03:45:46.000000Z",
+                "updated_at": "2023-09-22T03:45:46.000000Z",
+                "active": 1
+            },
+            {
+                "id": 8,
+                "name": "หัวหน้าฝ่ายคลังสินค้า",
+                "created_at": "2023-09-22T03:45:57.000000Z",
+                "updated_at": "2023-09-22T03:45:57.000000Z",
+                "active": 1
+            },
+            {
+                "id": 9,
+                "name": "พนักงานคลังสินค้า",
+                "created_at": "2023-09-22T03:46:10.000000Z",
+                "updated_at": "2023-09-22T03:46:10.000000Z",
+                "active": 1
+            },
+            {
+                "id": 10,
+                "name": "หัวหน้าฝ่ายจัดส่งสินค้า",
+                "created_at": "2023-09-22T03:46:21.000000Z",
+                "updated_at": "2023-09-22T03:46:21.000000Z",
+                "active": 1
+            },
+            {
+                "id": 11,
+                "name": "พนักงานจัดส่งสินค้า",
+                "created_at": "2023-09-22T03:46:31.000000Z",
+                "updated_at": "2023-09-22T03:46:31.000000Z",
+                "active": 1
+            }
+        ],
+        "first_page_url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://sic-api.dev-asha.com/api/permission/page?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "https://sic-api.dev-asha.com/api/permission/page",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 3,
+        "total": 11
+    }
+}

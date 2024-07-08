@@ -1,0 +1,89 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-black-500">เกษตรกร</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">/
+                    <a class="ml-1 text-black-500" [routerLink]="'/../farmmer/list'">รายชื่อเกษตรกร</a>
+                </div>
+                <div class="flex items-center ml-1 whitespace-nowrap">/
+                    <a class="ml-1 text-black-500">ชื่อ - นามสกุล</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="flex flex-col mt-5 sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div class="flex items-center ml-1 whitespace-nowrap">
+                    <img class="rounded-full w-20 h-20 border-8 border-400-slate"
+                        src="https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+                        alt="image description">
+                </div>
+                <div class="flex flex-row items-start ml-5 whitespace-nowrap">
+                    <div class="grid grid-cols-2">
+                        <div class="col-span-2 text-4xl font-bold">ชื่อ - นามสกุล</div>
+                        <div>
+                            <p class="text-2xl font-bold">เลขบัตรประชาชน</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl ">111 222 3333 44</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">เลขที่สัญญา</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl ">TRR 5678 91</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">เลขที่สอน</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl">111111</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row items-start ml-20 whitespace-nowrap mt-12">
+                    <div class="grid grid-row-1">
+                        <div class="text-4xl font-bold"></div>
+                        <div>
+                            <p class="text-2xl font-bold">ที่อยู่</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">เบอร์โทรติดต่อ</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">โรงงาน</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row items-start ml-5 whitespace-nowrap mt-12">
+                    <div class="grid grid-row-1">
+                        <div class="text-4xl font-bold"></div>
+                        <div>
+                            <p class="text-2xl font-bold">25 ถ.สาทรใต้ แขวงสาทร เขตสาทร กรุงเทพมหานคร 10120</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">098 777 6656</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">สระบุรี</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

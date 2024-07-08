@@ -1,0 +1,27 @@
+{
+    "code": "200",
+    "status": true,
+    "message": "successfully",
+    "data": {
+        "id": 1,
+        "customer_code": "CS001",
+        "tax": "1111111111",
+        "prefix_id": 1,
+        "name": "Pongsakorn Chaicharoenmaitri",
+        "email": "boss32099@gmail.com",
+        "tel": "0917143000",
+        "fax": "020888911",
+       "status": "active",
+       "customer_type": "individual",
+       "price_type": "price-1",
+       "condition_pay": "",
+       "condition_bill": "",
+       "delivery": "",
+        "create_by": "admin",
+        "update_by": "admin",
+        "created_at": "2021-04-04 14:29:10",
+        "updated_at": "2021-04-17 17:37:32"
+    }
+}
+
+
