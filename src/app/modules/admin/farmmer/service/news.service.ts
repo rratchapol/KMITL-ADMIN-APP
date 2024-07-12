@@ -157,6 +157,23 @@ export class NewsService {
             );
     }
 
+    profile(id: number, begin_date: any, end_date: any): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/profile', {
+                FacID: 1,
+                QuotaNO: id,
+                // begin_date: begin_date,
+                // end_date: end_date,
+                Begin_year: '2567',
+                End_year: '6364',
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     getById(Id: any): Observable<any> {
         return this._httpClient
             .get(environment.baseURL + `api/news/${Id}`)

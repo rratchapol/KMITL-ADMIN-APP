@@ -340,6 +340,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         };
     }
 
+    profile:any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -347,7 +348,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
         console.log(`Selected Tab Index: ${selectedTabIndex}`);
         console.log(`Selected Tab Label: ${tabLabel}`);
         if (selectedTabIndex == 0) {}
-        if (selectedTabIndex == 1) {}
+        if (selectedTabIndex == 1) {
+            this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+                this.profile = resp
+                console.log("ดู กิจกรรมมม", this.profile);
+
+            });
+        }
         if (selectedTabIndex == 2) {
             this._farmmerService.myplot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
                 this.cane = resp.data

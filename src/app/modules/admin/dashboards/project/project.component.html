@@ -264,7 +264,7 @@
                                     </div>
                                 </div>
                                 <ol class="relative border-s-2 border-[#122437] dark:border-gray-700">
-                                    <li class="mb-10 ms-4" *ngFor="let item of timelineData; let i = index">
+                                    <li class="mb-10 ms-4" *ngFor="let item of profile; let i = index">
                                         <div
                                             class="absolute w-3 h-3 bg-[#122437] rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
                                         </div>
@@ -275,17 +275,17 @@
                                                 <p class="mb-4  text-base font-normal text-gray-500 dark:text-gray-400">
                                                     ผลผลิต : {{item.product}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    สัญญอ้อย : {{item.product1}}</p>
+                                                    สัญญอ้อย : {{item.product_ref}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    จำนวนแปลง : {{item.product2}}</p>
+                                                    จำนวนแปลง : {{item.station_total}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    พื้นที่ทั้งหมด : {{item.product3}}</p>
+                                                    พื้นที่ทั้งหมด : {{item.area_total}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    พื้นที่เข้าร่วมโคตรงการ BONSUCRO : {{item.product4}}</p>
+                                                    พื้นที่เข้าร่วมโคตรงการ BONSUCRO : {{item.area_bonsucro}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    พื้นที่เข้าร่วมโครงการ GETS FARMING : {{item.product5}}</p>
+                                                    พื้นที่เข้าร่วมโครงการ GETS FARMING : {{item.area_gets}}</p>
                                                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                    ประมาณการณ์ผลิตอ้อย : {{item.product6}}</p>
+                                                    ประมาณการณ์ผลิตอ้อย : {{item.estimate_product}}</p>
                                             </div>
                                             <div class="flex w-100 mt-30 justify-center font-semibold">
                                                 <div class="flex flex-col ">
@@ -295,7 +295,7 @@
                                                     </div>
                                                     <div class="flex justify-center">
                                                         <p class="mb-4 text-xl text-gray-500 dark:text-gray-400">
-                                                            {{item.ccs}} </p>
+                                                            {{item.ccs_mean}} </p>
                                                     </div>
                                                 </div>
                                             </div>
