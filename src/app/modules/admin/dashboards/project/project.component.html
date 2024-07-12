@@ -148,7 +148,8 @@
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6 overflow-auto">
         <div class="w-full mx-auto">
             <!-- Tabs -->
-            <mat-tab-group (selectedTabChange)="onTabChange($event)" class="sm:px-2" mat-stretch-tabs="true" [animationDuration]="'0'">
+            <mat-tab-group (selectedTabChange)="onTabChange($event)" class="sm:px-2" mat-stretch-tabs="true"
+                [animationDuration]="'0'">
                 <!-- Home -->
                 <mat-tab label="Dashboard">
                     <ng-template matTabContent>
@@ -334,34 +335,176 @@
                                             <div class="">
                                                 <p class=" text-white">{{item.selectdate ?? ''}}</p>
                                             </div>
-                                            <!-- <div class="">
-                                                <p class=" text-white">ทะเบียนรถ : {{item.license ?? ''}}</p>
-                                            </div> -->
-                                        </div>
-                                        <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
-                                            <div class="w-2/3 text-sm">
-                                                <p class="mb-1  text-white ">
-                                                    บิลอ้อย : {{item.bill ?? ''}}</p>
-                                                <p class="mb-1  text-white border-t-[1px]">
-                                                    ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
-                                                <p class="mb-1  text-white border-t-[1px]">
-                                                    เลขที่ตัวอย่าง : {{item.ex_number ?? ''}}</p>
-                                                <p class="mb-1  text-white border-t-[1px]">
-                                                    น้ำหนักสุทธิ : {{item.weight ?? ''}}</p>
+                                            <div class="">
+                                                <p class=" text-white">แปลงที่ : {{item.plotsugar_id ?? ''}}</p>
                                             </div>
-                                            <div class="flex w-1/3 justify-center font-semibold ">
-                                                <div class="flex flex-col border-l-[2px] my-5">
-                                                    <div class="flex justify-center ml-4 items-center">
-                                                        <p class=" text-sm text-white">
-                                                            ค่า CCS </p>
+                                        </div>
+                                        <ng-container *ngIf="item.activitytype == 0">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-3/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ไถและเตรียมดิน
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทการไถ : {{item.plowingtype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.insecticidecost || 0) + (+item.laborwages
+                                                        ||
+                                                        0) + (+item.equipmentrent || 0) + (+item.fuelcost || 0) || '-'
+                                                        }}
+                                                    </p>
+                                                </div>
+                                                <!-- <div class="flex w-1/3 justify-center font-semibold ">
+                                                    <div class="flex flex-col border-l-[2px] my-5">
+                                                        <div class="flex justify-center ml-4 items-center">
+                                                            <p class=" text-sm text-white">
+                                                                ค่า  </p>
+                                                        </div>
+                                                        <div class="flex justify-center">
+                                                            <p class="text-center text-sm text-white">
+                                                                {{ ((item.insecticidecost ?? 0) + (item.laborwages ?? 0) + (item.equipmentrent ?? 0) + (item.fuelcost ?? 0)) || '-' }}
+                                                              </p>
+                                                              
+                                                        </div>
                                                     </div>
-                                                    <div class="flex justify-center">
-                                                        <p class="text-center text-sm text-white">
-                                                            {{item.ccs ?? ''}}</p>
-                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 1">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ปลูกอ้อย
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        พันธุ์อ้อย : {{item.sugarcane ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ระบบการปลูก : {{item.plantingsystem ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.expenses || 0) + (+item.sugartypecost ||
+                                                        0) + (+item.sugarcaneplantingcost || 0) + (+item.fertilizercost
+                                                        || 0) + (+item.fuelcost || 0) || '-'}}
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 2">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ให้น้ำ
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ระบบน้ำ : {{item.wateringsystem ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.laborwages || 0) + (+item.fuelcost || 0)
+                                                        || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 3">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ฉีดพ่นน้ำหมักปุ๋ยยูเรีบ
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ปริมาณปุ๋ยยูเรียสูตรย่อยสลาย : {{item.fertilizerquantity ?? ''}}
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ปริมาณปุ๋ยยูเรียสูตรกำจัดวัชพืช : {{item.amountureafertilizer ??
+                                                        ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.herbicidecost || 0) + (+item.laborwages
+                                                        || 0) + (+item.fuelcost || 0) || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 4">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ฉีดพ่นสารกำจัดศัตรูพืช
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        วัชพืช : {{item.weed ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        โรคพืช : {{item.plantdiseases ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        แมลงศัตรูพืช : {{item.pests ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.laborwages || 0) + (+item.fuelcost || 0)
+                                                        + (+item.pesticidecost || 0) || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 5">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ใส่ปุ๋ย
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ชนิดปุ๋ย : {{item.fertilizertype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ปริมาณปุ๋ย : {{item.fertilizerquantity ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.laborwages || 0) + (+item.fuelcost || 0)
+                                                        || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 6">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ตัดอ้อย
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทการตัด : {{item.cuttingtype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugarcanetype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.sugarcanecuttinglabor || 0) +
+                                                        (+item.fuelcost || 0) || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.activitytype == 7">
+                                            <div class="flex flex-row justify-between mt-2 border-t-[1px] ">
+                                                <div class="w-2/3 text-sm">
+                                                    <p class="mb-1  text-white ">
+                                                        กิจกรรม : ขนส่งอ้อย
+                                                    </p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ประเภทอ้อย : {{item.sugartype ?? ''}}</p>
+                                                    <p class="mb-1  text-white border-t-[1px]">
+                                                        ค่าใช้จ่าย : {{ (+item.laborwages || 0) + (+item.fuelcost || 0)
+                                                        || '-'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
                                     </div>
                                 </div>
                             </div>
@@ -392,10 +535,13 @@
                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                     </div>
                                     <div class="md:w-1/4">
-                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense px-2 w-full" [subscriptSizing]="'dynamic'">
-                                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
-                                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'ค้นหา'">
-                                          </mat-form-field>
+                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense px-2 w-full"
+                                            [subscriptSizing]="'dynamic'">
+                                            <mat-icon class="icon-size-5" matPrefix
+                                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
+                                                [placeholder]="'ค้นหา'">
+                                        </mat-form-field>
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
@@ -501,7 +647,8 @@
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}</p>
+                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
@@ -513,25 +660,27 @@
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost || "-"}}</p>
+                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost ||
+                                                                        "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent  || "-"}}</p>
+                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent || "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages  || "-"}}</p>
+                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages || "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าเชื้อเพลิง {{item?.fuelcost  || "-"}}</p>
+                                                                        ค่าเชื้อเพลิง {{item?.fuelcost || "-"}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -548,35 +697,44 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-" }}</p>
+                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem || "-" }}</p>
+                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-" }}</p>
+                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปลูกอ้อย {{ item?.sugarcaneplantingcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าปลูกอ้อย {{
+                                                                        item?.sugarcaneplantingcost || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -593,21 +751,25 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem || "-" }}</p>
+                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
-                                                                
+
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -624,40 +786,51 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{ item?.fertilizerquantity || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
+                                                                        item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{ item?.otheringredients || "-" }}</p>
+                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{
+                                                                        item?.otheringredients || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{ item?.amountureafertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
+                                                                        item?.amountureafertilizer || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-" }}</p>
+                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{ item?.otheringredientcosts || "-" }}</p>
+                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{
+                                                                        item?.otheringredientcosts || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -677,26 +850,32 @@
                                                                     <p class="mb-4">วัชพืช {{ item?.weed || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-" }}</p>
+                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-" }}</p>
+                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -713,26 +892,32 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ย {{ item?.fertilizerquantity || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ย {{
+                                                                        item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -749,23 +934,28 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{ item?.sugarcanecuttinglabor || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{
+                                                                        item?.sugarcanecuttinglabor || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -782,17 +972,20 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-2 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -838,10 +1031,13 @@
                                             <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
                                                 [placeholder]="'ค้นหา'">
                                         </mat-form-field> -->
-                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense px-2 w-full" [subscriptSizing]="'dynamic'">
-                                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
-                                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'" [placeholder]="'ค้นหา'">
-                                          </mat-form-field>
+                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense px-2 w-full"
+                                            [subscriptSizing]="'dynamic'">
+                                            <mat-icon class="icon-size-5" matPrefix
+                                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
+                                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
+                                                [placeholder]="'ค้นหา'">
+                                        </mat-form-field>
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
@@ -941,7 +1137,8 @@
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}</p>
+                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
@@ -953,25 +1150,27 @@
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost || "-"}}</p>
+                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost ||
+                                                                        "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent  || "-"}}</p>
+                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent || "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages  || "-"}}</p>
+                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages || "-"}}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าเชื้อเพลิง {{item?.fuelcost  || "-"}}</p>
+                                                                        ค่าเชื้อเพลิง {{item?.fuelcost || "-"}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -988,35 +1187,44 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-" }}</p>
+                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem || "-" }}</p>
+                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-" }}</p>
+                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปลูกอ้อย {{ item?.sugarcaneplantingcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าปลูกอ้อย {{
+                                                                        item?.sugarcaneplantingcost || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1033,21 +1241,25 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem || "-" }}</p>
+                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
-                                                                
+
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1064,40 +1276,51 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{ item?.fertilizerquantity || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
+                                                                        item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{ item?.otheringredients || "-" }}</p>
+                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{
+                                                                        item?.otheringredients || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{ item?.amountureafertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
+                                                                        item?.amountureafertilizer || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-" }}</p>
+                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{ item?.otheringredientcosts || "-" }}</p>
+                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{
+                                                                        item?.otheringredientcosts || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1117,26 +1340,32 @@
                                                                     <p class="mb-4">วัชพืช {{ item?.weed || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-" }}</p>
+                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-" }}</p>
+                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-"
+                                                                        }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost || "-" }}</p>
+                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1153,26 +1382,32 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype
+                                                                        || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}</p>
+                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ย {{ item?.fertilizerquantity || "-" }}</p>
+                                                                    <p class="mb-4">ปริมาณปุ๋ย {{
+                                                                        item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1189,23 +1424,28 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype || "-" }}</p>
+                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{ item?.sugarcanecuttinglabor || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{
+                                                                        item?.sugarcanecuttinglabor || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -1222,17 +1462,20 @@
                                                             <div
                                                                 class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages || "-" }}</p>
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
+                                                                        "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost || "-" }}</p>
+                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
+                                                                        "-" }}</p>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                             <div class="col-span-3 flex justify-center items-center m-2"
                                                                 *ngIf="imageUrl">
                                                                 <img [src]="imageUrl" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md" (click)="openImage(imageUrl)">
+                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
+                                                                    (click)="openImage(imageUrl)">
                                                             </div>
                                                         </div>
                                                     </ng-container>

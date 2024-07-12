@@ -516,6 +516,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }));
             console.log("events loaded", this.events);
             console.log("events loaded plot", this.myplot);
+            console.log("รวมรายจ่าย", this.myplot[0].laborwages + this.myplot[0].insecticidecost);
+
             
             // อัปเดต events ใน calendarOptions
             if (this.calendarOptions1) {
