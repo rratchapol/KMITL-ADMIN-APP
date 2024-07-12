@@ -11,11 +11,23 @@ export class NewsService {
     //     throw new Error('Method not implemented.');
     // }
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
             .post('https://asha-tech.co.th/trr-api/public/api/frammer_page', dataTablesParameters)
+            // .post('http://192.168.1.162/trr-api/public/api/frammer_page', dataTablesParameters)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getPagecane(dataTablesParameters: any): Observable<any> {
+        return this._httpClient
+            // .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page', dataTablesParameters)
+            .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -55,11 +67,11 @@ export class NewsService {
     getAPIFarmmer(): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/profile_farmer', {
-                FacID: '1',
+                FacID: '0',
                 page: '1',
                 skip: '1',
                 take: '10',
-                search: '', 
+                search: '',
             })
             .pipe(
                 switchMap((response: any) => {
@@ -67,13 +79,76 @@ export class NewsService {
                 })
             );
     }
-    getAPICCS(id: number): Observable<any> {
+
+    getsugarcane(id: number, begin_date: any, end_date: any,sugartype:any,search:any,activity:any,plot:any): Observable<any> {
+        return this._httpClient
+            .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
+            // .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', {
+                columns: [],
+                length: 10,
+                order: [
+                    {
+                        column: 1,
+                        dir: "asc"
+                    }
+                ],
+                search: {
+                    value: ""
+                },
+                start: 0,
+                // activitytype: 0,
+                start_date: "2023-01-01",
+                end_date: "2024-12-31",
+                frammer_id: id,
+                sugartype: sugartype
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    myplot(id: number, begin_date: any, end_date:any): Observable<any> {
+        return this._httpClient
+            .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
+            // .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', {
+                columns: [],
+                length: 10,
+                order: [
+                    {
+                        column: 1,
+                        dir: "asc"
+                    }
+                ],
+                search: {
+                    value: ""
+                },
+                start: 0,
+                // activitytype: 0,
+                start_date: begin_date,
+                end_date: end_date,
+                // start_date: "2023-01-01",
+                // end_date: "2024-12-31",
+                frammer_id: id,
+                // sugartype: ""
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getAPICCS(id: number, begin_date: any, end_date: any): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/ccs', {
                 factory_id: 1,
                 quota_id: id,
-                begin_date: '2023-12-01',
-                end_date: '2023-12-31',
+                begin_date: begin_date,
+                end_date: end_date,
+                // begin_date: '2023-12-01',
+                // end_date: '2023-12-31',
             })
             .pipe(
                 switchMap((response: any) => {
