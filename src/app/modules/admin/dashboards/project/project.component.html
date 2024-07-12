@@ -1490,147 +1490,23 @@
                         </div>
                     </ng-template>
                 </mat-tab>
-                <!-- <mat-tab label="แปลงผสม">
+                <mat-tab label="แปลงผสม">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
-                            <div
-                                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                                <div class="flex flex-col sm:flex-row items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                            <div class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#0e1f3d] shadow rounded-md overflow-hidden text-white mb-2"
+                                *ngFor="let item of myplots; let i = index">
+                                    <p>{{item.plot_no ?? ''}}</p>
+                                    <div *ngFor="let map of item.co_or_points; let i = index">
+                                        <p>{{map[0] ?? ''}}</p>
+                                        <p>{{map[1] ?? ''}}</p>
+                                        <p class="mb-1  text-white border-t-[1px]"></p>
+                                        
                                     </div>
-
-                                    <div class="mt-3 sm:mt-0 sm:ml-2 min-w-96">
-                                        <mat-form-field class="w-full">
-                                            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                                                <input matStartDate formControlName="start" placeholder="วันที่เริ่ม">
-                                                <input matEndDate formControlName="end" placeholder="วันที่สิ้นสุด">
-                                            </mat-date-range-input>
-                                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-date-range-picker #picker></mat-date-range-picker>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col sm:flex-row items-start">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                    </div>
-                                    <div class="md:w-1/4">
-                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense px-2 w-full"
-                                            [subscriptSizing]="'dynamic'">
-                                            <mat-icon class="icon-size-5" matPrefix
-                                                [svgIcon]="'heroicons_solid:magnifying-glass'"></mat-icon>
-                                            <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
-                                                [placeholder]="'ค้นหา'">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="md:w-1/4">
-                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select>
-                                                <mat-option [value]="1">
-                                                    แปลงที่ 1
-                                                </mat-option>
-                                                <mat-option [value]="2">
-                                                    แปลงที่ 2
-                                                </mat-option>
-                                                <mat-option [value]="3">
-                                                    แปลงที่ 3
-                                                </mat-option>
-                                                <mat-option [value]="4">
-                                                    แปลงที่ 4
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="md:w-1/4">
-                                        <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select>
-                                                <mat-option [value]="1">
-                                                    ไถและเตรียมดิน
-                                                </mat-option>
-                                                <mat-option [value]="2">
-                                                    ปลูกอ้อย
-                                                </mat-option>
-                                                <mat-option [value]="3">
-                                                    ให้น้ำ
-                                                </mat-option>
-                                                <mat-option [value]="4">
-                                                    ฉีดพ่นสารกำจัดศัตรูพืช
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row" *ngFor="let item of timelineData1; let i = index">
-                                    <div>
-                                        <div class="flex flex-col w-30 mt-[30px]">
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.date}}</span>
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.time}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col w-full">
-                                        <div class="flex">
-                                            <ol
-                                                class="relative border-s-2  border-[#122437] dark:border-gray-700 w-full">
-                                                <li class="mb-10 ms-4 grid-cols-3">
-                                                    <div
-                                                        class="absolute -left-2.5 w-5 h-5 bg-[#122437] rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
-                                                    </div>
-                                                    <div class="flex flex-row justify-between mt-5">
-                                                        <div class="flex items-center ml-5 justify-center">
-                                                            <p
-                                                                class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div
-                                                            class=" tracking-tight leading-7 sm:leading-10 truncate mb-5 first-line:">
-                                                            <button
-                                                                class="border-2 border-gray-900 rounded-md font-black hover:bg-slate-50 w-fit mx-2">
-                                                                <span class="mx-5 text-gray-900">แก้ไข</span>
-                                                            </button>
-                                                            <button
-                                                                class="border-2 border-red-500 rounded-md font-black hover:bg-slate-50 w-fit mx-2">
-                                                                <span class="mx-5 text-red-600">ลบ</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        class="grid grid-cols-3 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                        <div class="flex items-center ml-5 justify-start">
-                                                            <p class="mb-4  ">
-                                                                {{item.event}}</p>
-                                                        </div>
-                                                    </div>
-                                                    <mat-divider></mat-divider>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+
                         </div>
                     </ng-template>
-                </mat-tab> -->
+                </mat-tab>
                 <mat-tab label="CCS">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">

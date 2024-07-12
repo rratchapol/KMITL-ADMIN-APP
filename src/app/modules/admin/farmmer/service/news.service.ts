@@ -174,6 +174,21 @@ export class NewsService {
             );
     }
 
+    
+    plot(id: number, begin_date: any, end_date: any): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/plots', {
+                FacID: 1,
+                QuotaNO: id,
+                Year: '6667',
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     getById(Id: any): Observable<any> {
         return this._httpClient
             .get(environment.baseURL + `api/news/${Id}`)

@@ -341,6 +341,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     profile:any;
+    myplots:any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -356,7 +357,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
         }
         if (selectedTabIndex == 2) {
-            this._farmmerService.myplot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
 
@@ -479,6 +480,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     });
 
                 }
+
+            });
+        }
+        if (selectedTabIndex == 5) {
+            this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+                this.myplots = resp
+                console.log("ดู กิจกรรมมม", this.myplots);
 
             });
         }
