@@ -1,5 +1,5 @@
 import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -206,7 +206,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _farmmerService: NewsService,
         private cdr: ChangeDetectorRef,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private ngZone: NgZone
     ) {
 
         this.verticalStepperForm = this._formBuilder.group({
@@ -239,6 +240,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
+    activitys: any
+    plot: any
+    search: any = "";
+    sugartype: any;
     range: FormGroup;
     startday: any;
     endday: any;
@@ -339,9 +344,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
             },
         };
     }
+    private apiKey: string = 'AIzaSyD4w6es-jk17lkWGFzIEpq0S8nhf1ZaunM';
+    getMapImageUrl(lat: number, lng: number): string {
+        const zoom = 13; // Adjust as needed
+        const size = '200x100'; // Adjust as needed
+        const maptype = 'satellite'; // Adjust as needed
+        const style = 'feature:all|element:labels|visibility:off'; // Adjust as needed
+    
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&key=${this.apiKey}`;
+      }
 
     profile:any;
     myplots:any;
+    allplot:any
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -358,8 +373,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         }
         if (selectedTabIndex == 2) {
             this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.cane = resp.data
-                console.log("ดู กิจกรรมมม", this.cane);
+                this.myplots = resp
+                console.log("ดู กิจกรรมมม", this.myplots);
 
             });
         }
@@ -369,6 +384,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยปลูกใหม่";
+            this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
+                this.allplot = resp
+                console.log("ดู แปลงชาวนา", this.allplot);
+
+            });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
@@ -385,7 +405,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
             this.activityControl.valueChanges.subscribe(value => {
                 this.activitys = value;
-                console.log(this.activitys);  // เพื่อตรวจสอบค่า activitys ใน console
+                console.log("ดูกิจกรรมที่เลือก",this.activitys);  // เพื่อตรวจสอบค่า activitys ใน console
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
@@ -483,24 +503,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
             });
         }
-        if (selectedTabIndex == 5) {
-            this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.myplots = resp
-                console.log("ดู กิจกรรมมม", this.myplots);
 
-            });
-        }
 
 
     }
+    google: any;
+    @ViewChildren('mapContainer') mapContainers!: QueryList<ElementRef>;
+  
+
+
 
     openImage(imageUrl: string) {
         window.open(imageUrl, '_blank');
     }
-    activitys: any
-    plot: any
-    search: any = "";
-    sugartype: any;
+
 
 
 

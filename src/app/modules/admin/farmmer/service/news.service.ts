@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.development';
+import { param } from 'jquery';
 import { Observable, map, of, switchMap } from 'rxjs';
 
 @Injectable({
@@ -80,7 +81,24 @@ export class NewsService {
             );
     }
 
-    getsugarcane(id: number, begin_date: any, end_date: any,sugartype:any,search:any,activity:any,plot:any): Observable<any> {
+    getplotframmer(id:any): Observable<any> {
+        const currentYear = new Date().getFullYear();
+        return this._httpClient
+            .post('https://asha-tech.co.th/trr-api/public/api/get_frammer_area', { 
+                frammer_id: id,
+                year: currentYear
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getsugarcane(id: number, begin_date: any, end_date: any,sugartype:any,search:any,plot:any,activity:any): Observable<any> {
+        // if(activity == null){
+        //     activity = "";
+        // }
         return this._httpClient
             .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
             // .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', {
@@ -88,18 +106,19 @@ export class NewsService {
                 length: 10,
                 order: [
                     {
-                        column: 1,
+                        column: 0,
                         dir: "asc"
                     }
                 ],
                 search: {
-                    value: ""
+                    value: search
                 },
                 start: 0,
-                // activitytype: 0,
                 start_date: "2023-01-01",
                 end_date: "2024-12-31",
+                activitytype: activity ,
                 frammer_id: id,
+                plotsugar_id: plot,
                 sugartype: sugartype
             })
             .pipe(
