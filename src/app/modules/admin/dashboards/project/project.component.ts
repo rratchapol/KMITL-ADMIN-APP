@@ -72,6 +72,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     @ViewChild(DataTableDirective)
     dtElement!: DataTableDirective;
     dataRow: any = [];
+    declare  google: any;
 
     // range = new FormGroup({
     //     start: new FormControl<Date | null>(null),
@@ -196,6 +197,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     Id: number;
     public itemData: any;
     public ccsData: any;
+    @ViewChildren('mapCanvas') mapCanvases: QueryList<ElementRef>;
     /**
      * Constructor
      */
@@ -262,8 +264,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     activity: any;
     imageUrl = "https://page365.zendesk.com/hc/article_attachments/900009033263/______________.jpg";
-    startmonth:any;
-    endmonth:any;
+    startmonth: any;
+    endmonth: any;
     ngOnInit(): void {
         const currentDate = new Date();
         this.updateDates(currentDate);
@@ -283,7 +285,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         for (let year = 2533; year <= currentYear; year++) {
             this.years.push(year);
         }
-        this.startYear = currentYear-1;
+        this.startYear = currentYear - 1;
         this.endYear = currentYear;
 
         console.log("aaaaaaaaa", this.ccsData);
@@ -336,15 +338,34 @@ export class ProjectComponent implements OnInit, OnDestroy {
         };
     }
     private apiKey: string = 'AIzaSyD4w6es-jk17lkWGFzIEpq0S8nhf1ZaunM';
-    getMapImageUrl(lat: number, lng: number): string {
+    getMapImageUrl(lat: number, lng: number, coOrPoints: number[][]): string {
         const zoom = 13; // Adjust as needed
         const size = '200x100'; // Adjust as needed
         const maptype = 'satellite'; // Adjust as needed
         const style = 'feature:all|element:labels|visibility:off'; // Adjust as needed
 
-        return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&key=${this.apiKey}`;
+        const path = coOrPoints.map(point => `${point[1]},${point[0]}`).join('|');
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&path=color:0xff0000ff|weight:2|${path}&key=${this.apiKey}`;
+        // return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&key=${this.apiKey}`;
     }
 
+    drawPolygon(ctx: CanvasRenderingContext2D, points: number[][]): void {
+        if (points.length < 2) return;
+
+        ctx.beginPath();
+        ctx.moveTo(points[0][0], points[0][1]);
+
+        points.slice(1).forEach(point => {
+            ctx.lineTo(point[0], point[1]);
+        });
+
+        ctx.closePath();
+        ctx.strokeStyle = '#FF0000'; // Set the color of the polygon border
+        ctx.lineWidth = 2; // Set the width of the polygon border
+        ctx.stroke();
+    }
+    
+    @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
     myplots: any;
     allplot: any
@@ -361,6 +382,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 console.log("ดู กิจกรรมมม", this.profile);
 
             });
+
         }
         if (selectedTabIndex == 2) {
             this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
@@ -445,6 +467,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยตอ";
+            this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
+                this.allplot = resp
+                console.log("ดู แปลงชาวนา", this.allplot);
+
+            });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
@@ -501,7 +528,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
     }
-    google: any;
+    // google: any;
     @ViewChildren('mapContainer') mapContainers!: QueryList<ElementRef>;
 
 
@@ -654,12 +681,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     prevpage(): void {
-        this.page -= 1;
-        this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
-            this.cane = resp.data
-            console.log("ดู กิจกรรมมม", this.cane);
+        if(this.page <= 0){
+            this.page == 0
+        }
+        else{
+            this.page -= 1;
+            this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
+                this.cane = resp.data
+                console.log("ดู กิจกรรมมม", this.cane);
+    
+            });
+        }
 
-        });
     }
 
     onStartYearChange(selectedYear: number) {
