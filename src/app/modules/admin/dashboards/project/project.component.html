@@ -263,24 +263,32 @@
                                         </mat-button-toggle-group> -->
                                         <div class="max-w-md mx-auto my-8 px-4">
                                             <div class="flex flex-col sm:flex-row justify-between ">
-                                              <div class="w-full sm:w-1/2">
-                                                <label for="start-year" class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
-                                                <select (ngModelChange)="onStartYearChange($event)" id="start-year" [(ngModel)]="startYear" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                                                </select>
-                                              </div>
-                                          
-                                              <div class="w-full sm:w-1/2">
-                                                <label for="end-year" class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
-                                                <select (ngModelChange)="onEndYearChange($event)" id="end-year" [(ngModel)]="endYear" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                                                </select>
-                                              </div>
+                                                <div class="w-full sm:w-1/2">
+                                                    <label for="start-year"
+                                                        class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
+                                                    <select (ngModelChange)="onStartYearChange($event)" id="start-year"
+                                                        [(ngModel)]="startYear"
+                                                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                        <option *ngFor="let year of years" [value]="year">{{ year }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="w-full sm:w-1/2">
+                                                    <label for="end-year"
+                                                        class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
+                                                    <select (ngModelChange)="onEndYearChange($event)" id="end-year"
+                                                        [(ngModel)]="endYear"
+                                                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                        <option *ngFor="let year of years" [value]="year">{{ year }}
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                          
-                                          
-                                        
+
+
+
                                     </div>
                                 </div>
                                 <ol class="relative border-s-2 border-[#122437] dark:border-gray-700">
@@ -328,18 +336,57 @@
                 </mat-tab>
                 <mat-tab label="แปลงของฉัน">
                     <ng-template matTabContent>
+                        <!-- <div class="w-1/4">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
+                                <mat-select [formControl]="plotControl">
+                                    <mat-option [value]="">
+                                        ทั้งหมด
+                                    </mat-option>
+                                    <mat-option *ngFor="let plot of allplot" [value]="plot.id">
+                                        แปลงที่ {{ plot.area }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                        <div class="w-1/4">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
+                                <mat-select [formControl]="yearControl">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{ year }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
-                            <div 
-                                *ngFor="let item of myplots; let i = index">
-                                    <p>{{item.plot_no ?? ''}}</p>
-                                    <div *ngFor="let map of item.co_or_points; let i = index">
-                                        <div class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#0e1f3d] shadow rounded-md overflow-hidden text-white mb-2">
-                                        <!-- <p>{{map[0] ?? ''}}</p> -->
-                                        <!-- <p>{{map[1] ?? ''}}</p> -->
+
+                            <div *ngFor="let item of myplots; let i = index">
+                                <div
+                                    class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#ffffff] shadow rounded-md overflow-hidden text-black mb-2">
+                                    <div *ngFor="let map of item.center; let i = index" class="mb-2">
                                         <img [src]="getMapImageUrl(map[1], map[0])" alt="Map image" />
-                                        <!-- <p class="mb-1  text-white border-t-[1px]"></p>     -->
-                                        </div>                                   
                                     </div>
+                                    <div class="flex flex-wrap">
+                                        <div class="w-1/2">
+                                            <p>ปี </p>
+                                            <p>พื้นที่(ไร่) </p>
+                                            <p>อายุอ้อย(ปี) </p>
+                                            <p>พันธุ์อ้อย</p>
+                                            <p>ผลผลิต(ตันต่อไร่)</p>
+                                        </div>
+                                        <div class="w-1/2">
+                                            <p>{{item.year_period_str ?? ''}}</p>
+                                            <p>{{item.area_size ?? ''}}</p>
+                                            <p>{{item.sugarcane_age ?? ''}}</p>
+                                            <p>{{item.sugarcane_type ?? ''}}</p>
+                                            <p>{{item.product_per_rai ?? ''}}</p>
+                                        </div>
+                                    </div>
+                                    <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
+                                    <div class="flex flex-wrap">
+                                        <div class="w-1/2">
+                                            <p>แปลง {{item.plot_no ?? ''}}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </ng-template>
@@ -823,8 +870,10 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
-                            <button (click)="prevpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700" >&laquo; Prev</button>
-                            <button (click)="nextpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                            <button (click)="prevpage()"
+                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">&laquo; Prev</button>
+                            <button (click)="nextpage()"
+                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -1309,16 +1358,18 @@
                                                     <mat-divider></mat-divider>
                                                 </li>
                                             </ol>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
-                            <button (click)="prevpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700" >&laquo; Prev</button>
-                            <button (click)="nextpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                            <button (click)="prevpage()"
+                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">&laquo; Prev</button>
+                            <button (click)="nextpage()"
+                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>

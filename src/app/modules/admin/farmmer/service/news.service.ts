@@ -114,8 +114,8 @@ export class NewsService {
                     value: search
                 },
                 start: page,
-                start_date: "2023-01-01",
-                end_date: "2024-12-31",
+                start_date: begin_date,
+                end_date: end_date,
                 activitytype: activity ,
                 frammer_id: id,
                 plotsugar_id: plot,
@@ -196,7 +196,7 @@ export class NewsService {
     
     plot(id: number, begin_date: any, end_date: any): Observable<any> {
         return this._httpClient
-            .post('https://canegrow.com:28099/api/plots', {
+            .post('https://canegrow.com:28099/api/plot_user', {
                 FacID: 1,
                 QuotaNO: id,
                 Year: '6667',
