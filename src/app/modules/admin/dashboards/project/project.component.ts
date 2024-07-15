@@ -72,7 +72,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     @ViewChild(DataTableDirective)
     dtElement!: DataTableDirective;
     dataRow: any = [];
-    declare  google: any;
+    declare google: any;
 
     // range = new FormGroup({
     //     start: new FormControl<Date | null>(null),
@@ -261,7 +261,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     years: number[] = [];
     startYear: number;
     endYear: number;
-
+    last_page: number;
     activity: any;
     imageUrl = "https://page365.zendesk.com/hc/article_attachments/900009033263/______________.jpg";
     startmonth: any;
@@ -364,7 +364,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         ctx.lineWidth = 2; // Set the width of the polygon border
         ctx.stroke();
     }
-    
+
     @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
     myplots: any;
@@ -408,7 +408,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
+                this.last_page = resp.last_page;
                 console.log("ดู กิจกรรมมม", this.cane);
+                console.log("ดู lastpage", this.last_page);
 
             });
             this.searchInputControl.valueChanges.subscribe(value => {
@@ -474,6 +476,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
+                this.last_page = resp.last_page;
                 console.log("ดู กิจกรรมมม", this.cane);
 
             });
@@ -672,24 +675,29 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     nextpage(): void {
-        this.page += 1;
-        this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
-            this.cane = resp.data
-            console.log("ดู กิจกรรมมม", this.cane);
+        if (this.page == this.last_page) {
+            this.page == this.last_page
+        }
+        else {
+            this.page += 1;
+            this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
+                this.cane = resp.data
+                console.log("ดู กิจกรรมมม", this.cane);
 
-        });
+            });
+        }
     }
 
     prevpage(): void {
-        if(this.page <= 0){
+        if (this.page <= 0) {
             this.page == 0
         }
-        else{
+        else {
             this.page -= 1;
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
-    
+
             });
         }
 
