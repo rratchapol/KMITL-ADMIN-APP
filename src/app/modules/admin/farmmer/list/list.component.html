@@ -52,7 +52,7 @@
                         <th class="border-bottom-0 w-50"></th>
                     </tr>
                 </thead>
-                <tbody *ngIf="dataRow?.length != 0">
+                <!-- <tbody *ngIf="dataRow?.length != 0">
                     <tr *ngFor="let item of dataRow; let i = index">
                         <td>{{item.id_card_number ?? '-'}}</td>
                         <td>{{item.First_name ?? '-'}} {{item.Last_name ?? '-'}}</td>
@@ -64,6 +64,24 @@
                         <td>{{item.station_total ?? '-'}}</td>
                         <td>
                             <button (click)="goToProfile(item.Quota_id)" class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50">
+                                <span class="ml-2 mr-1">รายละเอียด</span>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody> -->
+                <tbody *ngIf="dataRow?.length != 0">
+                    <tr *ngFor="let item of dataRow; let i = index">
+                        <td>{{item.idcard ?? '-'}}</td>
+                        <td>{{item.name ?? '-'}}</td>
+                        <td>{{item.qouta ?? '-'}}</td>
+                        <td>{{item.phone ?? '-'}}</td>
+                        <td>{{item.province_code ?? '-'}}</td>
+                        <td>{{item.country_code ?? '-'}}</td>
+                        <td>{{item.area ?? '-'}}</td>
+                        <td>{{item.count_area ?? '-'}}</td>
+                        <td>
+                            <button (click)="goToProfile(item.qouta)" class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50">
                                 <span class="ml-2 mr-1">รายละเอียด</span>
                             </button>
 

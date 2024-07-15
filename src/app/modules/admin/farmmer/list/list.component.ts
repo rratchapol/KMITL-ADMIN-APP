@@ -73,7 +73,7 @@ export class ListComponent implements OnInit {
         });
         this._Service.getAPIFarmmer().subscribe((resp: any) => {
             this.farmmer = resp;
-            console.log(this.farmmer)
+            console.log("farmer ok",this.farmmer)
             this._changeDetectorRef.markForCheck();
         });
     }
@@ -225,54 +225,94 @@ export class ListComponent implements OnInit {
             error: (err: any) => {};
         });
     }
-    pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };
+    // pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };
 
+    // loadTable(): void {
+    //     const that = this;
+    //     this.dtOptions = {
+    //         pagingType: 'full_numbers',
+    //         pageLength: 10,
+    //         serverSide: true,
+    //         processing: true,
+    //         order: [[0, 'desc']],
+    //         language: {
+    //             url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
+    //         },
+    //         ajax: (dataTablesParameters: any, callback) => {
+    //             that._Service
+    //                 .getPage(dataTablesParameters)
+    //                 .subscribe((resp) => {
+    //                     this.pages.current_page = resp.current_page;
+    //                     this.pages.last_page = resp.last_page;
+    //                     this.pages.per_page = resp.per_page;
+    //                     if (parseInt(resp.current_page) > 1) {
+    //                         this.pages.begin =
+    //                             parseInt(resp.per_page) *
+    //                             (parseInt(resp.current_page) - 1);
+    //                     } else {
+    //                         this.pages.begin = 0;
+    //                     }
+    //                     that.dataRow = this.farmmer;
+    //                     callback({
+    //                         recordsTotal: resp.total,
+    //                         recordsFiltered: resp.total,
+    //                         data: [],
+    //                     });
+    //                 });
+    //         },
+    //         columns: [
+    //             { data: 'idcard', orderable: false },
+    //             { data: 'name', orderable: false },
+    //             { data: 'qouta', orderable: false },
+    //             { data: 'phone', orderable: false },
+    //             // { data: 'no', orderable: false },
+    //             { data: 'no', orderable: false },
+    //             { data: 'area', orderable: false },
+    //             { data: 'count_area', orderable: false },
+    //             { data: 'action', orderable: false },
+    //         ],
+    //     };
+    // }
+
+    dataTablesParameters : any
+    pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };
     loadTable(): void {
         const that = this;
         this.dtOptions = {
-            pagingType: 'full_numbers',
+            pagingType: "full_numbers",
             pageLength: 10,
             serverSide: true,
             processing: true,
-            order: [[0, 'desc']],
             language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
+                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json",
             },
             ajax: (dataTablesParameters: any, callback) => {
-                that._Service
-                    .getPage(dataTablesParameters)
-                    .subscribe((resp) => {
-                        this.pages.current_page = resp.current_page;
-                        this.pages.last_page = resp.last_page;
-                        this.pages.per_page = resp.per_page;
-                        if (parseInt(resp.current_page) > 1) {
-                            this.pages.begin =
-                                parseInt(resp.per_page) *
-                                (parseInt(resp.current_page) - 1);
-                        } else {
-                            this.pages.begin = 0;
-                        }
-                        that.dataRow = this.farmmer;
-                        callback({
-                            recordsTotal: resp.total,
-                            recordsFiltered: resp.total,
-                            data: [],
-                        });
-                    });
+                dataTablesParameters.status = null;
+                 that._Service.getPage(dataTablesParameters).subscribe((resp: any) => {
+                     this.dataRow = resp.data;
+                     console.log('111',this.dataRow)
+                     this.pages.current_page = resp.current_page;
+                     this.pages.last_page = resp.last_page;
+                     this.pages.per_page = resp.per_page;
+                     if (resp.currentPage > 1) {
+                         this.pages.begin =
+                             parseInt(resp.itemsPerPage) * (parseInt(resp.currentPage) - 1);
+                     } else {
+                         this.pages.begin = 0;
+                     }
+
+                     callback({
+                         recordsTotal: resp.data.total,
+                         recordsFiltered: resp.data.total,
+                         data: [],
+                     });
+                     this._changeDetectorRef.markForCheck();
+                     console.log(resp)
+                 });
             },
-            columns: [
-                { data: 'idcard', orderable: false },
-                { data: 'name', orderable: false },
-                { data: 'qouta', orderable: false },
-                { data: 'phone', orderable: false },
-                { data: 'no', orderable: false },
-                { data: 'no', orderable: false },
-                { data: 'area', orderable: false },
-                { data: 'count_area', orderable: false },
-                { data: 'action', orderable: false },
-            ],
         };
     }
+    
     showPicture(imgObject: any): void {
         this.dialog
             .open(PictureComponent, {
