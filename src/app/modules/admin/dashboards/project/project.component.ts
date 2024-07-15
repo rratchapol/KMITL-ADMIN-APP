@@ -262,7 +262,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     activity: any;
     imageUrl = "https://page365.zendesk.com/hc/article_attachments/900009033263/______________.jpg";
+    startmonth:any;
+    endmonth:any;
     ngOnInit(): void {
+        const currentDate = new Date();
+        this.updateDates(currentDate);
+        const startOfMonth = this.getCurrentMonthStartDate(currentDate);
+        const endOfMonth = this.getCurrentMonthEndDate(currentDate);
+        console.log('Start of month:', startOfMonth);
+        console.log('End of month:', endOfMonth);
+
+        this.startmonth = this.getCurrentMonthStartDate(currentDate);
+        this.endmonth = this.getCurrentMonthEndDate(currentDate);
         this.range = this._formBuilder.group({
             start: [''],
             end: ['']
@@ -272,17 +283,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         for (let year = 2533; year <= currentYear; year++) {
             this.years.push(year);
         }
-        this.startYear = 2533;
+        this.startYear = currentYear-1;
         this.endYear = currentYear;
 
         console.log("aaaaaaaaa", this.ccsData);
 
-        const currentDate = new Date();
-        this.updateDates(currentDate);
-        const startOfMonth = this.getCurrentMonthStartDate(currentDate);
-        const endOfMonth = this.getCurrentMonthEndDate(currentDate);
-        console.log('Start of month:', startOfMonth);
-        console.log('End of month:', endOfMonth);
+
 
         this.activatedRoute.params.subscribe((params) => {
             // console.log(params);
@@ -364,6 +370,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
         }
         if (selectedTabIndex == 3) {
+            const currentDate = new Date();
+            this.updateDates(currentDate);
+            this.startday = this.getCurrentMonthStartDate(currentDate);
+            this.endday = this.getCurrentMonthEndDate(currentDate);
             this.range = this._formBuilder.group({
                 start: [''],
                 end: ['']
@@ -410,19 +420,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 if (val.start) {
                     this.startday = this.datePipe.transform(val.start, 'yyyy-MM-dd');
                     console.log("เริ่มวันนน", this.startday);
-                    this._farmmerService.getsugarcane(this.Id, this.startday, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
-                        this.cane = resp.data
-                        console.log("ดู กิจกรรมมม", this.cane);
-
-                    });
                 }
                 if (val.end) {
                     this.endday = this.datePipe.transform(val.end, 'yyyy-MM-dd');
                     console.log("สิ้นสุดวันนน", this.endday);
-                    this._farmmerService.getsugarcane(this.Id, this.startdate, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
+                }
+                if (val.start || val.end) {
+                    this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
-
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
@@ -430,6 +436,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
         }
         if (selectedTabIndex == 4) {
+            const currentDate = new Date();
+            this.updateDates(currentDate);
+            this.startday = this.getCurrentMonthStartDate(currentDate);
+            this.endday = this.getCurrentMonthEndDate(currentDate);
             this.range = this._formBuilder.group({
                 start: [''],
                 end: ['']
@@ -471,19 +481,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 if (val.start) {
                     this.startday = this.datePipe.transform(val.start, 'yyyy-MM-dd');
                     console.log("เริ่มวันนน", this.startday);
-                    this._farmmerService.getsugarcane(this.Id, this.startday, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
-                        this.cane = resp.data
-                        console.log("ดู กิจกรรมมม", this.cane);
-
-                    });
                 }
                 if (val.end) {
                     this.endday = this.datePipe.transform(val.end, 'yyyy-MM-dd');
                     console.log("สิ้นสุดวันนน", this.endday);
-                    this._farmmerService.getsugarcane(this.Id, this.startdate, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
+                }
+                if (val.start || val.end) {
+                    this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
-
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
