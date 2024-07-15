@@ -255,12 +255,32 @@
                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                     </div>
                                     <div class="mt-3 sm:mt-0 sm:ml-2">
-                                        <mat-button-toggle-group value="this-week"
+                                        <!-- <mat-button-toggle-group value="this-week"
                                             #githubIssuesWeekSelector="matButtonToggleGroup" class="bg-black-300">
                                             <mat-button-toggle value="this-week">2533-2564
                                                 <mat-icon svgIcon="heroicons_outline:calendar-days"></mat-icon>
                                             </mat-button-toggle>
-                                        </mat-button-toggle-group>
+                                        </mat-button-toggle-group> -->
+                                        <div class="max-w-md mx-auto my-8 px-4">
+                                            <div class="flex flex-col sm:flex-row justify-between ">
+                                              <div class="w-full sm:w-1/2">
+                                                <label for="start-year" class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
+                                                <select (ngModelChange)="onStartYearChange($event)" id="start-year" [(ngModel)]="startYear" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                                                </select>
+                                              </div>
+                                          
+                                              <div class="w-full sm:w-1/2">
+                                                <label for="end-year" class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
+                                                <select (ngModelChange)="onEndYearChange($event)" id="end-year" [(ngModel)]="endYear" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                        </div>
+                                          
+                                          
+                                        
                                     </div>
                                 </div>
                                 <ol class="relative border-s-2 border-[#122437] dark:border-gray-700">
@@ -802,6 +822,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
+                            <button (click)="prevpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700" >&laquo; Prev</button>
+                            <button (click)="nextpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                        </div>
                     </ng-template>
                 </mat-tab>
                 <mat-tab label="อ้อยตอ">
@@ -1285,10 +1309,16 @@
                                                     <mat-divider></mat-divider>
                                                 </li>
                                             </ol>
+                                            
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
+                            <button (click)="prevpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700" >&laquo; Prev</button>
+                            <button (click)="nextpage()" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>

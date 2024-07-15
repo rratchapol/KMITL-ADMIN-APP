@@ -95,7 +95,7 @@ export class NewsService {
             );
     }
 
-    getsugarcane(id: number, begin_date: any, end_date: any,sugartype:any,search:any,plot:any,activity:any): Observable<any> {
+    getsugarcane(id: number, begin_date: any, end_date: any,sugartype:any,search:any,plot:any,activity:any,page:number): Observable<any> {
         // if(activity == null){
         //     activity = "";
         // }
@@ -113,7 +113,7 @@ export class NewsService {
                 search: {
                     value: search
                 },
-                start: 0,
+                start: page,
                 start_date: "2023-01-01",
                 end_date: "2024-12-31",
                 activitytype: activity ,
