@@ -289,23 +289,22 @@ export class ListComponent implements OnInit {
             ajax: (dataTablesParameters: any, callback) => {
                 dataTablesParameters.status = null;
                  that._Service.getPage(dataTablesParameters).subscribe((resp: any) => {
-                     this.dataRow = resp.data;
-                     console.log('111',this.dataRow)
-                     this.pages.current_page = resp.current_page;
-                     this.pages.last_page = resp.last_page;
-                     this.pages.per_page = resp.per_page;
-                     if (resp.currentPage > 1) {
-                         this.pages.begin =
-                             parseInt(resp.itemsPerPage) * (parseInt(resp.currentPage) - 1);
-                     } else {
-                         this.pages.begin = 0;
-                     }
-
-                     callback({
-                         recordsTotal: resp.data.total,
-                         recordsFiltered: resp.data.total,
-                         data: [],
-                     });
+                    this.pages.current_page = resp.current_page;
+                    this.pages.last_page = resp.last_page;
+                    this.pages.per_page = resp.per_page;
+                    if (parseInt(resp.current_page) > 1) {
+                        this.pages.begin =
+                            parseInt(resp.per_page) *
+                            (parseInt(resp.current_page) - 1);
+                    } else {
+                        this.pages.begin = 0;
+                    }
+                    that.dataRow = resp.data;
+                    callback({
+                        recordsTotal: resp.total,
+                        recordsFiltered: resp.total,
+                        data: [],
+                    });
                      this._changeDetectorRef.markForCheck();
                      console.log(resp)
                  });
