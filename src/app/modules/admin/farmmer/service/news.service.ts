@@ -81,6 +81,19 @@ export class NewsService {
             );
     }
 
+    groupyear(id:any): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/group_years', {
+                FacID: 1,
+                QuotaID: id,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     getplotframmer(id:any): Observable<any> {
         const currentYear = new Date().getFullYear();
         return this._httpClient
@@ -181,10 +194,10 @@ export class NewsService {
             .post('https://canegrow.com:28099/api/profile', {
                 FacID: 1,
                 QuotaNO: id,
-                // begin_date: begin_date,
-                // end_date: end_date,
-                Begin_year: '2567',
-                End_year: '6364',
+                Begin_year: begin_date,
+                End_year: end_date,
+                // Begin_year: 5758,
+                // End_year: 6768,
             })
             .pipe(
                 switchMap((response: any) => {
@@ -194,12 +207,12 @@ export class NewsService {
     }
 
     
-    plot(id: number, begin_date: any, end_date: any): Observable<any> {
+    plot(id: number, begin_date: any): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/plot_user', {
                 FacID: 1,
                 QuotaNO: id,
-                Year: '6667',
+                Year: begin_date,
             })
             .pipe(
                 switchMap((response: any) => {

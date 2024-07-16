@@ -256,6 +256,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     searchInputControl: FormControl = new FormControl();
     activityControl: FormControl = new FormControl();
     plotControl: FormControl = new FormControl();
+    yearControl: FormControl = new FormControl();
     page: number = 0;
 
     years: number[] = [];
@@ -266,7 +267,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     imageUrl = "https://page365.zendesk.com/hc/article_attachments/900009033263/______________.jpg";
     startmonth: any;
     endmonth: any;
+    groupyear: any;
     ngOnInit(): void {
+
+
+
         const currentDate = new Date();
         this.updateDates(currentDate);
         const startOfMonth = this.getCurrentMonthStartDate(currentDate);
@@ -290,10 +295,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
         console.log("aaaaaaaaa", this.ccsData);
 
-
-
         this.activatedRoute.params.subscribe((params) => {
-            // console.log(params);
             this.Id = params.id;
             this._changeDetectorRef.markForCheck();
             this._farmmerService.getAPIFarmmer().subscribe((resp: any) => {
@@ -349,26 +351,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
         // return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&key=${this.apiKey}`;
     }
 
-    drawPolygon(ctx: CanvasRenderingContext2D, points: number[][]): void {
-        if (points.length < 2) return;
-
-        ctx.beginPath();
-        ctx.moveTo(points[0][0], points[0][1]);
-
-        points.slice(1).forEach(point => {
-            ctx.lineTo(point[0], point[1]);
-        });
-
-        ctx.closePath();
-        ctx.strokeStyle = '#FF0000'; // Set the color of the polygon border
-        ctx.lineWidth = 2; // Set the width of the polygon border
-        ctx.stroke();
-    }
 
     @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
     myplots: any;
     allplot: any
+    year: any;
+    grouplastyear: any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -377,19 +366,42 @@ export class ProjectComponent implements OnInit, OnDestroy {
         console.log(`Selected Tab Label: ${tabLabel}`);
         if (selectedTabIndex == 0) { }
         if (selectedTabIndex == 1) {
-            this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.profile = resp
-                console.log("ดู กิจกรรมมม", this.profile);
+            // this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            //     this.profile = resp
+            //     console.log("ดู กิจกรรมมม", this.profile);
+            //     this.cdr.detectChanges();
+            // });
 
+            this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
+                this.groupyear = resp
+                console.log("ดู groupyear", this.groupyear);
+                const firstYear = this.groupyear[0];
+                const lastYear = this.groupyear[this.groupyear.length - 1];
+                this._farmmerService.profile(this.Id, firstYear.value, lastYear.value).subscribe((resp: any) => {
+                    this.profile = resp
+                    console.log("ดู กิจกรรมมม", this.profile);
+                    this.cdr.detectChanges();
+                });
             });
 
         }
         if (selectedTabIndex == 2) {
-            this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.myplots = resp
-                console.log("ดู กิจกรรมมม", this.myplots);
-
+            this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
+                this.groupyear = resp
+                this.grouplastyear = resp[resp.length - 1];
+                console.log("ดู groupyear", this.groupyear.value);
+                this._farmmerService.plot(this.Id, this.grouplastyear.value).subscribe((resp: any) => {
+                    this.myplots = resp
+                    console.log("ดู กิจกรรมมม", this.myplots);
+                    this.cdr.detectChanges();
+                });
             });
+            // this._farmmerService.plot(this.Id, this.grouplastyear).subscribe((resp: any) => {
+            //     this.myplots = resp
+            //     console.log("ดู กิจกรรมมม", this.myplots);
+            //     this.cdr.detectChanges();
+            // });
+
         }
         if (selectedTabIndex == 3) {
             const currentDate = new Date();
@@ -404,14 +416,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
-
+                this.cdr.detectChanges();
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 this.last_page = resp.last_page;
                 console.log("ดู กิจกรรมมม", this.cane);
                 console.log("ดู lastpage", this.last_page);
-
+                this.cdr.detectChanges();
             });
             this.searchInputControl.valueChanges.subscribe(value => {
                 this.search = value;
@@ -419,7 +431,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.activityControl.valueChanges.subscribe(value => {
@@ -428,7 +440,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.plotControl.valueChanges.subscribe(value => {
@@ -437,7 +449,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.range.valueChanges.subscribe(val => {
@@ -453,6 +465,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
+                        this.cdr.detectChanges();
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
@@ -472,13 +485,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
-
+                this.cdr.detectChanges();
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 this.last_page = resp.last_page;
                 console.log("ดู กิจกรรมมม", this.cane);
-
+                this.cdr.detectChanges();
             });
             this.searchInputControl.valueChanges.subscribe(value => {
                 this.search = value;
@@ -486,7 +499,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.activityControl.valueChanges.subscribe(value => {
@@ -495,7 +508,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.plotControl.valueChanges.subscribe(value => {
@@ -504,7 +517,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.range.valueChanges.subscribe(val => {
@@ -520,6 +533,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
+                        this.cdr.detectChanges();
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
@@ -536,7 +550,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
 
-
     openImage(imageUrl: string) {
         window.open(imageUrl, '_blank');
     }
@@ -548,12 +561,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
     loadCCSData(): void {
         this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
             this.ccsData = resp || [];
-            this.events = this.ccsData.map(item => ({
-                start: item.CCS_Date,
-                // title: item.bill_no
-            }));
+            // this.events = this.ccsData.map(item => ({
+            //     start: item.CCS_Date,
+            //     title: item.bill_no
+            // }));
             console.log("events loaded", this.events);
-
+            const uniqueDates = new Set(this.ccsData.map(item => {
+                return new Date(item.CCS_Date).toISOString().split('T')[0];
+              }));
+                            this.events = Array.from(uniqueDates).map(date => ({
+                start: date,
+                display: 'list-item',  
+                allDay: true
+              }));
             // อัปเดต events ใน calendarOptions
             if (this.calendarOptions) {
                 this.calendarOptions.events = this.events;
@@ -720,6 +740,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
         });
     }
+
+    onYearChange(selectedYear: number) {
+        console.log('Selected start year:', selectedYear);
+        this._farmmerService.plot(this.Id, selectedYear).subscribe((resp: any) => {
+            this.myplots = resp;
+            console.log("ดู กิจกรรมมม", this.myplots);
+            this.cdr.detectChanges();
+        });
+    }
+
 
 
 
