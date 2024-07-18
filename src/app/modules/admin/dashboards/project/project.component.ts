@@ -29,13 +29,28 @@ import { ThaiDatePipe } from 'app/shared/date-thai.component.pipe';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
+import { ChartComponent } from "ng-apexcharts";
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+    series: ApexNonAxisChartSeries;
+    chart: ApexChart;
+    responsive: ApexResponsive[];
+    labels: any;
+  };
 @Component({
     selector: 'project',
     templateUrl: './project.component.html',
+    styleUrls: ["./project.component.css"],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
+        NgApexchartsModule,
         DataTablesModule,
         TranslocoModule,
         MatIconModule,
@@ -63,7 +78,8 @@ import { FormsModule } from '@angular/forms';
         ShareModule,
         ThaiDatePipe,
         CommonModule,
-        FormsModule
+        FormsModule,
+        NgApexchartsModule
     ],
     providers: [ThaiDatePipe, DatePipe]
 })
@@ -198,6 +214,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
     public itemData: any;
     public ccsData: any;
     @ViewChildren('mapCanvas') mapCanvases: QueryList<ElementRef>;
+
+
+    @ViewChild("chart") chart: ChartComponent;
+    public chartOptions: Partial<ChartOptions>;
+  
+    
     /**
      * Constructor
      */
@@ -210,7 +232,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private _farmmerService: NewsService,
         private cdr: ChangeDetectorRef,
         private datePipe: DatePipe,
-        private ngZone: NgZone
+        private ngZone: NgZone,
     ) {
 
         this.verticalStepperForm = this._formBuilder.group({
@@ -269,7 +291,26 @@ export class ProjectComponent implements OnInit, OnDestroy {
     endmonth: any;
     groupyear: any;
     ngOnInit(): void {
-
+        this.chartOptions = {
+            series: [44, 55, 13, 43, 22],
+            chart: {
+              type: "donut"
+            },
+            labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  legend: {
+                    position: "bottom"
+                  }
+                }
+              }
+            ]
+          };
 
 
         const currentDate = new Date();
@@ -306,6 +347,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             });
 
             this.loadCCSData();
+            this.loadCCS();
             this.loadmyplot();
             this.initializeCalendar();
             this.plotCalendar();
@@ -358,6 +400,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     allplot: any
     year: any;
     grouplastyear: any;
+    firstYear: any;
+    lastYear: any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -375,9 +419,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
                 this.groupyear = resp
                 console.log("ดู groupyear", this.groupyear);
-                const firstYear = this.groupyear[0];
-                const lastYear = this.groupyear[this.groupyear.length - 1];
-                this._farmmerService.profile(this.Id, firstYear.value, lastYear.value).subscribe((resp: any) => {
+                this.firstYear = this.groupyear[0];
+                this.lastYear = this.groupyear[this.groupyear.length - 1];
+                this._farmmerService.profile(this.Id, this.firstYear.value, this.lastYear.value).subscribe((resp: any) => {
                     this.profile = resp
                     console.log("ดู กิจกรรมมม", this.profile);
                     this.cdr.detectChanges();
@@ -554,26 +598,35 @@ export class ProjectComponent implements OnInit, OnDestroy {
         window.open(imageUrl, '_blank');
     }
 
-
+    ccs:any;
+    loadCCS(): void {
+        const currentDate = new Date();
+        this.updateDates(currentDate);
+        const startOfMonth = this.getCurrentMonthStartDate(currentDate);
+        const endOfMonth = this.getCurrentMonthEndDate(currentDate);
+        console.log('Start of month:', startOfMonth);
+        console.log('End of month:', endOfMonth);
+        this._farmmerService.getAPICCS(this.Id, startOfMonth, endOfMonth).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
+    }
 
 
 
     loadCCSData(): void {
         this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
             this.ccsData = resp || [];
-            // this.events = this.ccsData.map(item => ({
-            //     start: item.CCS_Date,
-            //     title: item.bill_no
-            // }));
+
             console.log("events loaded", this.events);
             const uniqueDates = new Set(this.ccsData.map(item => {
                 return new Date(item.CCS_Date).toISOString().split('T')[0];
-              }));
-                            this.events = Array.from(uniqueDates).map(date => ({
+            }));
+            this.events = Array.from(uniqueDates).map(date => ({
                 start: date,
-                display: 'list-item',  
+                display: 'list-item',
                 allDay: true
-              }));
+            }));
             // อัปเดต events ใน calendarOptions
             if (this.calendarOptions) {
                 this.calendarOptions.events = this.events;
@@ -581,6 +634,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+
+
     myplot: any
     loadmyplot(): void {
         this._farmmerService.myplot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
@@ -647,6 +703,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.originalEndDate = this.enddate;
         this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.originalStartDate, this.originalEndDate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     private formatDate(date: Date): string {
@@ -668,15 +728,23 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.startdate = this.originalStartDate;
             this.enddate = this.originalEndDate;
             this.selectedDate = null;
-        } else {
+        }else {
             // ถ้ากดวันใหม่ ให้อัปเดตวันที่
             this.startdate = selectionInfo.startStr;
-            this.enddate = selectionInfo.startStr;
+            this.enddate = selectionInfo.endStr || selectionInfo.startStr;
+            // Adjust the end date if it's over by a day
+            if (new Date(this.enddate) > new Date(this.startdate)) {
+                this.enddate = new Date(new Date(this.enddate).setDate(new Date(this.enddate).getDate() - 1)).toISOString().split('T')[0];
+            }
             this.selectedDate = selectionInfo.startStr;
         }
         console.log("วันที่เริ่ม:", this.startdate, "วันที่สิ้นสุด:", this.enddate);
-        this.loadCCSData(); // โหลดข้อมูลใหม่ตามวันที่เลือก
+        // this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     // เพิ่มฟังก์ชันใหม่เพื่อจัดการเมื่อยกเลิกการเลือก
@@ -685,8 +753,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.enddate = this.originalEndDate;
         this.selectedDate = null;
         console.log("ยกเลิกการเลือก - วันที่เริ่ม:", this.startdate, "วันที่สิ้นสุด:", this.enddate);
-        this.loadCCSData(); // โหลดข้อมูลใหม่ตามวันที่เดิม
+        // this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     goToProfile(id: any): void {
@@ -703,7 +775,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
-
+                this.cdr.detectChanges();
             });
         }
     }
@@ -717,7 +789,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
-
+                this.cdr.detectChanges();
             });
         }
 
@@ -725,19 +797,21 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     onStartYearChange(selectedYear: number) {
         console.log('Selected start year:', selectedYear);
-        this._farmmerService.profile(this.Id, selectedYear, this.enddate).subscribe((resp: any) => {
+        this.firstYear.value = selectedYear;
+        this._farmmerService.profile(this.Id, selectedYear, this.lastYear.value).subscribe((resp: any) => {
             this.profile = resp
             console.log("ดู กิจกรรมมม", this.profile);
-
+            this.cdr.detectChanges();
         });
     }
 
     onEndYearChange(selectedYear: number) {
+        this.lastYear.value = selectedYear;
         console.log('Selected start year:', selectedYear);
-        this._farmmerService.profile(this.Id, this.startdate, selectedYear).subscribe((resp: any) => {
+        this._farmmerService.profile(this.Id, this.firstYear.value, selectedYear).subscribe((resp: any) => {
             this.profile = resp
             console.log("ดู กิจกรรมมม", this.profile);
-
+            this.cdr.detectChanges();
         });
     }
 
@@ -750,7 +824,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
     }
 
-
+    spinner: string = 'assets/images/Spinner.gif';
 
 
     /**

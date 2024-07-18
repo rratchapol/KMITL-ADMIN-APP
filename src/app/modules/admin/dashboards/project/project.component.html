@@ -153,6 +153,34 @@
                 <mat-tab label="Dashboard">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                            <div class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="chart flex-auto md:w-1/4">
+                                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                        [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
+                                </div>
+                                <div class=" md:w-3/4 flex flex-row justify-between p-6">
+                                    <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="text-xl font-semibold leading-none tracking-tight">
+                                            50
+                                        </div>
+                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
+                                    </div>
+                                    <div class="ml-5 col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="text-xl font-semibold leading-none tracking-tight">
+                                            50
+                                        </div>
+                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
+                                    </div>
+                                    <div class="ml-5 col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="text-xl font-semibold leading-none tracking-tight">
+                                            50
+                                        </div>
+                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
                             <!-- Github issues summary -->
                             <div
                                 class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
@@ -258,7 +286,10 @@
                                                 <mat-icon svgIcon="heroicons_outline:calendar-days"></mat-icon>
                                             </mat-button-toggle>
                                         </mat-button-toggle-group> -->
-                                        <div class="max-w-md mx-auto my-8 px-4">
+                                        <div *ngIf="!profile" class="flex items-center w-full">
+                                            <img [src]="spinner" alt="Loading..." class="my-8 ml-100">
+                                        </div>
+                                        <div class="max-w-md mx-auto my-8 px-4" *ngIf="profile">
                                             <div class="flex flex-col sm:flex-row justify-between ">
                                                 <div class="w-full sm:w-1/2">
                                                     <label for="start-year"
@@ -266,9 +297,10 @@
                                                     <select (ngModelChange)="onStartYearChange($event)" id="start-year"
                                                         [(ngModel)]="startYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of groupyear" [value]="value">{{ year.text }}
-                                                        </option>
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
+                                                            year.text }}</option>
                                                     </select>
+
                                                 </div>
 
                                                 <div class="w-full sm:w-1/2">
@@ -277,7 +309,8 @@
                                                     <select (ngModelChange)="onEndYearChange($event)" id="end-year"
                                                         [(ngModel)]="endYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of groupyear" [value]="value">{{ year.text }}
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
+                                                            year.text }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -289,9 +322,9 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <ol class="relative border-s-2 border-[#122437] dark:border-gray-700">
-                                    
+
                                     <li class="mb-10 ms-4" *ngFor="let item of profile; let i = index">
                                         <ol class="relative border-s-2 border-[#122437] dark:border-gray-700"></ol>
                                         <div
@@ -358,7 +391,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
 
                             <div *ngFor="let item of myplots; let i = index">
                                 <div
@@ -369,7 +402,7 @@
                                     </div>
                                     <p>ปี {{item.year_period_str ?? ''}}</p>
                                     <div class="flex flex-wrap">
-                                        
+
                                         <div class="w-1/2">
                                             <!-- <p>ปี {{item.year_period_str ?? ''}}</p> -->
                                             <p>พื้นที่(ไร่) </p>
@@ -388,12 +421,12 @@
                                     <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
                                     <div class="flex flex-wrap">
                                         <div class="w-1/3">
-                                        </div> 
+                                        </div>
                                         <div class="w-1/3">
                                             <p>แปลง : {{item.plot_no ?? ''}}</p>
                                         </div>
                                         <div class="w-1/3">
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -527,7 +560,8 @@
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        การปรับปรุงดิน : {{item?.soilImprovement || "-"}}
+                                                                        การปรับปรุงดิน : {{item?.soilImprovement ||
+                                                                        "-"}}
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -545,7 +579,8 @@
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน : {{item?.equipmentrent || "-"}}</p>
+                                                                        ค่าจ้างแรงงาน : {{item?.equipmentrent || "-"}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
@@ -577,11 +612,13 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane || "-"
+                                                                    <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก : {{ item?.plantingsystem ||
+                                                                    <p class="mb-4">ระบบปลูก : {{ item?.plantingsystem
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -589,11 +626,13 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses || "-"
+                                                                    <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย : {{ item?.sugartypecost
+                                                                    <p class="mb-4">ค่าพันธุ์อ้อย : {{
+                                                                        item?.sugartypecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -635,7 +674,8 @@
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -678,7 +718,8 @@
                                                                         item?.amountureafertilizer || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide || "-"
+                                                                    <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -690,7 +731,8 @@
                                                                         item?.otheringredientcosts || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า : {{ item?.herbicidecost
+                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า : {{
+                                                                        item?.herbicidecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -698,7 +740,8 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -730,7 +773,8 @@
                                                                     <p class="mb-4">วัชพืช : {{ item?.weed || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช : {{ item?.plantdiseases || "-"
+                                                                    <p class="mb-4">โรคพืช : {{ item?.plantdiseases ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -738,11 +782,13 @@
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง : {{ item?.pesticidecost
+                                                                    <p class="mb-4">ค่ายาฆ่าแมลง : {{
+                                                                        item?.pesticidecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -784,7 +830,8 @@
                                                                         item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -814,11 +861,13 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด : {{ item?.cuttingtype ||
+                                                                    <p class="mb-4">ประเภทการตัด : {{ item?.cuttingtype
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย : {{ item?.sugarcanetype ||
+                                                                    <p class="mb-4">ประเภทอ้อย : {{ item?.sugarcanetype
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -852,7 +901,8 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -880,9 +930,11 @@
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
                             <button (click)="prevpage()"
-                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">&laquo; Prev</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">&laquo;
+                                Prev</button>
                             <button (click)="nextpage()"
-                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">Next &raquo;</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">Next
+                                &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -1021,7 +1073,8 @@
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        การปรับปรุงดิน : {{item?.soilImprovement || "-"}}
+                                                                        การปรับปรุงดิน : {{item?.soilImprovement ||
+                                                                        "-"}}
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1039,7 +1092,8 @@
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน : {{item?.equipmentrent || "-"}}</p>
+                                                                        ค่าจ้างแรงงาน : {{item?.equipmentrent || "-"}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
                                                                     <p class="mb-4  ">
@@ -1071,11 +1125,13 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane || "-"
+                                                                    <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก : {{ item?.plantingsystem ||
+                                                                    <p class="mb-4">ระบบปลูก : {{ item?.plantingsystem
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1083,11 +1139,13 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses || "-"
+                                                                    <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย : {{ item?.sugartypecost
+                                                                    <p class="mb-4">ค่าพันธุ์อ้อย : {{
+                                                                        item?.sugartypecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1129,7 +1187,8 @@
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1172,7 +1231,8 @@
                                                                         item?.amountureafertilizer || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide || "-"
+                                                                    <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1184,7 +1244,8 @@
                                                                         item?.otheringredientcosts || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า : {{ item?.herbicidecost
+                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า : {{
+                                                                        item?.herbicidecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1192,7 +1253,8 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1224,7 +1286,8 @@
                                                                     <p class="mb-4">วัชพืช : {{ item?.weed || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช : {{ item?.plantdiseases || "-"
+                                                                    <p class="mb-4">โรคพืช : {{ item?.plantdiseases ||
+                                                                        "-"
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1232,11 +1295,13 @@
                                                                         }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง : {{ item?.pesticidecost
+                                                                    <p class="mb-4">ค่ายาฆ่าแมลง : {{
+                                                                        item?.pesticidecost
                                                                         || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1278,7 +1343,8 @@
                                                                         item?.fertilizerquantity || "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1308,11 +1374,13 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด : {{ item?.cuttingtype ||
+                                                                    <p class="mb-4">ประเภทการตัด : {{ item?.cuttingtype
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย : {{ item?.sugarcanetype ||
+                                                                    <p class="mb-4">ประเภทอ้อย : {{ item?.sugarcanetype
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1346,7 +1414,8 @@
                                                             <div
                                                                 class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
                                                                 <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages ||
+                                                                    <p class="mb-4">ค่าจ้างแรงงาน : {{ item?.laborwages
+                                                                        ||
                                                                         "-" }}</p>
                                                                 </div>
                                                                 <div class="flex items-center ml-5 justify-start">
@@ -1422,7 +1491,7 @@
                                 <mat-divider class="w-full mb-3"></mat-divider>
                                 <div *ngIf="ccsData && ccsData.length > 0">
                                     <div class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#0e1f3d] shadow rounded-md overflow-hidden text-white mb-2"
-                                        *ngFor="let item of ccsData; let i = index">
+                                        *ngFor="let item of ccs; let i = index">
                                         <div class="flex flex-row justify-between  text-sm">
                                             <div class="">
                                                 <!-- <p class=" text-white">{{(item.CCS_Date | date: 'dd MMMM yyyy') ?? ''}}</p> -->
