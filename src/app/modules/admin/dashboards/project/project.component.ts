@@ -35,7 +35,30 @@ import {
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
-
+import {
+    ApexAxisChartSeries,
+    ApexDataLabels,
+    ApexPlotOptions,
+    ApexYAxis,
+    ApexLegend,
+    ApexStroke,
+    ApexXAxis,
+    ApexFill,
+    ApexTooltip
+  } from "ng-apexcharts";
+  
+  export type ChartsOptions = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
+    yaxis: ApexYAxis;
+    xaxis: ApexXAxis;
+    fill: ApexFill;
+    tooltip: ApexTooltip;
+    stroke: ApexStroke;
+    legend: ApexLegend;
+  };
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
     chart: ApexChart;
@@ -218,6 +241,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     @ViewChild("chart") chart: ChartComponent;
     public chartOptions: Partial<ChartOptions>;
+    public chartOptions1: Partial<ChartOptions>;
+    public chartOptions2: Partial<ChartsOptions>;
   
     
     /**
@@ -292,6 +317,27 @@ export class ProjectComponent implements OnInit, OnDestroy {
     groupyear: any;
     ngOnInit(): void {
         this.chartOptions = {
+            series: [45, 55],
+            chart: {
+              type: "donut"
+            },
+            labels: ["รายจ่าย", "รายรับ"],
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  legend: {
+                    position: "bottom"
+                  }
+                }
+              }
+            ]
+          };
+
+          this.chartOptions1 = {
             series: [44, 55, 13, 43, 22],
             chart: {
               type: "donut"
@@ -310,6 +356,63 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 }
               }
             ]
+          };
+
+          this.chartOptions2 = {
+            series: [
+                {
+                  name: "Net Profit",
+                  data: [44, 55, 57, 56, 61, 58]
+                },
+                {
+                  name: "Revenue",
+                  data: [76, 85, 101, 98, 87, 105]
+                }
+              ],
+            chart: {
+              type: "bar",
+              height: 350
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: "55%",
+                // endingShape: "rounded"
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ["transparent"]
+            },
+            xaxis: {
+              categories: [
+                "2557",
+                "2559",
+                "2561",
+                "2563",
+                "2565",
+                "2567",
+              ]
+            },
+            yaxis: {
+              title: {
+                // text: "$ (thousands)"
+              }
+            },
+            fill: {
+              opacity: 1
+            },
+            tooltip: {
+              y: {
+                formatter: function(val) {
+                  return "$ " + val + " thousands";
+                }
+              }
+            }
           };
 
 
