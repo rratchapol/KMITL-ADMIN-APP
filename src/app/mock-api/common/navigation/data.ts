@@ -60,6 +60,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:pencil-square',
         link: '/admin/employee/list',
     },
+    {
+        id: 'admin.user',
+        title: 'เปลี่ยนโซเชียล',
+        type: 'basic',
+        icon: 'heroicons_outline:pencil-square',
+        link: '/admin/employee/detail',
+    },
  
 ];
 export const compactNavigation: FuseNavigationItem[] = [

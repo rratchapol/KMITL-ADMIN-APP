@@ -411,7 +411,8 @@
                                         <img [src]="getMapImageUrl(map[1], map[0],item.co_or_points)" alt="Map image" />
                                         <!-- <img [src]="getMapImageUrl(map.center[1], map.center[0], map.co_or_points)" alt="Map image" /> -->
                                     </div>
-                                    <p>ปี {{item.year_period_str ?? ''}}</p>
+                                    <!-- <p>ปี {{item.year_period_str ?? ''}}</p> -->
+                                    <p>ปี {{formatYearPeriod(item.year_period_str)}}</p>
                                     <div class="flex flex-wrap">
 
                                         <div class="w-1/2">
@@ -1456,9 +1457,9 @@
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
                             <button (click)="prevpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">&laquo; Prev</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">&laquo; Prev</button>
                             <button (click)="nextpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">Next &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>

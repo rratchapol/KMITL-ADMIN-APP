@@ -497,6 +497,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
 
+
+    
+
     @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
     myplots: any;
@@ -695,7 +698,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
     // google: any;
     @ViewChildren('mapContainer') mapContainers!: QueryList<ElementRef>;
 
-
+    formatYearPeriod(yearPeriod: number): string {
+        if (!yearPeriod) return '';
+        
+        const yearString = yearPeriod.toString();
+        if (yearString.length !== 4) return yearString;
+        
+        const firstYear = parseInt(yearString.slice(0, 2)) + 2500;
+        const secondYear = parseInt(yearString.slice(2)) + 2500;
+        
+        return `${firstYear}/${secondYear}`;
+      }
 
     openImage(imageUrl: string) {
         window.open(imageUrl, '_blank');

@@ -1,0 +1,89 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="!this.Id">
+                    เพิ่มวารสาร
+                </h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="this.Id">
+                    แก้ไขวารสาร
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <form [formGroup]="addForm">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>หัวข้อวารสาร</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ฉบับที่</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'no'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>หัวข้อวารสาร</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ฉบับที่</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'no'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>หัวข้อวารสาร</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ฉบับที่</mat-label>
+                                <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'no'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                   
+
+                    <div mat-dialog-actions class="flex justify-end md-4">
+                        <!-- <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400" (click)="backTo()">ยกเลิก</button> -->
+                        <button mat-button class="px-4 py-2 bg-[#0a1c3a] text-white rounded-md hover:bg-gray-600 ml-2" (click)="Submit()">บันทึก</button> &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
