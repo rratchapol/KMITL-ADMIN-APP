@@ -261,4 +261,15 @@ export class NewsService {
     //   })
     //   );
     //   }
+
+    getByFacId(): Observable<any> {
+        const Id = 1;
+        return this._httpClient
+            .get(environment.baseURL + `api/get_company_byfactory/${Id}`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
 }

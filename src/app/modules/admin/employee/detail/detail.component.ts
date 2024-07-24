@@ -1,3 +1,4 @@
+import { items } from './../../../../mock-api/apps/file-manager/data';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -92,73 +93,56 @@ export class DetailComponent implements OnInit {
             this.Id = params.id;
         });
         this.addForm = this.formBuilder.group({
-            id:'',
-            no: '',
-            title: '',
-            detail: '',
-            file: '',
-            image: '',
-            notify_status: '',
+            factory_affiliation: '',
+            head_office:'',
+            phone: '',
+            email: '',
+            time_start: '',
+            time_end: '',
+            date_start: '',
+            date_end: '',
+            youtube: '',
+            facebook: '',
+            tiktok: '',
+            website: '',
         });
     }
-
+    itemData:any;
     ngOnInit(): void {
-        // สร้าง Reactive Form
-        if (this.Id) {
-            this.activatedRoute.params.subscribe((params) => {
-                // console.log(params);
-                const id = params.id;
-                this._service.getById(id).subscribe((resp: any) => {
-                    this.item = resp;
-                    this.addForm.patchValue({
-                        ...this.item,
-                    });
+        this._service.getByFacId().subscribe(
+            (resp: any) => {
+                console.log("หา ของ", resp);
+                this.itemData = resp.data;
+                console.log("Prefix value:", this.itemData);
 
-                    this.addForm.patchValue({
-                        image: '',
-                    });
+                this.addForm.patchValue({
+                    factory_affiliation: this.itemData.factory_affiliation,
+                    head_office: this.itemData.head_office,
+                    phone: this.itemData.phone,
+                    email: this.itemData.email,
+                    time_start: this.itemData.time_start,
+                    time_end: this.itemData.time_end,
+                    date_start: this.itemData.date_start,
+                    date_end: this.itemData.date_end,
+                    youtube: this.itemData.youtube,
+                    facebook: this.itemData.facebook,
+                    tiktok: this.itemData.tiktok,
+                    website: this.itemData.website,
 
-                    this.addForm.patchValue({
-                        file: '',
-                    });
-                    // console.log(this.item.image);
-                    // this.files.push(this.item.image);
-                    if (this.item.image) this.uploadedImages = this.item.image;
-
-                    if (this.item.file) this.uploadedFile = this.item.file;
                 });
-            });
-        } else {
-            this.addForm.patchValue({
-                id:'',
-                no: '',
-                title: '',
-                detail: '',
-                image: '',
-                file: '',
-                notify_status: '1',
-            });
-        }
+
+            },
+            (error) => {
+                console.error('Error 888:', error);
+            }
+        );
+       
     }
 
-    selectedFile: File = null;
-    onFileChange(event) {
-        this.selectedFile = (event.target as HTMLInputElement).files[0];
-
-        // if (this.selectedFile) {
-        //     // ปรับให้เก็บข้อมูลที่คุณต้องการ ในที่นี้เป็นชื่อไฟล์
-        //     this.addForm.patchValue({ image: this.selectedFile.name });
-        //   }
-        // this.addForm.get('image').updateValueAndValidity();
-    }
 
     Submit(): void {
         console.log(this.addForm.value);
-        // const end =  moment(this.addForm.value.register_date).format('YYYY-MM-DD')
-        // console.log(end)
-        // this.addForm.patchValue({
-        //   register_date:end
-        // })
+
         const confirmation = this._fuseConfirmationService.open({
             title: 'เพิ่มข้อมูล',
             message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
@@ -264,52 +248,5 @@ export class DetailComponent implements OnInit {
                 // }
             }
         });
-    }
-
-    files: File[] = [];
-    url_logo: string;
-    onSelect(event: { addedFiles: File[] }): void {
-        this.files = [];
-
-        // เพิ่มรูปใหม่
-        const newFiles = event.addedFiles;
-        this.files.push(...newFiles);
-        const file = this.files[0];
-        this.addForm.patchValue({
-            image: file,
-        });
-    }
-
-    onRemove(file: File): void {
-        const index = this.files.indexOf(file);
-        if (index >= 0) {
-            this.files.splice(index, 1);
-        }
-    }
-
-    files2: File[] = [];
-    onSelect2(event: { addedFiles: File[] }): void {
-        this.files2 = [];
-
-        // เพิ่มรูปใหม่
-        const newFiles = event.addedFiles;
-        this.files2.push(...newFiles);
-        const file = this.files2[0];
-        this.addForm.patchValue({
-            file: file,
-        });
-        this.uploadedFile = true;
-    }
-
-    onRemove2(file: File): void {
-        const index = this.files2.indexOf(file);
-        if (index >= 0) {
-            this.files2.splice(index, 1);
-        }
-        this.uploadedFile = false;
-    }
-
-    backTo() {
-        this._router.navigate(['admin/journal/list']);
     }
 }
