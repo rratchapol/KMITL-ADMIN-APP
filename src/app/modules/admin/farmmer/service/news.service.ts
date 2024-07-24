@@ -272,4 +272,15 @@ export class NewsService {
                 })
             );
     }
+
+
+    create(formData: FormData): Observable<any> {
+        return this._httpClient
+            .put(environment.baseURL + '/api/company/1', formData)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
 }

@@ -26,6 +26,7 @@ import { ShareModule } from 'app/share.module';
 import { ThaiDatePipe } from 'app/shared/date-thai.component.pipe';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'detail',
@@ -87,12 +88,14 @@ export class DetailComponent implements OnInit {
         private _fuseConfirmationService: FuseConfirmationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: NewsService,
-        public activatedRoute: ActivatedRoute
+        public activatedRoute: ActivatedRoute,
+        private http: HttpClient
     ) {
         this.activatedRoute.params.subscribe((params) => {
             this.Id = params.id;
         });
         this.addForm = this.formBuilder.group({
+            factory_id: 1,
             factory_affiliation: '',
             head_office:'',
             phone: '',
@@ -106,9 +109,30 @@ export class DetailComponent implements OnInit {
             tiktok: '',
             website: '',
         });
+        
     }
     itemData:any;
     ngOnInit(): void {
+        this.http.get('https://asha-tech.co.th/trr-api/public/api/get_company_byfactory/1').subscribe(response => {
+            this.itemData = response;
+            console.log(response);
+            this.addForm.patchValue({
+                factory_affiliation: this.itemData.data.factory_affiliation,
+                head_office: this.itemData.data.head_office,
+                phone: this.itemData.data.phone,
+                email: this.itemData.data.email,
+                time_start: this.itemData.data.time_start,
+                time_end: this.itemData.data.time_end,
+                date_start: this.itemData.data.date_start,
+                date_end: this.itemData.data.date_end,
+                youtube: this.itemData.data.youtube,
+                facebook: this.itemData.data.facebook,
+                tiktok: this.itemData.data.tiktok,
+                website: this.itemData.data.website,
+
+            });console.log(this.itemData.data.head_office);
+        });
+
         this._service.getByFacId().subscribe(
             (resp: any) => {
                 console.log("หา ของ", resp);
@@ -164,88 +188,44 @@ export class DetailComponent implements OnInit {
             },
             dismissible: true,
         });
-
-        // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
-            // If the confirm button pressed...
             if (result === 'confirmed') {
-                const formData = new FormData();
-                Object.entries(this.addForm.value).forEach(
-                    ([key, value]: any[]) => {
-                        formData.append(key, value);
-                    }
-                );
-                // if (!this.Id) {
-                //     this._service.create(formData).subscribe({
-                //         next: (resp: any) => {
-                //             this._router
-                //                 .navigateByUrl('admin/journal/list')
-                //                 .then(() => {});
-                //         },
+                const formData = this.addForm.value
+                    this._service.create(formData).subscribe({
+                        next: (resp: any) => {
+                            // this._router
+                                // .navigateByUrl('admin/journal/list')
+                                // .then(() => {});
+                        },
 
-                //         error: (err: any) => {
-                //             console.log(err);
-                //             this.addForm.enable();
-                //             this._fuseConfirmationService.open({
-                //                 title: 'เกิดข้อผิดพลาด',
-                //                 message: err.error.message,
-                //                 icon: {
-                //                     show: true,
-                //                     name: 'heroicons_outline:exclamation',
-                //                     color: 'warning',
-                //                 },
-                //                 actions: {
-                //                     confirm: {
-                //                         show: false,
-                //                         label: 'ตกลง',
-                //                         color: 'primary',
-                //                     },
-                //                     cancel: {
-                //                         show: false,
-                //                         label: 'ยกเลิก',
-                //                     },
-                //                 },
-                //                 dismissible: true,
-                //             });
-                //             console.log(err.error.message);
-                //         },
-                //     });
-                // } else {
-                //     this._service.update(formData).subscribe({
-                //         next: (resp: any) => {
-                //             this._router
-                //                 .navigateByUrl('admin/journal/list')
-                //                 .then(() => {});
-                //         },
+                        error: (err: any) => {
+                            console.log(err);
+                            this.addForm.enable();
+                            this._fuseConfirmationService.open({
+                                title: 'เกิดข้อผิดพลาด',
+                                message: err.error.message,
+                                icon: {
+                                    show: true,
+                                    name: 'heroicons_outline:exclamation',
+                                    color: 'warning',
+                                },
+                                actions: {
+                                    confirm: {
+                                        show: false,
+                                        label: 'ตกลง',
+                                        color: 'primary',
+                                    },
+                                    cancel: {
+                                        show: false,
+                                        label: 'ยกเลิก',
+                                    },
+                                },
+                                dismissible: true,
+                            });
+                            console.log(err.error.message);
+                        },
+                    });
 
-                //         error: (err: any) => {
-                //             console.log(err);
-                //             this.addForm.enable();
-                //             this._fuseConfirmationService.open({
-                //                 title: 'เกิดข้อผิดพลาด',
-                //                 message: err.error.message,
-                //                 icon: {
-                //                     show: true,
-                //                     name: 'heroicons_outline:exclamation',
-                //                     color: 'warning',
-                //                 },
-                //                 actions: {
-                //                     confirm: {
-                //                         show: false,
-                //                         label: 'ตกลง',
-                //                         color: 'primary',
-                //                     },
-                //                     cancel: {
-                //                         show: false,
-                //                         label: 'ยกเลิก',
-                //                     },
-                //                 },
-                //                 dismissible: true,
-                //             });
-                //             console.log(err.error.message);
-                //         },
-                //     });
-                // }
             }
         });
     }
