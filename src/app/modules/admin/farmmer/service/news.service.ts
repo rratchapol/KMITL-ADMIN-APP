@@ -263,9 +263,11 @@ export class NewsService {
     //   }
 
     getByFacId(): Observable<any> {
-        const Id = 1;
+        const Id = {
+            factory_id: 1
+        }
         return this._httpClient
-            .get(environment.baseURL + `api/get_company_byfactory/${Id}`)
+            .post(environment.baseURL + '/api/get_company_byfactory',Id)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -282,5 +284,32 @@ export class NewsService {
                     return of(response.data);
                 })
             );
+    }
+
+    dashboardactivitytype(Id: any): Observable<any> {
+        const data = {
+            farmer_id: Id
+        }
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_byactivitytype', data)
+            .pipe();
+    }
+
+    dashboardincomededuct(Id: any): Observable<any> {
+        const data = {
+            farmer_id: Id
+        }
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_incomededuct', data)
+            .pipe();
+    }
+
+    dashboardweekly(Id: any): Observable<any> {
+        const data = {
+            farmer_id: Id
+        }
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_byweekly', data)
+            .pipe();
     }
 }

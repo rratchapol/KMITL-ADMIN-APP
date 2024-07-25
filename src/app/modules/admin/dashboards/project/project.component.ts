@@ -315,48 +315,128 @@ export class ProjectComponent implements OnInit, OnDestroy {
     startmonth: any;
     endmonth: any;
     groupyear: any;
+    income:any;
+    deduct:any;
     ngOnInit(): void {
-        this.chartOptions = {
-            series: [45, 55],
-            chart: {
-              type: "donut"
-            },
-            labels: ["รายจ่าย", "รายรับ"],
-            responsive: [
-              {
-                breakpoint: 480,
-                options: {
-                  chart: {
-                    width: 200
-                  },
-                  legend: {
-                    position: "bottom"
-                  }
-                }
-              }
-            ]
-          };
+        // this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
+        //     this.dbactivity = resp.data
+        //     console.log("ดู กิจกรรมมม", this.dbactivity);
+        //     this.cdr.detectChanges();
+        // });
+        // this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
+        //     this.dbincome = resp.data
+        //     console.log("ดู กิจกรรมมม", this.dbincome.Income[0]);
+        //     this.cdr.detectChanges();
+        // });
+        // this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
+        //     this.dbweekly = resp.data
+        //     console.log("ดู กิจกรรมมม", this.dbweekly);
+        //     this.cdr.detectChanges();
+        // });
 
-          this.chartOptions1 = {
-            series: [44, 55, 13, 43, 22],
-            chart: {
-              type: "donut"
-            },
-            labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-            responsive: [
-              {
-                breakpoint: 480,
-                options: {
-                  chart: {
-                    width: 200
-                  },
-                  legend: {
-                    position: "bottom"
-                  }
+        this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
+            this.dbincome = resp.data;
+            if (this.dbincome && this.dbincome.Income && this.dbincome.Income.length > 0 && this.dbincome.Deduct && this.dbincome.Deduct.length > 0) {
+                const income = parseFloat(this.dbincome.Income[0]) || 0;
+                const deduct = parseFloat(this.dbincome.Deduct[0]) || 0;
+                this.income = income;
+                this.deduct = deduct;
+                console.log("ดู กิจกรรมมม", income, deduct);
+                
+                if (income === 0 && deduct === 0) {
+                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
+                    this.chartOptions = null;
+                } else {
+                    this.chartOptions = {
+                        series: [deduct, income],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["รายจ่าย", "รายรับ"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
                 }
-              }
-            ]
-          };
+                this.cdr.detectChanges();
+            } else {
+                console.error('ข้อมูลไม่ครบถ้วนหรือไม่ถูกต้อง', this.dbincome);
+                this.chartOptions = null;
+            }
+        });
+ 
+
+        this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
+            this.dbactivity = resp.data
+            console.log("ดู this.dbactivity", this.dbactivity);
+            if (this.dbactivity) {
+                const price1 = parseFloat(this.dbactivity[0]?.total_paid) || 0;
+                const price2 = parseFloat(this.dbactivity[1]?.total_paid) || 0;
+                const price3 = parseFloat(this.dbactivity[2]?.total_paid) || 0;
+                const price4 = parseFloat(this.dbactivity[3]?.total_paid) || 0;
+                const price5 = parseFloat(this.dbactivity[4]?.total_paid) || 0;
+                const price6 = parseFloat(this.dbactivity[5]?.total_paid) || 0;
+                const price7 = parseFloat(this.dbactivity[6]?.total_paid) || 0;
+                const price8 = parseFloat(this.dbactivity[7]?.total_paid) || 0;
+                
+                console.log("ดู กิจกรรมมม8888888", price1, price2);
+                
+                if (price1 === 0 && price2 === 0 && price3 === 0 && price4 === 0 && price5 === 0 && price6 === 0 && price7 === 0 && price8 === 0) {
+                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
+                    this.chartOptions1 = null;
+                } else {
+                    this.chartOptions1 = {
+                        series: [price1, price2, price3, price4, price5, price6, price7, price8],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["ไถและเตรียมดิน", "ปลูกอ้อย", "ให้น้ำ", "ฉีดพ่นน้ำหมักปุ๋ยยูเรีย", "ฉีดพ่นสารกำจัดศัตรูพืช", "ใส่ปุ๋ย", "ตัดอ้อย", "ขนส่งอ้อย"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                }
+                this.cdr.detectChanges();
+            } else {
+                console.error('ข้อมูลไม่ครบถ้วนหรือไม่ถูกต้อง', this.dbactivity);
+                this.chartOptions1 = null;
+            }
+        });
+
+        this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
+            this.dbweekly = resp.data
+            const day1 = "2024-07-22";
+            const day2 = "2024-07-23";
+            const day3 = "2024-07-24";
+            const day4 = "2024-07-25";
+            const day5 = "2024-07-26";
+            const day6 = "2024-07-27";
+            const day7 = "2024-07-28";
+            console.log("ดู dbweekly", this.dbweekly);
+            console.log("ดู dbweekly", this.dbweekly[day1]);
+            this.cdr.detectChanges();
+        });
+
 
           this.chartOptions2 = {
             series: [
@@ -377,7 +457,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
               bar: {
                 horizontal: false,
                 columnWidth: "55%",
-                // endingShape: "rounded"
               }
             },
             dataLabels: {
@@ -390,17 +469,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
             },
             xaxis: {
               categories: [
-                "2557",
-                "2559",
-                "2561",
-                "2563",
-                "2565",
-                "2567",
+                "จันทร์",
+                "อังคาร",
+                "พุธ",
+                "พฤหัสบดี",
+                "ศุกร์",
+                "เสาร์",
+                "อาทิตย์"
               ]
             },
             yaxis: {
               title: {
-                // text: "$ (thousands)"
+                text: "$ (thousands)"
               }
             },
             fill: {
@@ -508,13 +588,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
     grouplastyear: any;
     firstYear: any;
     lastYear: any;
+    dbactivity:any;
+    dbincome:any;
+    dbweekly:any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
 
         console.log(`Selected Tab Index: ${selectedTabIndex}`);
         console.log(`Selected Tab Label: ${tabLabel}`);
-        if (selectedTabIndex == 0) { }
+        if (selectedTabIndex == 0) { 
+            this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
+                this.dbactivity = resp.data
+                console.log("ดู กิจกรรมมม", this.dbactivity);
+                this.cdr.detectChanges();
+            });
+            this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
+                this.dbincome = resp.data
+                console.log("ดู กิจกรรมมม", this.dbincome.Income[0]);
+                this.cdr.detectChanges();
+            });
+            this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
+                this.dbweekly = resp.data
+                console.log("ดู กิจกรรมมม", this.dbweekly);
+                this.cdr.detectChanges();
+            });
+        }
         if (selectedTabIndex == 1) {
             // this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
             //     this.profile = resp
@@ -563,6 +662,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยปลูกใหม่";
+            this.activitys ="";
+            this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
@@ -632,6 +733,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยตอ";
+            this.activitys ="";
+            this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
@@ -640,7 +743,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 this.last_page = resp.last_page;
-                console.log("ดู กิจกรรมมม", this.cane);
+                console.log("ดู กิจกรรมมม cane", this.cane);
                 this.cdr.detectChanges();
             });
             this.searchInputControl.valueChanges.subscribe(value => {

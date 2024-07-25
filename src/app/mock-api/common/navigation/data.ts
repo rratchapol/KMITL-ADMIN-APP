@@ -62,7 +62,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'admin.user',
-        title: 'เปลี่ยนโซเชียล',
+        title: 'ข้อมูลบริษัท',
         type: 'basic',
         icon: 'heroicons_outline:pencil-square',
         link: '/admin/employee/detail',

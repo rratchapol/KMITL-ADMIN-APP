@@ -113,30 +113,30 @@ export class DetailComponent implements OnInit {
     }
     itemData:any;
     ngOnInit(): void {
-        this.http.get('https://asha-tech.co.th/trr-api/public/api/get_company_byfactory/1').subscribe(response => {
-            this.itemData = response;
-            console.log(response);
-            this.addForm.patchValue({
-                factory_affiliation: this.itemData.data.factory_affiliation,
-                head_office: this.itemData.data.head_office,
-                phone: this.itemData.data.phone,
-                email: this.itemData.data.email,
-                time_start: this.itemData.data.time_start,
-                time_end: this.itemData.data.time_end,
-                date_start: this.itemData.data.date_start,
-                date_end: this.itemData.data.date_end,
-                youtube: this.itemData.data.youtube,
-                facebook: this.itemData.data.facebook,
-                tiktok: this.itemData.data.tiktok,
-                website: this.itemData.data.website,
+        // this.http.get('https://asha-tech.co.th/trr-api/public/api/get_company_byfactory/1').subscribe(response => {
+        //     this.itemData = response;
+        //     console.log(response);
+        //     this.addForm.patchValue({
+        //         factory_affiliation: this.itemData.data.factory_affiliation,
+        //         head_office: this.itemData.data.head_office,
+        //         phone: this.itemData.data.phone,
+        //         email: this.itemData.data.email,
+        //         time_start: this.itemData.data.time_start,
+        //         time_end: this.itemData.data.time_end,
+        //         date_start: this.itemData.data.date_start,
+        //         date_end: this.itemData.data.date_end,
+        //         youtube: this.itemData.data.youtube,
+        //         facebook: this.itemData.data.facebook,
+        //         tiktok: this.itemData.data.tiktok,
+        //         website: this.itemData.data.website,
 
-            });console.log(this.itemData.data.head_office);
-        });
+        //     });console.log(this.itemData.data.head_office);
+        // });
 
         this._service.getByFacId().subscribe(
             (resp: any) => {
                 console.log("หา ของ", resp);
-                this.itemData = resp.data;
+                this.itemData = resp;
                 console.log("Prefix value:", this.itemData);
 
                 this.addForm.patchValue({

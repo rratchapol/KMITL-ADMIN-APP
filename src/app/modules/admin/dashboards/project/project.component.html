@@ -154,28 +154,35 @@
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
                             <div class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
-                                <div class="chart flex-auto md:w-1/4">
-                                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
-                                        [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
-                                </div>
-                                <div class=" md:w-3/4 flex flex-row justify-between p-6">
+                                <ng-container *ngIf="dbincome">
+                                    <div class="chart flex-auto md:w-1/4" *ngIf="chartOptions && chartOptions.series && chartOptions.series.length > 0">
+                                        <apx-chart 
+                                            [series]="chartOptions.series" 
+                                            [chart]="chartOptions.chart"
+                                            [labels]="chartOptions.labels" 
+                                            [responsive]="chartOptions.responsive">
+                                        </apx-chart>
+                                    </div>
+                                </ng-container>
+                                <div class=" md:w-3/4 flex flex-row justify-between p-18">
+                                    
                                     <div class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="mt-1 text-xs font-medium text-center">รายรับ</div>
                                         <div class="text-xl font-semibold leading-none tracking-tight">
-                                            50
+                                            {{income}}
                                         </div>
-                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
                                     </div>
                                     <div class="ml-5 col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="mt-1 text-xs font-medium text-center">รายจ่าย</div>
                                         <div class="text-xl font-semibold leading-none tracking-tight">
-                                            50
+                                            {{deduct}}
                                         </div>
-                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
                                     </div>
                                     <div class="ml-5 col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl bg-blue-900 text-white dark:bg-white dark:bg-opacity-5 w-full md:w-1/3">
+                                        <div class="mt-1 text-xs font-medium text-center">ยอดรวม</div>
                                         <div class="text-xl font-semibold leading-none tracking-tight">
-                                            50
+                                            {{income - deduct}}
                                         </div>
-                                        <div class="mt-1 text-xs font-medium text-center">Fixed</div>
                                     </div>
                                 </div>
                             </div>
@@ -229,54 +236,23 @@
                                     <div class="flex flex-col">
                                         <div class="font-medium text-secondary">ข้อมูลสรุป</div>
                                         <!-- <div class="flex-auto grid grid-cols-4 gap-4 mt-6"> -->
-                                            <div class="chart flex-auto  md:w-3/4 ">
+
+                                            <!-- <div class="chart flex-auto  md:w-3/4 ">
                                                 <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
                                                     [labels]="chartOptions1.labels" [responsive]="chartOptions1.responsive"></apx-chart>
-                                            </div>
-                                            <!-- <div
-                                                class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-indigo-50 text-indigo-800 dark:bg-white dark:bg-opacity-5 dark:text-indigo-400">
-                                                <div
-                                                    class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['new-issues']}}
-                                                </div>
-                                                <div class="mt-1 text-sm sm:text-lg font-medium">New Issues</div>
-                                            </div>
-                                            <div
-                                                class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-green-50 text-green-800 dark:bg-white dark:bg-opacity-5 dark:text-green-500">
-                                                <div
-                                                    class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['closed-issues']}}
-                                                </div>
-                                                <div class="mt-1 text-sm sm:text-lg font-medium">Closed</div>
-                                            </div>
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['fixed']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Fixed</div>
-                                            </div>
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['wont-fix']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Won't Fix</div>
-                                            </div>
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['re-opened']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Re-opened</div>
-                                            </div>
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['needs-triage']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Needs Triage</div>
                                             </div> -->
+
+                                            <ng-container *ngIf="dbactivity">
+                                                <div class="chart flex-auto md:w-3/4 " *ngIf="chartOptions1 && chartOptions1.series && chartOptions1.series.length > 0">
+                                                    <apx-chart 
+                                                        [series]="chartOptions1.series" 
+                                                        [chart]="chartOptions1.chart"
+                                                        [labels]="chartOptions1.labels" 
+                                                        [responsive]="chartOptions1.responsive">
+                                                    </apx-chart>
+                                                </div>
+                                            </ng-container>
+
                                         </div>
                                     </div>
                                 </div>
@@ -523,6 +499,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
+                                <div *ngIf="cane && cane.length > 0">
                                 <div class="flex flex-row" *ngFor="let item of cane; let i = index">
                                     <div>
                                         <div class="flex flex-col w-30 mt-[30px]">
@@ -938,6 +915,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                                <div *ngIf="cane?.length == 0" class="flex items-center justify-center">
+                                    <div>ไม่พบข้อมูล</div>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
@@ -1036,6 +1018,7 @@
 
                                     </div>
                                 </div>
+                                <div *ngIf="cane && cane.length > 0">
                                 <div class="flex flex-row" *ngFor="let item of cane; let i = index">
                                     <div>
                                         <div class="flex flex-col w-30 mt-[30px]">
@@ -1452,6 +1435,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                                <div *ngIf="cane?.length == 0" class="mt-5 flex items-center justify-center ">
+                                    <div>ไม่พบข้อมูล</div>
+                                </div>
+                                
 
                             </div>
                         </div>
