@@ -287,29 +287,28 @@ export class NewsService {
     }
 
     dashboardactivitytype(Id: any): Observable<any> {
-        const data = {
-            farmer_id: Id
-        }
+
         return this._httpClient
-            .post(environment.baseURL + '/api/get_byactivitytype', data)
+            .post(environment.baseURL + '/api/get_byactivitytype', {
+                frammer_id: Id
+            })
             .pipe();
     }
 
     dashboardincomededuct(Id: any): Observable<any> {
-        const data = {
-            farmer_id: Id
-        }
+
         return this._httpClient
-            .post(environment.baseURL + '/api/get_incomededuct', data)
+            .post(environment.baseURL + '/api/get_incomededuct', {
+                frammer_id: Id})
             .pipe();
     }
 
     dashboardweekly(Id: any): Observable<any> {
-        const data = {
-            farmer_id: Id
-        }
+
         return this._httpClient
-            .post(environment.baseURL + '/api/get_byweekly', data)
+            .post(environment.baseURL + '/api/get_byweekly', {
+                frammer_id: Id
+            })
             .pipe();
     }
 }

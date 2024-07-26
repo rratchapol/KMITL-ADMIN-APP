@@ -31,9 +31,9 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
 import { ChartComponent } from "ng-apexcharts";
 import {
-  ApexNonAxisChartSeries,
-  ApexResponsive,
-  ApexChart
+    ApexNonAxisChartSeries,
+    ApexResponsive,
+    ApexChart
 } from "ng-apexcharts";
 import {
     ApexAxisChartSeries,
@@ -45,9 +45,10 @@ import {
     ApexXAxis,
     ApexFill,
     ApexTooltip
-  } from "ng-apexcharts";
-  
-  export type ChartsOptions = {
+} from "ng-apexcharts";
+// import { log } from 'console';
+
+export type ChartsOptions = {
     series: ApexAxisChartSeries;
     chart: ApexChart;
     dataLabels: ApexDataLabels;
@@ -58,13 +59,13 @@ import {
     tooltip: ApexTooltip;
     stroke: ApexStroke;
     legend: ApexLegend;
-  };
+};
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
     chart: ApexChart;
     responsive: ApexResponsive[];
     labels: any;
-  };
+};
 @Component({
     selector: 'project',
     templateUrl: './project.component.html',
@@ -243,8 +244,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     public chartOptions: Partial<ChartOptions>;
     public chartOptions1: Partial<ChartOptions>;
     public chartOptions2: Partial<ChartsOptions>;
-  
-    
+
+
     /**
      * Constructor
      */
@@ -258,6 +259,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private cdr: ChangeDetectorRef,
         private datePipe: DatePipe,
         private ngZone: NgZone,
+        private route: ActivatedRoute
     ) {
 
         this.verticalStepperForm = this._formBuilder.group({
@@ -315,9 +317,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
     startmonth: any;
     endmonth: any;
     groupyear: any;
-    income:any;
-    deduct:any;
+    income: any;
+    deduct: any;
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.Id = params['id'];
+            console.log("ดู ID", this.Id);
+          });
         // this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
         //     this.dbactivity = resp.data
         //     console.log("ดู กิจกรรมมม", this.dbactivity);
@@ -333,7 +339,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         //     console.log("ดู กิจกรรมมม", this.dbweekly);
         //     this.cdr.detectChanges();
         // });
-
+        console.log("ดู ID", this.Id);
+        
         this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
             this.dbincome = resp.data;
             if (this.dbincome && this.dbincome.Income && this.dbincome.Income.length > 0 && this.dbincome.Deduct && this.dbincome.Deduct.length > 0) {
@@ -342,10 +349,28 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.income = income;
                 this.deduct = deduct;
                 console.log("ดู กิจกรรมมม", income, deduct);
-                
+
                 if (income === 0 && deduct === 0) {
-                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
-                    this.chartOptions = null;
+                    this.chartOptions = {
+                        series: [0, 0],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["รายจ่าย ไม่มี", "รายรับ ไม่มี"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
                 } else {
                     this.chartOptions = {
                         series: [deduct, income],
@@ -374,7 +399,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.chartOptions = null;
             }
         });
- 
+
 
         this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
             this.dbactivity = resp.data
@@ -388,9 +413,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 const price6 = parseFloat(this.dbactivity[5]?.total_paid) || 0;
                 const price7 = parseFloat(this.dbactivity[6]?.total_paid) || 0;
                 const price8 = parseFloat(this.dbactivity[7]?.total_paid) || 0;
-                
+
                 console.log("ดู กิจกรรมมม8888888", price1, price2);
-                
+
                 if (price1 === 0 && price2 === 0 && price3 === 0 && price4 === 0 && price5 === 0 && price6 === 0 && price7 === 0 && price8 === 0) {
                     console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
                     this.chartOptions1 = null;
@@ -425,75 +450,93 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
         this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
             this.dbweekly = resp.data
-            const day1 = "2024-07-22";
-            const day2 = "2024-07-23";
-            const day3 = "2024-07-24";
-            const day4 = "2024-07-25";
-            const day5 = "2024-07-26";
-            const day6 = "2024-07-27";
-            const day7 = "2024-07-28";
-            console.log("ดู dbweekly", this.dbweekly);
-            console.log("ดู dbweekly", this.dbweekly[day1]);
-            this.cdr.detectChanges();
-        });
+            console.log("ดู dbweekly ว่าขนาดเท่าไหร่", this.dbweekly.income[0]);
+            console.log("ดู dbweekly ว่าขนาดเท่าไหร่", this.dbweekly.deduct);
+            if (this.dbweekly) {
+                const day1in = parseFloat(Object.values(this.dbweekly.income[0])[0] as string) || 0;
+                const day2in = parseFloat(Object.values(this.dbweekly.income[1])[0] as string) || 0;
+                const day3in = parseFloat(Object.values(this.dbweekly.income[2])[0] as string) || 0;
+                const day4in = parseFloat(Object.values(this.dbweekly.income[3])[0] as string) || 0;
+                const day5in = parseFloat(Object.values(this.dbweekly.income[4])[0] as string) || 0;
+                const day6in = parseFloat(Object.values(this.dbweekly.income[5])[0] as string) || 0;
+                const day7in = parseFloat(Object.values(this.dbweekly.income[6])[0] as string) || 0;
 
-
-          this.chartOptions2 = {
-            series: [
-                {
-                  name: "Net Profit",
-                  data: [44, 55, 57, 56, 61, 58]
-                },
-                {
-                  name: "Revenue",
-                  data: [76, 85, 101, 98, 87, 105]
+                const day1de = parseFloat(Object.values(this.dbweekly.deduct[0])[0] as string) || 0;
+                const day2de = parseFloat(Object.values(this.dbweekly.deduct[1])[0] as string) || 0;
+                const day3de = parseFloat(Object.values(this.dbweekly.deduct[2])[0] as string) || 0;
+                const day4de = parseFloat(Object.values(this.dbweekly.deduct[3])[0] as string) || 0;
+                const day5de = parseFloat(Object.values(this.dbweekly.deduct[4])[0] as string) || 0;
+                const day6de = parseFloat(Object.values(this.dbweekly.deduct[5])[0] as string) || 0;
+                const day7de = parseFloat(Object.values(this.dbweekly.deduct[6])[0] as string) || 0;
+        
+                console.log("ดู dbweekly", this.dbweekly);
+                console.log("ดู dbweekly", day2in);
+                console.log("ดู dbweekly", day2de);
+                this.cdr.detectChanges();
+                if (day1in === 0 && day2in === 0 && day3in === 0 && day4in === 0 && day5in === 0 && day6in === 0 && day7in === 0 && day1de === 0 && day2de === 0 && day3de === 0 && day4de === 0 && day5de === 0 && day6de === 0 && day7de === 0) {
+                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
+                    this.chartOptions1 = null;
+                } else {
+                    this.chartOptions2 = {
+                        series: [
+                            {
+                                name: "รายรับ",
+                                data: [day1in, day2in, day3in, day4in, day5in, day6in, day7in]
+                            },
+                            {
+                                name: "รายจ่าย",
+                                data: [day1de, day2de, day3de, day4de, day5de, day6de, day7de]
+                            }
+                        ],
+                        chart: {
+                            type: "bar",
+                            height: 350
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: "55%",
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ["transparent"]
+                        },
+                        xaxis: {
+                            categories: [
+                                "จันทร์",
+                                "อังคาร",
+                                "พุธ",
+                                "พฤหัสบดี",
+                                "ศุกร์",
+                                "เสาร์",
+                                "อาทิตย์"
+                            ]
+                        },
+                        yaxis: {
+                            title: {
+                                text: "B (บาท)"
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return " " + val + " บาท";
+                                }
+                            }
+                        }
+                    };
+                    this.cdr.detectChanges();
                 }
-              ],
-            chart: {
-              type: "bar",
-              height: 350
-            },
-            plotOptions: {
-              bar: {
-                horizontal: false,
-                columnWidth: "55%",
-              }
-            },
-            dataLabels: {
-              enabled: false
-            },
-            stroke: {
-              show: true,
-              width: 2,
-              colors: ["transparent"]
-            },
-            xaxis: {
-              categories: [
-                "จันทร์",
-                "อังคาร",
-                "พุธ",
-                "พฤหัสบดี",
-                "ศุกร์",
-                "เสาร์",
-                "อาทิตย์"
-              ]
-            },
-            yaxis: {
-              title: {
-                text: "$ (thousands)"
-              }
-            },
-            fill: {
-              opacity: 1
-            },
-            tooltip: {
-              y: {
-                formatter: function(val) {
-                  return "$ " + val + " thousands";
-                }
-              }
             }
-          };
+        });
 
 
         const currentDate = new Date();
@@ -564,6 +607,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
             },
         };
     }
+
+
+    allValuesAreZero(): boolean {
+        return this.dbweekly.income.slice(0, 8).every(item =>
+          Object.values(item).every(value => value === 0)
+        );
+      }
+
     private apiKey: string = 'AIzaSyD4w6es-jk17lkWGFzIEpq0S8nhf1ZaunM';
     getMapImageUrl(lat: number, lng: number, coOrPoints: number[][]): string {
         const zoom = 13; // Adjust as needed
@@ -578,7 +629,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
 
-    
+
 
     @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
@@ -588,16 +639,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
     grouplastyear: any;
     firstYear: any;
     lastYear: any;
-    dbactivity:any;
-    dbincome:any;
-    dbweekly:any;
+    dbactivity: any;
+    dbincome: any;
+    dbweekly: any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
 
         console.log(`Selected Tab Index: ${selectedTabIndex}`);
         console.log(`Selected Tab Label: ${tabLabel}`);
-        if (selectedTabIndex == 0) { 
+        if (selectedTabIndex == 0) {
             this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
                 this.dbactivity = resp.data
                 console.log("ดู กิจกรรมมม", this.dbactivity);
@@ -662,7 +713,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยปลูกใหม่";
-            this.activitys ="";
+            this.activitys = "";
             this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
@@ -733,7 +784,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยตอ";
-            this.activitys ="";
+            this.activitys = "";
             this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
@@ -803,21 +854,21 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     formatYearPeriod(yearPeriod: number): string {
         if (!yearPeriod) return '';
-        
+
         const yearString = yearPeriod.toString();
         if (yearString.length !== 4) return yearString;
-        
+
         const firstYear = parseInt(yearString.slice(0, 2)) + 2500;
         const secondYear = parseInt(yearString.slice(2)) + 2500;
-        
+
         return `${firstYear}/${secondYear}`;
-      }
+    }
 
     openImage(imageUrl: string) {
         window.open(imageUrl, '_blank');
     }
 
-    ccs:any;
+    ccs: any;
     loadCCS(): void {
         const currentDate = new Date();
         this.updateDates(currentDate);
@@ -866,7 +917,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }));
             console.log("events loaded", this.events);
             console.log("events loaded plot", this.myplot);
-            console.log("รวมรายจ่าย", this.myplot[0].laborwages + this.myplot[0].insecticidecost);
+            // console.log("รวมรายจ่าย", this.myplot[0].laborwages + this.myplot[0].insecticidecost);
 
 
             // อัปเดต events ใน calendarOptions
@@ -947,7 +998,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this.startdate = this.originalStartDate;
             this.enddate = this.originalEndDate;
             this.selectedDate = null;
-        }else {
+        } else {
             // ถ้ากดวันใหม่ ให้อัปเดตวันที่
             this.startdate = selectionInfo.startStr;
             this.enddate = selectionInfo.endStr || selectionInfo.startStr;
@@ -1044,6 +1095,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     spinner: string = 'assets/images/Spinner.gif';
+    chart0: string = 'assets/images/chart0.png';
+    barchart0: string = 'assets/images/barchart0.png';
 
 
     /**
