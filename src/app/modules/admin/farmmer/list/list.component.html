@@ -4,9 +4,10 @@
     <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
         <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
-       
+
             <div class="flex flex-wrap items-center font-medium">
                 <div>
                     <a class="whitespace-nowrap text-black-500">เกษตรกร</a>
@@ -38,7 +39,7 @@
         </div> -->
 
         <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
-            <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+            <!-- <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
                 <thead>
                     <tr class="bg-gray-50">
                         <th class="border-bottom-0 w-50">เลขบัตรประชาชน</th>
@@ -69,13 +70,64 @@
 
                         </td>
                     </tr>
+                </tbody> -->
+
+                <div class="flex justify-end mb-4">
+                    <input type="text" placeholder="ค้นหา..." class="border p-2 rounded-md w-1/5"
+                           [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)">
+                </div>
+            <table class="table row-border hover w-full text-center">
+                <thead class="bg-gray-700 text-black">
+                    <tr class="bg-gray-200">
+                        <th class="border-b-2 w-1/8 p-3">เลขบัตรประชาชน</th>
+                        <th class="border-b-2 w-1/8 p-3">ชื่อเกษตรกร</th>
+                        <th class="border-b-2 w-1/8 p-3">เลขที่โควต้า</th>
+                        <th class="border-b-2 w-1/8 p-3">เบอร์ติดต่อ</th>
+                        <th class="border-b-2 w-1/8 p-3">เขต</th>
+                        <th class="border-b-2 w-1/8 p-3">พื้นที่ (ไร่)</th>
+                        <th class="border-b-2 w-1/8 p-3">จำนวนแปลง</th>
+                        <th class="border-b-2 w-1/8 p-3"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="farmmer?.length != 0">
+                    <tr *ngFor="let item of farmmer; let i = index" class="hover:bg-gray-100">
+                        <td class="p-3">{{ item.id_card_number ?? '-' }}</td>
+                        <td class="p-3">{{ item.First_name ?? '-' }} {{ item.Last_name ?? '-' }}</td>
+                        <td class="p-3">{{ item.Quota_id ?? '-' }}</td>
+                        <td class="p-3">{{ item.phone_number ?? '-' }}</td>
+                        <td class="p-3">{{ item.area ?? '-' }}</td>
+                        <td class="p-3">{{ item.station_total ?? '-' }}</td>
+                        <td class="p-3">{{ item.area_total ?? '-' }}</td>
+                        <td class="p-3">
+                            <button (click)="goToProfile(item.Quota_id)"
+                                class="border-2 border-green-500 text-green-500 w-full rounded-md p-2 font-bold hover:bg-green-500 hover:text-white">
+                                <span class="ml-2 mr-1">รายละเอียด</span>
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
-                <tbody *ngIf="dataRow?.length == 0">
+
+                <tbody *ngIf="farmmer?.length == 0">
                     <tr>
                         <td colspan="" class="no-data-available text-center">ไม่มีข้อมูล !</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
+                <button *ngIf="currentPage >= 2"
+                    class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
+                    (click)="changePage(currentPage - 1)" [disabled]="currentPage <= 1">&laquo;
+                </button>
+                <p class="border py-2 px-3 rounded ">{{ currentPage }}</p>
+                <button *ngIf="farmmer?.length == 10"
+                    class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
+                    (click)="changePage(currentPage + 1)" >
+                    &raquo;
+                </button>
+            </div>
+            
+
         </div>
     </div>
 </div>

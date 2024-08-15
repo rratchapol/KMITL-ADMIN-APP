@@ -65,14 +65,14 @@ export class NewsService {
                 })
             );
     }
-    getAPIFarmmer(): Observable<any> {
+    getAPIFarmmer(search: any,page: number): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/profile_farmer', {
                 FacID: '0',
-                page: '1',
+                page: page.toString(),
                 skip: '1',
                 take: '10',
-                search: '',
+                search: search,
             })
             .pipe(
                 switchMap((response: any) => {
@@ -205,6 +205,22 @@ export class NewsService {
                 })
             );
     }
+
+    profiles(id: number): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/profile', {
+                FacID: 1,
+                QuotaNO: id,
+                Begin_year: 5758,
+                End_year: 6768,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            );
+    }
+
 
     
     plot(id: number, begin_date: any): Observable<any> {

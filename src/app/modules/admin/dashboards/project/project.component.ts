@@ -319,26 +319,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
     groupyear: any;
     income: any;
     deduct: any;
+    profiles: any;
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.Id = params['id'];
             console.log("ดู ID", this.Id);
           });
-        // this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
-        //     this.dbactivity = resp.data
-        //     console.log("ดู กิจกรรมมม", this.dbactivity);
-        //     this.cdr.detectChanges();
-        // });
-        // this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
-        //     this.dbincome = resp.data
-        //     console.log("ดู กิจกรรมมม", this.dbincome.Income[0]);
-        //     this.cdr.detectChanges();
-        // });
-        // this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
-        //     this.dbweekly = resp.data
-        //     console.log("ดู กิจกรรมมม", this.dbweekly);
-        //     this.cdr.detectChanges();
-        // });
+
+          this._farmmerService.profiles(this.Id).subscribe((resp: any) => {
+            this.profiles = resp
+            console.log("ดู profiles ชื่อ บัตร", this.profiles);
+            this.cdr.detectChanges();
+        });
+
         console.log("ดู ID", this.Id);
         
         this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
@@ -565,12 +558,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.activatedRoute.params.subscribe((params) => {
             this.Id = params.id;
             this._changeDetectorRef.markForCheck();
-            this._farmmerService.getAPIFarmmer().subscribe((resp: any) => {
-                const data1 = resp.find(item => item.Quota_id === 285)
-                console.log('ata', data1)
-                this.itemData = resp.find(item => item.Quota_id === +this.Id)
-                console.log('item_data', this.itemData)
-            });
+            // this._farmmerService.getAPIFarmmer().subscribe((resp: any) => {
+            //     const data1 = resp.find(item => item.Quota_id === 285)
+            //     console.log('ata', data1)
+            //     this.itemData = resp.find(item => item.Quota_id === +this.Id)
+            //     console.log('item_data', this.itemData)
+            // });
 
             this.loadCCSData();
             this.loadCCS();

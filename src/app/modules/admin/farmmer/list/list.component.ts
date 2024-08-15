@@ -13,6 +13,7 @@ import { EditComponent } from '../edit/edit.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PictureComponent } from '../picture/picture.component';
 import { FormControl } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 declare var jQuery: any;
 export interface PeriodicElement {
     no: number;
@@ -59,6 +60,9 @@ export class ListComponent implements OnInit {
     province: any[] = [];
     farmmer: any[] = []
     data = new FormControl('1');
+    searchTerm: string = '';
+    currentPage: number = 1;
+    totalPages: number = 1;
     constructor(
         private dialog: MatDialog,
         private _liveAnnouncer: LiveAnnouncer,
@@ -71,17 +75,56 @@ export class ListComponent implements OnInit {
             this.province = resp;
             this._changeDetectorRef.markForCheck();
         });
-        this._Service.getAPIFarmmer().subscribe((resp: any) => {
+        this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
             this.farmmer = resp;
-            console.log("farmer ok",this.farmmer)
+            console.log("farmer ok", this.farmmer)
             this._changeDetectorRef.markForCheck();
         });
     }
 
     ngOnInit(): void {
-       
+
         this.loadTable();
+        this.searchFarmers();
+        this.loadFarmers();
     }
+
+    // ฟังก์ชันที่เรียกใช้เมื่อต้องการค้นหา
+    searchFarmers(): void {
+        this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
+            this.farmmer = resp;
+            console.log("farmer ok", this.farmmer);
+            this._changeDetectorRef.markForCheck();
+        });
+    }
+
+    // ฟังก์ชันที่เรียกใช้เมื่อมีการเปลี่ยนแปลงข้อความใน input
+    onSearchChange(searchValue: string): void {
+        this.searchTerm = searchValue;
+        this.currentPage = 1;
+        this.searchFarmers();
+    }
+
+    loadFarmers(): void {
+        this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
+            this.farmmer = resp;
+            console.log("เปลี่ยนหน้า page, this.farmmer", this.farmmer);
+            this.totalPages = resp.length
+            console.log("เปลี่ยนหน้า page, this.farmmer", this.totalPages);
+            this._changeDetectorRef.markForCheck();
+        });
+    }
+
+    changePage(page: number): void {
+        if (page >= 1) {
+            this.currentPage = page;
+            this.loadFarmers();
+            console.log("เปลี่ยนหน้า page", this.farmmer);
+        }
+    }
+
+
+
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -131,7 +174,7 @@ export class ListComponent implements OnInit {
         this._router.navigate(['news/form']);
     }
 
-    goToProfile(id : string) {
+    goToProfile(id: string) {
         this._router.navigate(['profile/page/edit/' + id]);
     }
     editElement(element: any) {
@@ -222,10 +265,10 @@ export class ListComponent implements OnInit {
                     this.rerender();
                 });
             }
-            error: (err: any) => {};
+            error: (err: any) => { };
         });
     }
-    dataTablesParameters : any
+    dataTablesParameters: any
     pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };
     loadTable(): void {
         const that = this;
@@ -240,36 +283,38 @@ export class ListComponent implements OnInit {
             },
             ajax: (dataTablesParameters: any, callback) => {
                 that._Service.getPage(dataTablesParameters).subscribe((resp) => {
-                        this.dataRow = resp.data;
-                        this.pages.current_page = resp.current_page;
-                        this.pages.last_page = resp.last_page;
-                        this.pages.per_page = resp.per_page;
-                        if (parseInt(resp.current_page) > 1) {
-                            this.pages.begin =
-                                parseInt(resp.per_page) *
-                                (parseInt(resp.current_page) - 1);
-                        } else {
-                            this.pages.begin = 0;
-                        }
-                        // that.dataRow = this.farmmer;
-                        callback({
-                            recordsTotal: resp.total,
-                            recordsFiltered: resp.total,
-                            data: [],
-                        });
+                    // this.dataRow = resp.data;
+                    this.pages.current_page = resp.current_page;
+                    this.pages.last_page = resp.last_page;
+                    this.pages.per_page = resp.per_page;
+                    if (parseInt(resp.current_page) > 1) {
+                        this.pages.begin =
+                            parseInt(resp.per_page) *
+                            (parseInt(resp.current_page) - 1);
+                    } else {
+                        this.pages.begin = 0;
+                    }
+                    that.dataRow = this.farmmer;
+                    this._changeDetectorRef.markForCheck();
+
+                    callback({
+                        recordsTotal: resp.total,
+                        recordsFiltered: resp.total,
+                        data: [],
                     });
+                });
             },
-            columns: [
-                { data: 'idcard', orderable: false },
-                { data: 'name', orderable: false },
-                { data: 'qouta', orderable: false },
-                { data: 'phone', orderable: false },
-                // { data: 'no', orderable: false },
-                { data: 'no', orderable: false },
-                { data: 'area', orderable: false },
-                { data: 'count_area', orderable: false },
-                { data: 'action', orderable: false },
-            ],
+            // columns: [
+            //     { data: 'id_card_number', orderable: false },
+            //     { data: 'name', orderable: false },
+            //     { data: 'qouta', orderable: false },
+            //     { data: 'phone', orderable: false },
+            //     // { data: 'no', orderable: false },
+            //     { data: 'no', orderable: false },
+            //     { data: 'area', orderable: false },
+            //     { data: 'count_area', orderable: false },
+            //     { data: 'action', orderable: false },
+            // ],
         };
     }
 
@@ -310,7 +355,7 @@ export class ListComponent implements OnInit {
     //         },
     //     };
     // }
-    
+
     showPicture(imgObject: any): void {
         this.dialog
             .open(PictureComponent, {
@@ -320,6 +365,6 @@ export class ListComponent implements OnInit {
                 },
             })
             .afterClosed()
-            .subscribe(() => {});
+            .subscribe(() => { });
     }
 }

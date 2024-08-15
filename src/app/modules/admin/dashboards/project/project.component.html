@@ -66,26 +66,26 @@
                         <div class="flex flex-row items-start ml-5 whitespace-nowrap">
                             <div class="grid grid-cols-2">
                                 <div class="col-span-2 text-4xl font-semibold">
-                                    {{this.itemData?.First_name ?? '-'}} {{this.itemData?.Last_name ?? '-'}}
+                                    {{this.profiles?.first_name ?? '-'}} {{this.profiles?.last_name ?? '-'}}
                                 </div>
                                 <div>
                                     <p class="text-xl font-semibold">เลขบัตรประชาชน</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.id_card_number ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.id_number ?? '-'}}</p>
                                 </div>
                                 <div>
                                     <p class="text-xl font-semibold">เลขที่สัญญา</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.Quota_id ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.id_reference ?? '-'}}</p>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <p class="text-xl font-semibold">เลขที่สอน</p>
                                 </div>
                                 <div>
                                     <p class="text-xl font-normal">111111</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="flex flex-row items-start ml-20 whitespace-nowrap mt-12">
@@ -98,7 +98,7 @@
                                     <p class="text-xl font-semibold">เบอร์โทรติดต่อ</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-semibold">โรงงาน</p>
+                                    <!-- <p class="text-xl font-semibold">โรงงาน</p> -->
                                 </div>
                             </div>
                         </div>
@@ -106,13 +106,13 @@
                             <div class="grid grid-row-1">
                                 <div class="text-4xl "></div>
                                 <div>
-                                    <p class="text-xl font-normal">25 ถ.สาทรใต้ แขวงสาทร เขตสาทร กรุงเทพมหานคร 10120</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.address ?? '-'}}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.phone_number ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.phone_number ?? '-'}}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.area ?? '-'}}</p>
+                                    <!-- <p class="text-xl font-normal">{{this.profiles?.area ?? '-'}}</p> -->
                                 </div>
                             </div>
                         </div>
@@ -133,47 +133,51 @@
                 <mat-tab label="Dashboard">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
-                            <div class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
+                            <div
+                                class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
                                 <ng-container *ngIf="dbincome">
-                                  <ng-container *ngIf="dbincome.Income == 0 && dbincome.Deduct == 0">
-                                    <div class="flex flex-col items-center justify-center w-1/4">
-                                      <img [src]="chart0" alt="Loading..." class="w-full h-auto p-1">
-                                    </div>
-                                  </ng-container>
-                                  <ng-container *ngIf="dbincome.Income > 0 && dbincome.Deduct > 0">
-                                    <div class="flex flex-col items-center justify-center w-2/5"
-                                         *ngIf="chartOptions && chartOptions.series && chartOptions.series.length > 0">
-                                      <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
-                                                 [labels]="chartOptions.labels" [responsive]="chartOptions.responsive">
-                                      </apx-chart>
-                                    </div>
-                                  </ng-container>
+                                    <ng-container *ngIf="dbincome.Income == 0 && dbincome.Deduct == 0">
+                                        <div class="flex flex-col items-center justify-center w-1/4">
+                                            <img [src]="chart0" alt="Loading..." class="w-full h-auto p-1">
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="dbincome.Income > 0 || dbincome.Deduct > 0">
+                                        <div class="flex flex-col items-center justify-center w-2/5"
+                                            *ngIf="chartOptions && chartOptions.series && chartOptions.series.length > 0">
+                                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                                [labels]="chartOptions.labels" [responsive]="chartOptions.responsive">
+                                            </apx-chart>
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
                                 <div class="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 p-10 w-full">
-                                  <!-- รายรับ -->
-                                  <div class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
-                                    <div class="text-sm font-medium text-center">รายรับ</div>
-                                    <div class="text-xl font-semibold">
-                                      {{income}}
+                                    <!-- รายรับ -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">รายรับ</div>
+                                        <div class="text-xl font-semibold">
+                                            {{income}}
+                                        </div>
                                     </div>
-                                  </div>
-                                  <!-- รายจ่าย -->
-                                  <div class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
-                                    <div class="text-sm font-medium text-center">รายจ่าย</div>
-                                    <div class="text-xl font-semibold">
-                                      {{deduct}}
+                                    <!-- รายจ่าย -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">รายจ่าย</div>
+                                        <div class="text-xl font-semibold">
+                                            {{deduct}}
+                                        </div>
                                     </div>
-                                  </div>
-                                  <!-- ยอดรวม -->
-                                  <div class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
-                                    <div class="text-sm font-medium text-center">ยอดรวม</div>
-                                    <div class="text-xl font-semibold">
-                                      {{income - deduct}}
+                                    <!-- ยอดรวม -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">ยอดรวม</div>
+                                        <div class="text-xl font-semibold">
+                                            {{income - deduct}}
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                              </div>
-                              
+                            </div>
+
 
 
                             <!-- Github issues summary -->
@@ -184,7 +188,7 @@
                                         รายรับรายจ่ายทั้งหมดของสัปดาห์ที่ผ่านมา
                                     </div> -->
                                     <div class="mt-3 sm:mt-0 sm:ml-2">
-  
+
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-8 sm:mt-4">
@@ -195,21 +199,22 @@
                                         <ng-container *ngIf="dbweekly">
                                             <ng-container *ngIf="allValuesAreZero()">
                                                 <div class="mt-1 text-xl font-medium text-center flex-auto">
-                                                    <img [src]="barchart0" alt="Loading..." class="p-5" >
+                                                    <img [src]="barchart0" alt="Loading..." class="p-5">
                                                 </div>
                                             </ng-container>
                                             <ng-container *ngIf="!allValuesAreZero()">
-                                            <div id="chart"
-                                                *ngIf="chartOptions2 && chartOptions2.series && chartOptions2.series.length > 0">
-                                                <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
-                                                    [dataLabels]="chartOptions2.dataLabels"
-                                                    [plotOptions]="chartOptions2.plotOptions"
-                                                    [yaxis]="chartOptions2.yaxis" [legend]="chartOptions2.legend"
-                                                    [fill]="chartOptions2.fill" [stroke]="chartOptions2.stroke"
-                                                    [tooltip]="chartOptions2.tooltip"
-                                                    [xaxis]="chartOptions2.xaxis"></apx-chart>
-                                            </div>
-                                        </ng-container>
+                                                <div id="chart"
+                                                    *ngIf="chartOptions2 && chartOptions2.series && chartOptions2.series.length > 0">
+                                                    <apx-chart [series]="chartOptions2.series"
+                                                        [chart]="chartOptions2.chart"
+                                                        [dataLabels]="chartOptions2.dataLabels"
+                                                        [plotOptions]="chartOptions2.plotOptions"
+                                                        [yaxis]="chartOptions2.yaxis" [legend]="chartOptions2.legend"
+                                                        [fill]="chartOptions2.fill" [stroke]="chartOptions2.stroke"
+                                                        [tooltip]="chartOptions2.tooltip"
+                                                        [xaxis]="chartOptions2.xaxis"></apx-chart>
+                                                </div>
+                                            </ng-container>
                                         </ng-container>
                                     </div>
 
@@ -219,24 +224,27 @@
                                         </div>
                                         <ng-container *ngIf="dbactivity">
                                             <ng-container *ngIf="dbactivity.length == 0 ">
-                                                <div class="flex flex-col mt-1 text-xl font-medium text-center md:flex-row">
+                                                <div
+                                                    class="flex flex-col mt-1 text-xl font-medium text-center md:flex-row">
                                                     <div class="flex-auto md:w-2/3 text-center md:text-left">
-                                                        <img [src]="chart0" alt="Loading..." class="p-5 mx-auto md:mx-0" />
+                                                        <img [src]="chart0" alt="Loading..."
+                                                            class="p-5 mx-auto md:mx-0" />
                                                     </div>
-                                                    <div class="flex-auto md:w-1/3 flex items-center justify-center text-center">
+                                                    <div
+                                                        class="flex-auto md:w-1/3 flex items-center justify-center text-center">
                                                         <p>ไม่มีข้อมูล</p>
                                                     </div>
                                                 </div>
                                             </ng-container>
                                             <ng-container *ngIf="dbactivity.length > 0 ">
-                                            <div class="chart flex-auto md:w-4/5 "
-                                                *ngIf="chartOptions1 && chartOptions1.series && chartOptions1.series.length > 0">
-                                                <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
-                                                    [labels]="chartOptions1.labels"
-                                                    [responsive]="chartOptions1.responsive">
-                                                </apx-chart>
-                                            </div>
-                                        </ng-container>
+                                                <div class="chart flex-auto md:w-4/5 "
+                                                    *ngIf="chartOptions1 && chartOptions1.series && chartOptions1.series.length > 0">
+                                                    <apx-chart [series]="chartOptions1.series"
+                                                        [chart]="chartOptions1.chart" [labels]="chartOptions1.labels"
+                                                        [responsive]="chartOptions1.responsive">
+                                                    </apx-chart>
+                                                </div>
+                                            </ng-container>
                                         </ng-container>
 
                                     </div>
@@ -369,10 +377,14 @@
                             <div *ngFor="let item of myplots; let i = index">
                                 <div
                                     class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#ffffff] shadow rounded-md overflow-hidden text-black mb-2">
-                                    <div *ngFor="let map of item.center; let i = index" class="mb-2">
-                                        <img [src]="getMapImageUrl(map[1], map[0],item.co_or_points)" alt="Map image" />
-                                        <!-- <img [src]="getMapImageUrl(map.center[1], map.center[0], map.co_or_points)" alt="Map image" /> -->
+                                    <div *ngIf="item?.center && item.center[0] !== null; else noData">
+                                        <div *ngFor="let map of item.center; let i = index" class="mb-2">                       
+                                            <img [src]="getMapImageUrl(map[1], map[0], item.co_or_points)" alt="Map image" />
+                                        </div>
                                     </div>
+                                    <ng-template #noData>
+                                        <p>ไม่พบข้อมูลรูป</p>
+                                    </ng-template>
                                     <!-- <p>ปี {{item.year_period_str ?? ''}}</p> -->
                                     <p>ปี {{formatYearPeriod(item.year_period_str)}}</p>
                                     <div class="flex flex-wrap">
@@ -386,10 +398,10 @@
                                         </div>
                                         <div class="w-1/2">
                                             <!-- <p>{{item.zzzz ?? ''}}</p> -->
-                                            <p>{{item.area_size ?? ''}}</p>
-                                            <p>{{item.sugarcane_age ?? ''}}</p>
-                                            <p>{{item.sugarcane_type ?? ''}}</p>
-                                            <p>{{item.product_per_rai ?? ''}}</p>
+                                            <p>{{item?.area_size ?? ''}}</p>
+                                            <p>{{item?.sugarcane_age ?? ''}}</p>
+                                            <p>{{item?.sugarcane_type ?? ''}}</p>
+                                            <p>{{item?.product_per_rai ?? ''}}</p>
                                         </div>
                                     </div>
                                     <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
@@ -397,7 +409,7 @@
                                         <div class="w-1/3">
                                         </div>
                                         <div class="w-1/3">
-                                            <p>แปลง : {{item.plot_no ?? ''}}</p>
+                                            <p>แปลง : {{item?.plot_no ?? ''}}</p>
                                         </div>
                                         <div class="w-1/3">
                                         </div>
@@ -936,7 +948,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="cane?.length == 0" class="flex items-center justify-center">
+                                <div *ngIf="cane?.length == 0" class="mt-10 flex items-center justify-center">
                                     <div>ไม่พบข้อมูล</div>
                                 </div>
 
@@ -1490,7 +1502,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="cane?.length == 0" class="mt-5 flex items-center justify-center ">
+                                <div *ngIf="cane?.length == 0" class="mt-10 flex items-center justify-center ">
                                     <div>ไม่พบข้อมูล</div>
                                 </div>
 
@@ -1584,7 +1596,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="!ccsData || ccsData.length === 0">
-                                    <p>No data in month.</p>
+                                    <p>ไม่มีข้อมูล.</p>
                                 </div>
                             </div>
                         </div>
