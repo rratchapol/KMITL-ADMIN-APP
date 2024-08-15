@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
@@ -23,24 +23,24 @@ import { finalize } from 'rxjs';
 })
 export class AuthResetPasswordComponent implements OnInit
 {
-    @ViewChild('signInNgForm') signInNgForm: NgForm;
+    @ViewChild('resetPasswordNgForm') resetPasswordNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type: 'success',
+        type   : 'success',
         message: '',
     };
-    signInForm: UntypedFormGroup;
+    resetPasswordForm: UntypedFormGroup;
     showAlert: boolean = false;
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router
-    ) {}
+    )
+    {
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -49,12 +49,17 @@ export class AuthResetPasswordComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void {
+    ngOnInit(): void
+    {
         // Create the form
-        this.signInForm = this._formBuilder.group({
-            password: ['', [Validators.required]],
-            passwordConfirm: ['', [Validators.required]],
-        });
+        this.resetPasswordForm = this._formBuilder.group({
+                password       : ['', Validators.required],
+                passwordConfirm: ['', Validators.required],
+            },
+            {
+                validators: FuseValidators.mustMatch('password', 'passwordConfirm'),
+            },
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -62,56 +67,54 @@ export class AuthResetPasswordComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Sign in
+     * Reset password
      */
-    signIn(): void {
+    resetPassword(): void
+    {
         // Return if the form is invalid
-        if (this.signInForm.invalid) {
+        if ( this.resetPasswordForm.invalid )
+        {
             return;
         }
 
         // Disable the form
-        this.signInForm.disable();
+        this.resetPasswordForm.disable();
 
         // Hide the alert
         this.showAlert = false;
 
-        // Sign in
-        this._authService.signIn(this.signInForm.value).subscribe(
-            () => {
-                // Set the redirect url.
-                // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                // to the correct page after a successful sign in. This way, that url can be set via
-                // routing file and we don't have to touch here.
-                const redirectURL =
-                    this._activatedRoute.snapshot.queryParamMap.get(
-                        'redirectURL'
-                    ) || '/signed-in-redirect';
+        // Send the request to the server
+        this._authService.resetPassword(this.resetPasswordForm.get('password').value)
+            .pipe(
+                finalize(() =>
+                {
+                    // Re-enable the form
+                    this.resetPasswordForm.enable();
 
-                // Navigate to the redirect url
-                this._router.navigateByUrl(redirectURL);
-            },
-            (response) => {
-                // Re-enable the form
-                this.signInForm.enable();
+                    // Reset the form
+                    this.resetPasswordNgForm.resetForm();
 
-                // Reset the form
-                this.signInNgForm.resetForm();
-
-                // Set the alert
-                this.alert = {
-                    type: 'error',
-                    message: 'Wrong email or password',
-                };
-
-                // Show the alert
-                this.showAlert = true;
-            }
-        );
+                    // Show the alert
+                    this.showAlert = true;
+                }),
+            )
+            .subscribe(
+                (response) =>
+                {
+                    // Set the alert
+                    this.alert = {
+                        type   : 'success',
+                        message: 'Your password has been reset.',
+                    };
+                },
+                (response) =>
+                {
+                    // Set the alert
+                    this.alert = {
+                        type   : 'error',
+                        message: 'Something went wrong, please try again.',
+                    };
+                },
+            );
     }
-
-    email(){
-        console.log(this.signInForm.get('email').value);
-    }
-
 }
