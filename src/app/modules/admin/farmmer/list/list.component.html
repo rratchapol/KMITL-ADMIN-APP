@@ -76,7 +76,7 @@
                     <input type="text" placeholder="ค้นหา..." class="border p-2 rounded-md w-1/5"
                            [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)">
                 </div>
-            <table class="table row-border hover w-full text-center">
+            <table class="table row-border hover w-full text-center whitespace-nowrap">
                 <thead class="bg-gray-700 text-black">
                     <tr class="bg-gray-200">
                         <th class="border-b-2 w-1/8 p-3">เลขบัตรประชาชน</th>
@@ -90,7 +90,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="farmmer?.length != 0">
-                    <tr *ngFor="let item of farmmer; let i = index" class="hover:bg-gray-100">
+                    <tr *ngFor="let item of farmmer; let i = index" class="hover:bg-gray-100 whitespace-nowrap">
                         <td class="p-3">{{ item.id_card_number ?? '-' }}</td>
                         <td class="p-3">{{ item.First_name ?? '-' }} {{ item.Last_name ?? '-' }}</td>
                         <td class="p-3">{{ item.Quota_id ?? '-' }}</td>
@@ -101,7 +101,7 @@
                         <td class="p-3">
                             <button (click)="goToProfile(item.Quota_id)"
                                 class="border-2 border-green-500 text-green-500 w-full rounded-md p-2 font-bold hover:bg-green-500 hover:text-white">
-                                <span class="ml-2 mr-1">รายละเอียด</span>
+                                <span class="whitespace-nowrap ml-2 mr-1">รายละเอียด</span>
                             </button>
                         </td>
                     </tr>

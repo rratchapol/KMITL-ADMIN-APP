@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageService } from '../page.service';
@@ -198,4 +198,21 @@ permissions: any[] = [];
             this.files.splice(index, 1);
         }
     }
+
+    addFactory(factoryId: number) {
+        const factories = this.editForm.get('factories') as FormArray;
+    
+        // ตรวจสอบว่า factoryId มีอยู่ใน FormArray หรือไม่
+        const index = factories.value.findIndex((value: any) => value.factorie_id === factoryId);
+    
+        if (index === -1) {
+            const value = this.formBuilder.group({
+                factorie_id: factoryId,
+            }); 
+          factories.push(value);
+        } else {
+          // ถ้ามีอยู่แล้วให้ลบออก
+          factories.removeAt(index);
+        }
+      }
 }

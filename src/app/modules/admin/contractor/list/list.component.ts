@@ -263,6 +263,8 @@ export class ListComponent implements OnInit {
                             this.pages.begin = 0;
                         }
                         that.dataRow = resp.data;
+                        console.log("ค่าใน item table",that.dataRow);
+                        console.log("ค่าใน item table",that.dataRow.facetories_contractors);
                         callback({
                             recordsTotal: resp.total,
                             recordsFiltered: resp.total,

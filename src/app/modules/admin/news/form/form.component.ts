@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
         this.addForm = this.formBuilder.group({
             id: '',
             title: '',
-            detail: '<p>Hello Quill</p>',
+            detail: '<p>Hello Quill</p>..',
             image: '',
             notify_status: '',
         });
@@ -64,7 +64,7 @@ export class FormComponent implements OnInit {
             this.addForm.patchValue({
                 id: '',
                 title: '',
-                detail: '',
+                detail: '<p>กรอกรายระเอียด</p>',
                 image: '',
                 notify_status: '1',
             });
@@ -133,7 +133,7 @@ export class FormComponent implements OnInit {
                             console.log(err);
                             this.addForm.enable();
                             this._fuseConfirmationService.open({
-                                title: 'เกิดข้อผิดพลาด',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้',
                                 message: err.error.message,
                                 icon: {
                                     show: true,

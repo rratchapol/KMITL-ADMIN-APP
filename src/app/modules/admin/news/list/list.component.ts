@@ -237,6 +237,7 @@ export class ListComponent implements OnInit {
                             this.pages.begin = 0;
                         }
                         that.dataRow = resp.data;
+                        console.log("that.dataRow", that.dataRow);
                         callback({
                             recordsTotal: resp.total,
                             recordsFiltered: resp.total,
