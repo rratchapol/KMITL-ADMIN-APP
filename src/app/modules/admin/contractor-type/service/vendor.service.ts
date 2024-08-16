@@ -15,7 +15,7 @@ export class VendorService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/feature_page', dataTablesParameters)
+            .post(environment.baseURL +'/api/feature_page', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -25,7 +25,7 @@ export class VendorService {
 
     Savedata(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + 'api/vendor', formData)
+            .post(environment.baseURL + '/api/feature', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -35,7 +35,7 @@ export class VendorService {
 
     getPermission(): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + 'api/get_promotion')
+            .get(environment.baseURL + '/api/get_feature')
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -44,7 +44,7 @@ export class VendorService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `api/vendor/${Id}`)
+            .get(environment.baseURL + `/api/feature/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -54,13 +54,13 @@ export class VendorService {
 
     update(Id: any, data: any): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + `api/update_vendor`, data)
+            .post(environment.baseURL + `/api/update_feature`, data)
             .pipe();
     }
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `api/vendor/${Id}`)
+            .delete(environment.baseURL + `/api/feature/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

@@ -220,7 +220,7 @@ export class ListComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            this.rerender();
+            location.reload();
         });
     }
     editElement(element: any) {
@@ -232,7 +232,7 @@ export class ListComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                alert(1);
+                location.reload();
                 // เมื่อ Dialog ถูกปิด ดำเนินการตามผลลัพธ์ที่คุณได้รับจาก Dialog
             }
         });
@@ -250,8 +250,9 @@ export class ListComponent implements OnInit {
             })
             .afterClosed()
             .subscribe((res) => {
+                location.reload();
                 //console.log('Product', res);
-                this.rerender();
+                // this.rerender();
                 // this.rerender();
 
                 /**ถ้าส่ง successfull มาจะทำการรีโหลดตาราง */
