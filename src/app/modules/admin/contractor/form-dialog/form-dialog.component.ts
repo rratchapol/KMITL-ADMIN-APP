@@ -50,7 +50,7 @@ export class FormDialogComponent implements OnInit {
             name: [''],
             phone: [''],
             detail: [''],
-            status: [''],
+            status: ['Yes'],
             features: this.formBuilder.array([]),
             factories: this.formBuilder.array([]),
 
@@ -144,7 +144,7 @@ export class FormDialogComponent implements OnInit {
                         this.addForm.enable();
                         this._fuseConfirmationService.open({
                             title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
+                            message: "เบอร์โทรศัพท์นี้มีแล้วในระบบ",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',
