@@ -1,20 +1,19 @@
 <div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
     <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-3 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
             <div class="flex flex-wrap items-center font-medium">
                 <div>
-                    <a class="whitespace-nowrap text-black-500">ผู้รับเหมา</a>
+                    <!-- <a class="whitespace-nowrap text-black-500">ผู้รับเหมา</a> -->
                 </div>
-                <div class="flex items-center ml-1 whitespace-nowrap">/
+                <div class="flex items-center ml-1 whitespace-nowrap">
                     <a class="ml-1 text-black-500">รายชื่อเกษตรกร</a>
                 </div>
             </div>
         </div>
     </div>
-    <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
-    </table>
+
     <!-- Header -->
     <div class="bg-card">
         <div class="flex flex-col w-full mx-auto">
@@ -57,7 +56,7 @@
             </div> -->
 
             <div
-                class="flex flex-col mt-5 sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+                class="flex flex-col mt-2 sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
                 <div class="flex-1 min-w-0">
                     <!-- Breadcrumbs -->
                     <div class="flex flex-wrap items-center font-medium">
@@ -67,26 +66,26 @@
                         <div class="flex flex-row items-start ml-5 whitespace-nowrap">
                             <div class="grid grid-cols-2">
                                 <div class="col-span-2 text-4xl font-semibold">
-                                    {{this.itemData?.First_name ?? '-'}} {{this.itemData?.Last_name ?? '-'}}
+                                    {{this.profiles?.first_name ?? '-'}} {{this.profiles?.last_name ?? '-'}}
                                 </div>
                                 <div>
                                     <p class="text-xl font-semibold">เลขบัตรประชาชน</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.id_card_number ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.id_number ?? '-'}}</p>
                                 </div>
                                 <div>
                                     <p class="text-xl font-semibold">เลขที่สัญญา</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.Quota_id ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.id_reference ?? '-'}}</p>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <p class="text-xl font-semibold">เลขที่สอน</p>
                                 </div>
                                 <div>
                                     <p class="text-xl font-normal">111111</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="flex flex-row items-start ml-20 whitespace-nowrap mt-12">
@@ -99,7 +98,7 @@
                                     <p class="text-xl font-semibold">เบอร์โทรติดต่อ</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-semibold">โรงงาน</p>
+                                    <!-- <p class="text-xl font-semibold">โรงงาน</p> -->
                                 </div>
                             </div>
                         </div>
@@ -107,40 +106,20 @@
                             <div class="grid grid-row-1">
                                 <div class="text-4xl "></div>
                                 <div>
-                                    <p class="text-xl font-normal">25 ถ.สาทรใต้ แขวงสาทร เขตสาทร กรุงเทพมหานคร 10120</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.address ?? '-'}}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.phone_number ?? '-'}}</p>
+                                    <p class="text-xl font-normal">{{this.profiles?.phone_number ?? '-'}}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-normal">{{this.itemData?.area ?? '-'}}</p>
+                                    <!-- <p class="text-xl font-normal">{{this.profiles?.area ?? '-'}}</p> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Project selector -->
-            <!-- <div class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default" matRipple [matMenuTriggerFor]="projectsMenu">
-                <div class="flex items-center">
-                    <div class="overflow-hidden">
-                        <div class="font-medium leading-6 truncate">{{selectedProject}}</div>
-                    </div>
-                    <div class="flex items-center justify-center pl-2">
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_mini:chevron-down'"></mat-icon>
-                    </div>
-                </div>
-                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
-                    <button mat-menu-item (click)="selectedProject='ACME Corp. Backend App'">ACME Corp. Backend App
-                    </button>
-                    <button mat-menu-item (click)="selectedProject='ACME Corp. Frontend App'">ACME Corp. Frontend App
-                    </button>
-                    <button mat-menu-item (click)="selectedProject='Creapond'">Creapond
-                    </button>
-                    <button mat-menu-item (click)="selectedProject='Withinpixels'">Withinpixels
-                    </button>
-                </mat-menu>
-            </div> -->
+
         </div>
     </div>
 
@@ -154,95 +133,124 @@
                 <mat-tab label="Dashboard">
                     <ng-template matTabContent>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
-                            <!-- Github issues summary -->
                             <div
-                                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                                <div class="flex flex-col sm:flex-row items-start justify-between">
-                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">ประจำสัปดาห์
-                                    </div>
-                                    <div class="mt-3 sm:mt-0 sm:ml-2">
-                                        <mat-button-toggle-group value="this-week"
-                                            #githubIssuesWeekSelector="matButtonToggleGroup">
-                                            <mat-button-toggle value="last-week">ย้อนหลัง</mat-button-toggle>
-                                            <mat-button-toggle value="this-week">ปัจจุบัน</mat-button-toggle>
-                                        </mat-button-toggle-group>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-8 sm:mt-4">
-                                    <!-- New vs. Closed -->
-                                    <div class="flex flex-col flex-auto">
-                                        <div class="font-medium text-secondary">New vs. Closed</div>
-                                        <div class="flex flex-col flex-auto">
-                                            <apx-chart class="flex-auto w-full h-80" [chart]="chartGithubIssues.chart"
-                                                [colors]="chartGithubIssues.colors"
-                                                [dataLabels]="chartGithubIssues.dataLabels"
-                                                [grid]="chartGithubIssues.grid" [labels]="chartGithubIssues.labels"
-                                                [legend]="chartGithubIssues.legend"
-                                                [plotOptions]="chartGithubIssues.plotOptions"
-                                                [series]="chartGithubIssues.series[githubIssuesWeekSelector.value]"
-                                                [states]="chartGithubIssues.states" [stroke]="chartGithubIssues.stroke"
-                                                [tooltip]="chartGithubIssues.tooltip" [xaxis]="chartGithubIssues.xaxis"
-                                                [yaxis]="chartGithubIssues.yaxis"></apx-chart>
+                                class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
+                                <ng-container *ngIf="dbincome">
+                                    <ng-container *ngIf="dbincome.Income == 0 && dbincome.Deduct == 0">
+                                        <div class="flex flex-col items-center justify-center w-1/4">
+                                            <img [src]="chart0" alt="Loading..." class="w-full h-auto p-1">
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="dbincome.Income > 0 || dbincome.Deduct > 0">
+                                        <div class="flex flex-col items-center justify-center w-2/5"
+                                            *ngIf="chartOptions && chartOptions.series && chartOptions.series.length > 0">
+                                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                                [labels]="chartOptions.labels" [responsive]="chartOptions.responsive">
+                                            </apx-chart>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div class="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 p-10 w-full">
+                                    <!-- รายรับ -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">รายรับ</div>
+                                        <div class="text-xl font-semibold">
+                                            {{income}}
                                         </div>
                                     </div>
-                                    <!-- Overview -->
-                                    <div class="flex flex-col">
-                                        <div class="font-medium text-secondary">ข้อมูลสรุป</div>
-                                        <div class="flex-auto grid grid-cols-4 gap-4 mt-6">
-                                            <!-- New issues -->
-                                            <div
-                                                class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-indigo-50 text-indigo-800 dark:bg-white dark:bg-opacity-5 dark:text-indigo-400">
-                                                <div
-                                                    class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['new-issues']}}
-                                                </div>
-                                                <div class="mt-1 text-sm sm:text-lg font-medium">New Issues</div>
-                                            </div>
-                                            <!-- Closed -->
-                                            <div
-                                                class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-green-50 text-green-800 dark:bg-white dark:bg-opacity-5 dark:text-green-500">
-                                                <div
-                                                    class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['closed-issues']}}
-                                                </div>
-                                                <div class="mt-1 text-sm sm:text-lg font-medium">Closed</div>
-                                            </div>
-                                            <!-- Fixed -->
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['fixed']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Fixed</div>
-                                            </div>
-                                            <!-- Won't fix -->
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['wont-fix']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Won't Fix</div>
-                                            </div>
-                                            <!-- Re-opened -->
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['re-opened']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Re-opened</div>
-                                            </div>
-                                            <!-- Needs triage -->
-                                            <div
-                                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
-                                                <div class="text-5xl font-semibold leading-none tracking-tight">
-                                                    {{data.githubIssues.overview[githubIssuesWeekSelector.value]['needs-triage']}}
-                                                </div>
-                                                <div class="mt-1 text-sm font-medium text-center">Needs Triage</div>
-                                            </div>
+                                    <!-- รายจ่าย -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">รายจ่าย</div>
+                                        <div class="text-xl font-semibold">
+                                            {{deduct}}
+                                        </div>
+                                    </div>
+                                    <!-- ยอดรวม -->
+                                    <div
+                                        class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
+                                        <div class="text-sm font-medium text-center">ยอดรวม</div>
+                                        <div class="text-xl font-semibold">
+                                            {{income - deduct}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+                            <!-- Github issues summary -->
+                            <div
+                                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="flex flex-col sm:flex-row items-start justify-between ">
+                                    <!-- <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                        รายรับรายจ่ายทั้งหมดของสัปดาห์ที่ผ่านมา
+                                    </div> -->
+                                    <div class="mt-3 sm:mt-0 sm:ml-2">
+
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-6 w-full mt-8 sm:mt-4">
+                                    <div class="flex flex-col flex-auto">
+                                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                            รายรับรายจ่ายทั้งหมดของสัปดาห์ที่ผ่านมา
+                                        </div>
+                                        <ng-container *ngIf="dbweekly">
+                                            <ng-container *ngIf="allValuesAreZero()">
+                                                <div class="mt-1 text-xl font-medium text-center flex-auto">
+                                                    <img [src]="barchart0" alt="Loading..." class="p-5">
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="!allValuesAreZero()">
+                                                <div id="chart"
+                                                    *ngIf="chartOptions2 && chartOptions2.series && chartOptions2.series.length > 0">
+                                                    <apx-chart [series]="chartOptions2.series"
+                                                        [chart]="chartOptions2.chart"
+                                                        [dataLabels]="chartOptions2.dataLabels"
+                                                        [plotOptions]="chartOptions2.plotOptions"
+                                                        [yaxis]="chartOptions2.yaxis" [legend]="chartOptions2.legend"
+                                                        [fill]="chartOptions2.fill" [stroke]="chartOptions2.stroke"
+                                                        [tooltip]="chartOptions2.tooltip"
+                                                        [xaxis]="chartOptions2.xaxis"></apx-chart>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                            ข้อมูลรายจ่ายตามประเภท
+                                        </div>
+                                        <ng-container *ngIf="dbactivity">
+                                            <ng-container *ngIf="dbactivity.length == 0 ">
+                                                <div
+                                                    class="flex flex-col mt-1 text-xl font-medium text-center md:flex-row">
+                                                    <div class="flex-auto md:w-2/3 text-center md:text-left">
+                                                        <img [src]="chart0" alt="Loading..."
+                                                            class="p-5 mx-auto md:mx-0" />
+                                                    </div>
+                                                    <div
+                                                        class="flex-auto md:w-1/3 flex items-center justify-center text-center">
+                                                        <p>ไม่มีข้อมูล</p>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="dbactivity.length > 0 ">
+                                                <div class="chart flex-auto md:w-4/5 "
+                                                    *ngIf="chartOptions1 && chartOptions1.series && chartOptions1.series.length > 0">
+                                                    <apx-chart [series]="chartOptions1.series"
+                                                        [chart]="chartOptions1.chart" [labels]="chartOptions1.labels"
+                                                        [responsive]="chartOptions1.responsive">
+                                                    </apx-chart>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -259,7 +267,10 @@
                                                 <mat-icon svgIcon="heroicons_outline:calendar-days"></mat-icon>
                                             </mat-button-toggle>
                                         </mat-button-toggle-group> -->
-                                        <div class="max-w-md mx-auto my-8 px-4">
+                                        <div *ngIf="!profile" class="flex items-center w-full">
+                                            <img [src]="spinner" alt="Loading..." class="my-8 ml-100">
+                                        </div>
+                                        <div class="max-w-md mx-auto my-8 px-4" *ngIf="profile">
                                             <div class="flex flex-col sm:flex-row justify-between ">
                                                 <div class="w-full sm:w-1/2">
                                                     <label for="start-year"
@@ -267,9 +278,10 @@
                                                     <select (ngModelChange)="onStartYearChange($event)" id="start-year"
                                                         [(ngModel)]="startYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of years" [value]="year">{{ year }}
-                                                        </option>
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
+                                                            year.text }}</option>
                                                     </select>
+
                                                 </div>
 
                                                 <div class="w-full sm:w-1/2">
@@ -278,7 +290,8 @@
                                                     <select (ngModelChange)="onEndYearChange($event)" id="end-year"
                                                         [(ngModel)]="endYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of years" [value]="year">{{ year }}
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
+                                                            year.text }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -290,10 +303,13 @@
                                     </div>
 
                                 </div>
+
                                 <ol class="relative border-s-2 border-[#122437] dark:border-gray-700">
+
                                     <li class="mb-10 ms-4" *ngFor="let item of profile; let i = index">
+                                        <ol class="relative border-s-2 border-[#122437] dark:border-gray-700"></ol>
                                         <div
-                                            class="absolute w-3 h-3 bg-[#122437] rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
+                                            class="absolute w-4 h-4 bg-[#122437] rounded-full mt-10 -start-2.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
                                         </div>
                                         <time
                                             class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.year}}</time>
@@ -349,8 +365,9 @@
                         </div> -->
                         <div class="w-1/6">
                             <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                <mat-select [formControl]="yearControl">
-                                    <mat-option *ngFor="let year of years" [value]="year">{{ year }}
+                                <mat-select [formControl]="yearControl" (selectionChange)="onYearChange($event.value)">
+                                    <mat-option *ngFor="let year of groupyear" [value]="year.value">
+                                        {{ year.text }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -360,13 +377,18 @@
                             <div *ngFor="let item of myplots; let i = index">
                                 <div
                                     class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#ffffff] shadow rounded-md overflow-hidden text-black mb-2">
-                                    <div *ngFor="let map of item.center; let i = index" class="mb-2">
-                                        <img [src]="getMapImageUrl(map[1], map[0],item.co_or_points)" alt="Map image" />
-                                        <!-- <img [src]="getMapImageUrl(map.center[1], map.center[0], map.co_or_points)" alt="Map image" /> -->
+                                    <div *ngIf="item?.center && item.center[0] !== null; else noData">
+                                        <div *ngFor="let map of item.center; let i = index" class="mb-2">                       
+                                            <img [src]="getMapImageUrl(map[1], map[0], item.co_or_points)" alt="Map image" />
+                                        </div>
                                     </div>
-                                    <p>ปี {{item.year_period_str ?? ''}}</p>
+                                    <ng-template #noData>
+                                        <p>ไม่พบข้อมูลรูป</p>
+                                    </ng-template>
+                                    <!-- <p>ปี {{item.year_period_str ?? ''}}</p> -->
+                                    <p>ปี {{formatYearPeriod(item.year_period_str)}}</p>
                                     <div class="flex flex-wrap">
-                                        
+
                                         <div class="w-1/2">
                                             <!-- <p>ปี {{item.year_period_str ?? ''}}</p> -->
                                             <p>พื้นที่(ไร่) </p>
@@ -376,21 +398,21 @@
                                         </div>
                                         <div class="w-1/2">
                                             <!-- <p>{{item.zzzz ?? ''}}</p> -->
-                                            <p>{{item.area_size ?? ''}}</p>
-                                            <p>{{item.sugarcane_age ?? ''}}</p>
-                                            <p>{{item.sugarcane_type ?? ''}}</p>
-                                            <p>{{item.product_per_rai ?? ''}}</p>
+                                            <p>{{item?.area_size ?? ''}}</p>
+                                            <p>{{item?.sugarcane_age ?? ''}}</p>
+                                            <p>{{item?.sugarcane_type ?? ''}}</p>
+                                            <p>{{item?.product_per_rai ?? ''}}</p>
                                         </div>
                                     </div>
                                     <div style="border-top: 1px solid #000; margin: 10px 0;"></div>
                                     <div class="flex flex-wrap">
                                         <div class="w-1/3">
-                                        </div> 
-                                        <div class="w-1/3">
-                                            <p>แปลง : {{item.plot_no ?? ''}}</p>
                                         </div>
                                         <div class="w-1/3">
-                                        </div> 
+                                            <p>แปลง : {{item?.plot_no ?? ''}}</p>
+                                        </div>
+                                        <div class="w-1/3">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -475,30 +497,31 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="flex flex-row" *ngFor="let item of cane; let i = index">
-                                    <div>
-                                        <div class="flex flex-col w-30 mt-[30px]">
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.date}}</span>
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.time}}</span>
+                                <div *ngIf="cane && cane.length > 0">
+                                    <div class="flex flex-row" *ngFor="let item of cane; let i = index">
+                                        <div>
+                                            <div class="flex flex-col w-30 mt-[30px]">
+                                                <span
+                                                    class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.date}}</span>
+                                                <span
+                                                    class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.time}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-col w-full">
-                                        <div class="flex">
-                                            <ol
-                                                class="relative border-s-2  border-[#122437] dark:border-gray-700 w-full">
-                                                <li class="mb-10 ms-4 grid-cols-3">
-                                                    <div
-                                                        class="absolute -left-2.5 w-5 h-5 bg-[#122437] rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
-                                                    </div>
-                                                    <div class="flex flex-row justify-between mt-5">
-                                                        <!-- <div class="flex items-center ml-5 justify-center">
+                                        <div class="flex flex-col w-full">
+                                            <div class="flex">
+                                                <ol
+                                                    class="relative border-s-2  border-[#122437] dark:border-gray-700 w-full">
+                                                    <li class="mb-10 ms-4 grid-cols-3">
+                                                        <div
+                                                            class="absolute -left-2.5 w-5 h-5 bg-[#122437] rounded-full mt-2 -start-2.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
+                                                        </div>
+                                                        <div class="flex flex-row justify-between mt-5">
+                                                            <!-- <div class="flex items-center ml-5 justify-center">
                                                             <p
                                                                 class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
                                                                 {{activity}}</p>
                                                         </div> -->
-                                                        <!-- <div
+                                                            <!-- <div
                                                             class=" tracking-tight leading-7 sm:leading-10 truncate mb-5 first-line:">
                                                             <button (click)="goToedit(i)"
                                                                 class="border-2 border-gray-900 rounded-md font-black hover:bg-slate-50 w-fit mx-2">
@@ -509,377 +532,435 @@
                                                                 <span class="mx-5 text-red-600">ลบ</span>
                                                             </button>
                                                         </div> -->
-                                                    </div>
-                                                    <ng-container *ngIf="item.activitytype == 0">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ไถและเตรียมดิน</p>
-                                                            </div>
                                                         </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
+                                                        <ng-container *ngIf="item.activitytype == 0">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ไถและเตรียมดิน</p>
+                                                                </div>
+                                                            </div>
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}
-                                                                    </p>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            การปรับปรุงดิน : {{item?.soilImprovement ||
+                                                                            "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ประเภทการไถ : {{item?.plowingtype || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ชนิดการไถ : {{item?.subtypeplowing || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าสารกำจัดศัตรูพืช :
+                                                                            {{item?.insecticidecost ||
+                                                                            "-"}}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าจ้างแรงงาน : {{item?.equipmentrent ||
+                                                                            "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าเช่าอุปกรณ์ : {{item?.laborwages || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าเชื้อเพลิง : {{item?.fuelcost || "-"}}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ประเภทการไถ {{item?.plowingtype || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ชนิดการไถ {{item?.subtypeplowing || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost ||
-                                                                        "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าเชื้อเพลิง {{item?.fuelcost || "-"}}</p>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 1">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ปลูกอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 1">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ปลูกอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปลูกอ้อย {{
-                                                                        item?.sugarcaneplantingcost || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ระบบปลูก : {{
+                                                                            item?.plantingsystem
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าพันธุ์อ้อย : {{
+                                                                            item?.sugartypecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าปลูกอ้อย : {{
+                                                                            item?.sugarcaneplantingcost || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าปุ๋ย : {{
+                                                                            item?.fertilizercost ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 2">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ให้น้ำ</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 2">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ให้น้ำ</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ระบบน้ำ : {{
+                                                                            item?.wateringsystem ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 3">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ฉีดพ่นน้ำหมักปุ๋ยยูเรีย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 3">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ฉีดพ่นน้ำหมักปุ๋ยยูเรีย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
-                                                                        item?.fertilizerquantity || "-" }}</p>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ยยูเรีย : {{
+                                                                            item?.fertilizerquantity || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ส่วนผสมอื่นๆ : {{
+                                                                            item?.otheringredients || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ยยูเรีย : {{
+                                                                            item?.amountureafertilizer || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทอื่นๆ : {{
+                                                                            item?.othertypes ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ : {{
+                                                                            item?.otheringredientcosts || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่ายาฆ่าหญ้า : {{
+                                                                            item?.herbicidecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{
-                                                                        item?.otheringredients || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
-                                                                        item?.amountureafertilizer || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{
-                                                                        item?.otheringredientcosts || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 4">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ฉีดพ่นสารกำจัดศัตรูพืช</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 4">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ฉีดพ่นสารกำจัดศัตรูพืช</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">วัชพืช {{ item?.weed || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">วัชพืช : {{ item?.weed || "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">โรคพืช : {{ item?.plantdiseases
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">แมลงศัตรูพืช : {{ item?.pests ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่ายาฆ่าแมลง : {{
+                                                                            item?.pesticidecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 5">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ใส่ปุ๋ย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 5">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ใส่ปุ๋ย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ย {{
-                                                                        item?.fertilizerquantity || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทปุ๋ย : {{
+                                                                            item?.fertilizertype
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ย : {{
+                                                                            item?.fertilizerquantity || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 6">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ตัดอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 6">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ตัดอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{
-                                                                        item?.sugarcanecuttinglabor || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทการตัด : {{
+                                                                            item?.cuttingtype
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทอ้อย : {{
+                                                                            item?.sugarcanetype
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย : {{
+                                                                            item?.sugarcanecuttinglabor || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 7">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ขนส่งอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 7">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ขนส่งอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-2 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
+                                                        </ng-container>
 
-                                                    <mat-divider></mat-divider>
-                                                </li>
-                                            </ol>
+                                                        <mat-divider></mat-divider>
+                                                    </li>
+                                                </ol>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div *ngIf="cane?.length == 0" class="mt-10 flex items-center justify-center">
+                                    <div>ไม่พบข้อมูล</div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
                             <button (click)="prevpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">&laquo; Prev</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">&laquo;
+                                Prev</button>
                             <button (click)="nextpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">Next
+                                &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -969,30 +1050,31 @@
 
                                     </div>
                                 </div>
-                                <div class="flex flex-row" *ngFor="let item of cane; let i = index">
-                                    <div>
-                                        <div class="flex flex-col w-30 mt-[30px]">
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.date}}</span>
-                                            <span
-                                                class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.time}}</span>
+                                <div *ngIf="cane && cane.length > 0">
+                                    <div class="flex flex-row" *ngFor="let item of cane; let i = index">
+                                        <div>
+                                            <div class="flex flex-col w-30 mt-[30px]">
+                                                <span
+                                                    class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.date}}</span>
+                                                <span
+                                                    class="ml-5 mb-4 text-base font-semibold leading-none text-gray-500 dark:text-gray-500 ">{{item.time}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-col w-full">
-                                        <div class="flex">
-                                            <ol
-                                                class="relative border-s-2  border-[#122437] dark:border-gray-700 w-full">
-                                                <li class="mb-10 ms-4 grid-cols-3">
-                                                    <div
-                                                        class="absolute -left-2.5 w-5 h-5 bg-[#122437] rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
-                                                    </div>
-                                                    <div class="flex flex-row justify-between mt-5">
-                                                        <!-- <div class="flex items-center ml-5 justify-center">
+                                        <div class="flex flex-col w-full">
+                                            <div class="flex">
+                                                <ol
+                                                    class="relative border-s-2  border-[#122437] dark:border-gray-700 w-full">
+                                                    <li class="mb-10 ms-4 grid-cols-3">
+                                                        <div
+                                                            class="absolute -left-2.5 w-5 h-5 bg-[#122437] rounded-full mt-2 -start-2.5 border border-white dark:border-gray-900 dark:bg-[#122437]">
+                                                        </div>
+                                                        <div class="flex flex-row justify-between mt-5">
+                                                            <!-- <div class="flex items-center ml-5 justify-center">
                                                             <p
                                                                 class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
                                                                 {{activity}}</p>
                                                         </div> -->
-                                                        <!-- <div
+                                                            <!-- <div
                                                             class=" tracking-tight leading-7 sm:leading-10 truncate mb-5 first-line:">
                                                             <button (click)="goToedit(i)"
                                                                 class="border-2 border-gray-900 rounded-md font-black hover:bg-slate-50 w-fit mx-2">
@@ -1003,379 +1085,437 @@
                                                                 <span class="mx-5 text-red-600">ลบ</span>
                                                             </button>
                                                         </div> -->
-                                                    </div>
-                                                    <ng-container *ngIf="item.activitytype == 0">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ไถและเตรียมดิน</p>
-                                                            </div>
                                                         </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
+                                                        <ng-container *ngIf="item.activitytype == 0">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ไถและเตรียมดิน</p>
+                                                                </div>
+                                                            </div>
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        การปรับปรุงดิน {{item?.soilImprovement || "-"}}
-                                                                    </p>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            การปรับปรุงดิน : {{item?.soilImprovement ||
+                                                                            "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ประเภทการไถ : {{item?.plowingtype || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ชนิดการไถ : {{item?.subtypeplowing || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าสารกำจัดศัตรูพืช :
+                                                                            {{item?.insecticidecost ||
+                                                                            "-"}}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าจ้างแรงงาน : {{item?.equipmentrent ||
+                                                                            "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าเช่าอุปกรณ์ : {{item?.laborwages || "-"}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4  ">
+                                                                            ค่าเชื้อเพลิง : {{item?.fuelcost || "-"}}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ประเภทการไถ {{item?.plowingtype || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ชนิดการไถ {{item?.subtypeplowing || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าสารกำจัดศัตรูพืช {{item?.insecticidecost ||
-                                                                        "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าจ้างแรงงาน {{item?.equipmentrent || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าเช่าอุปกรณ์ {{item?.laborwages || "-"}}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4  ">
-                                                                        ค่าเชื้อเพลิง {{item?.fuelcost || "-"}}</p>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 1">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ปลูกอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 1">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ปลูกอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">พันธุ์อ้อย {{ item?.sugarcane || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบปลูก {{ item?.plantingsystem ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่าย {{ item?.expenses || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าพันธุ์อ้อย {{ item?.sugartypecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปลูกอ้อย {{
-                                                                        item?.sugarcaneplantingcost || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าปุ๋ย {{ item?.fertilizercost ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">พันธุ์อ้อย : {{ item?.sugarcane
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ระบบปลูก : {{
+                                                                            item?.plantingsystem
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าใช้จ่าย : {{ item?.expenses
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าพันธุ์อ้อย : {{
+                                                                            item?.sugartypecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าปลูกอ้อย : {{
+                                                                            item?.sugarcaneplantingcost || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าปุ๋ย : {{
+                                                                            item?.fertilizercost ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 2">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ให้น้ำ</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 2">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ให้น้ำ</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ระบบน้ำ {{ item?.wateringsystem ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between  text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ระบบน้ำ : {{
+                                                                            item?.wateringsystem ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 3">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ฉีดพ่นน้ำหมักปุ๋ยยูเรีย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 3">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ฉีดพ่นน้ำหมักปุ๋ยยูเรีย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
-                                                                        item?.fertilizerquantity || "-" }}</p>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ยยูเรีย : {{
+                                                                            item?.fertilizerquantity || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ส่วนผสมอื่นๆ : {{
+                                                                            item?.otheringredients || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ยยูเรีย : {{
+                                                                            item?.amountureafertilizer || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ยาฆ่าหญ้า : {{ item?.herbicide
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทอื่นๆ : {{
+                                                                            item?.othertypes ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ : {{
+                                                                            item?.otheringredientcosts || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่ายาฆ่าหญ้า : {{
+                                                                            item?.herbicidecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ส่วนผสมอื่นๆ {{
-                                                                        item?.otheringredients || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ยยูเรีย {{
-                                                                        item?.amountureafertilizer || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ยาฆ่าหญ้า {{ item?.herbicide || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอื่นๆ {{ item?.othertypes ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าใช้จ่ายส่วนผสมอื่นๆ {{
-                                                                        item?.otheringredientcosts || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าหญ้า {{ item?.herbicidecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 4">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ฉีดพ่นสารกำจัดศัตรูพืช</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 4">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ฉีดพ่นสารกำจัดศัตรูพืช</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">วัชพืช {{ item?.weed || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">โรคพืช {{ item?.plantdiseases || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">แมลงศัตรูพืช {{ item?.pests || "-"
-                                                                        }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่ายาฆ่าแมลง {{ item?.pesticidecost
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">วัชพืช : {{ item?.weed || "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">โรคพืช : {{ item?.plantdiseases
+                                                                            ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">แมลงศัตรูพืช : {{ item?.pests ||
+                                                                            "-"
+                                                                            }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่ายาฆ่าแมลง : {{
+                                                                            item?.pesticidecost
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 5">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ใส่ปุ๋ย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 5">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ใส่ปุ๋ย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทปุ๋ย {{ item?.fertilizertype
-                                                                        || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปุ๋ย {{ item?.fertilizer || "-" }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ปริมาณปุ๋ย {{
-                                                                        item?.fertilizerquantity || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทปุ๋ย : {{
+                                                                            item?.fertilizertype
+                                                                            || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปุ๋ย : {{ item?.fertilizer ||
+                                                                            "-" }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ปริมาณปุ๋ย : {{
+                                                                            item?.fertilizerquantity || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 6">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ตัดอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 6">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ตัดอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทการตัด {{ item?.cuttingtype ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ประเภทอ้อย {{ item?.sugarcanetype ||
-                                                                        "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย {{
-                                                                        item?.sugarcanecuttinglabor || "-" }}</p>
-                                                                </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
-                                                                </div>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทการตัด : {{
+                                                                            item?.cuttingtype
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ประเภทอ้อย : {{
+                                                                            item?.sugarcanetype
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงานตัดอ้อย : {{
+                                                                            item?.sugarcanecuttinglabor || "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
 
+                                                                </div>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.activitytype == 7">
+                                                            <div class="flex flex-row justify-between mt-2">
+                                                                <div class="flex items-center ml-2 justify-center">
+                                                                    <p
+                                                                        class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
+                                                                        ขนส่งอ้อย</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="item.activitytype == 7">
-                                                        <div class="flex flex-row justify-between mt-5">
-                                                            <div class="flex items-center ml-5 justify-center">
-                                                                <p
-                                                                    class="mb-4  text-base font-bold text-gray-900 dark:text-gray-400">
-                                                                    ขนส่งอ้อย</p>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-10 gap-2 justify-between mt-5 text-gray-400 font-normal">
                                                             <div
-                                                                class="col-span-7 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าจ้างแรงงาน {{ item?.laborwages ||
-                                                                        "-" }}</p>
+                                                                class="grid grid-cols-10 gap-2 justify-between  text-gray-400 font-normal">
+                                                                <div
+                                                                    class="col-span-8 grid grid-cols-4 gap-4 justify-between mt-5 text-gray-400 font-normal">
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าจ้างแรงงาน : {{
+                                                                            item?.laborwages
+                                                                            ||
+                                                                            "-" }}</p>
+                                                                    </div>
+                                                                    <div class="flex items-center ml-5 justify-start">
+                                                                        <p class="mb-4">ค่าเชื้อเพลิง : {{
+                                                                            item?.fuelcost ||
+                                                                            "-" }}</p>
+                                                                    </div>
+
                                                                 </div>
-                                                                <div class="flex items-center ml-5 justify-start">
-                                                                    <p class="mb-4">ค่าเชื้อเพลิง {{ item?.fuelcost ||
-                                                                        "-" }}</p>
+                                                                <div class="col-span-2 flex justify-center items-center m-2"
+                                                                    *ngIf="item.image">
+                                                                    <img [src]="item.image" alt="รูปภาพ"
+                                                                        class="w-30 h-30 border border-gray-300 rounded-md"
+                                                                        (click)="openImage(item?.image)">
                                                                 </div>
-
                                                             </div>
-                                                            <div class="col-span-3 flex justify-center items-center m-2"
-                                                                *ngIf="item.image">
-                                                                <img [src]="item.image" alt="รูปภาพ"
-                                                                    class="w-40 h-auto border border-gray-300 rounded-md"
-                                                                    (click)="openImage(item?.image)">
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
+                                                        </ng-container>
 
-                                                    <mat-divider></mat-divider>
-                                                </li>
-                                            </ol>
+                                                        <mat-divider></mat-divider>
+                                                    </li>
+                                                </ol>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div *ngIf="cane?.length == 0" class="mt-10 flex items-center justify-center ">
+                                    <div>ไม่พบข้อมูล</div>
+                                </div>
+
 
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
                             <button (click)="prevpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">&laquo; Prev</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">&laquo;
+                                Prev</button>
                             <button (click)="nextpage()"
-                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700">Next &raquo;</button>
+                                class="bg-yellow-700 text-white py-1 px-2 rounded hover:bg-yellow-800">Next
+                                &raquo;</button>
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -1419,7 +1559,7 @@
                                 <mat-divider class="w-full mb-3"></mat-divider>
                                 <div *ngIf="ccsData && ccsData.length > 0">
                                     <div class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#0e1f3d] shadow rounded-md overflow-hidden text-white mb-2"
-                                        *ngFor="let item of ccsData; let i = index">
+                                        *ngFor="let item of ccs; let i = index">
                                         <div class="flex flex-row justify-between  text-sm">
                                             <div class="">
                                                 <!-- <p class=" text-white">{{(item.CCS_Date | date: 'dd MMMM yyyy') ?? ''}}</p> -->
@@ -1456,7 +1596,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="!ccsData || ccsData.length === 0">
-                                    <p>No data in month.</p>
+                                    <p>ไม่มีข้อมูล.</p>
                                 </div>
                             </div>
                         </div>

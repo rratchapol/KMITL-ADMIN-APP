@@ -65,14 +65,27 @@ export class NewsService {
                 })
             );
     }
-    getAPIFarmmer(): Observable<any> {
+    getAPIFarmmer(search: any,page: number): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/profile_farmer', {
                 FacID: '0',
-                page: '1',
+                page: page.toString(),
                 skip: '1',
                 take: '10',
-                search: '',
+                search: search,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    groupyear(id:any): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/group_years', {
+                FacID: 1,
+                QuotaID: id,
             })
             .pipe(
                 switchMap((response: any) => {
@@ -181,10 +194,10 @@ export class NewsService {
             .post('https://canegrow.com:28099/api/profile', {
                 FacID: 1,
                 QuotaNO: id,
-                // begin_date: begin_date,
-                // end_date: end_date,
-                Begin_year: '2567',
-                End_year: '6364',
+                Begin_year: begin_date,
+                End_year: end_date,
+                // Begin_year: 5758,
+                // End_year: 6768,
             })
             .pipe(
                 switchMap((response: any) => {
@@ -193,13 +206,29 @@ export class NewsService {
             );
     }
 
+    profiles(id: number): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/profile', {
+                FacID: 1,
+                QuotaNO: id,
+                Begin_year: 5758,
+                End_year: 6768,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            );
+    }
+
+
     
-    plot(id: number, begin_date: any, end_date: any): Observable<any> {
+    plot(id: number, begin_date: any): Observable<any> {
         return this._httpClient
             .post('https://canegrow.com:28099/api/plot_user', {
                 FacID: 1,
                 QuotaNO: id,
-                Year: '6667',
+                Year: begin_date,
             })
             .pipe(
                 switchMap((response: any) => {
@@ -248,4 +277,54 @@ export class NewsService {
     //   })
     //   );
     //   }
+
+    getByFacId(): Observable<any> {
+        const Id = {
+            factory_id: 1
+        }
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_company_byfactory',Id)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+
+    create(formData: FormData): Observable<any> {
+        return this._httpClient
+            .put(environment.baseURL + '/api/company/1', formData)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    dashboardactivitytype(Id: any): Observable<any> {
+
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_byactivitytype', {
+                frammer_id: Id
+            })
+            .pipe();
+    }
+
+    dashboardincomededuct(Id: any): Observable<any> {
+
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_incomededuct', {
+                frammer_id: Id})
+            .pipe();
+    }
+
+    dashboardweekly(Id: any): Observable<any> {
+
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_byweekly', {
+                frammer_id: Id
+            })
+            .pipe();
+    }
 }

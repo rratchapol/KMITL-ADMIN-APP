@@ -146,7 +146,7 @@ export class FormComponent implements OnInit {
                             console.log(err);
                             this.addForm.enable();
                             this._fuseConfirmationService.open({
-                                title: 'เกิดข้อผิดพลาด',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้',
                                 message: err.error.message,
                                 icon: {
                                     show: true,

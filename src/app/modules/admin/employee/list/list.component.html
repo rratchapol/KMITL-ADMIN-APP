@@ -1,4 +1,4 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+<div class="flex flex-col flex-auto min-w-0">
     <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
@@ -15,7 +15,7 @@
 
             <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
 
-                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
+                <!-- <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
                     <mat-select>
                         <mat-option [value]="''">
                             เลือกสถานะ
@@ -27,7 +27,7 @@
                             Inactive
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
                 <button class="ml-4 w-full rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                     <span class="ml-2 mr-1">เพิ่มผู้ใช้งาน</span>
@@ -50,13 +50,22 @@
                     <tbody *ngIf="dataRow?.length != 0">
                         <tr *ngFor="let item of dataRow; let i = index">
                             <td>{{item.name}}</td>
-                            <td>{{item.email ? item.email : '-'}}</td>
+                            <td>{{item?.email || '-'}}</td>
                             <td>{{item.phone}}</td>
                             <td>
                                 <ng-container *ngIf="item.factories?.length != 0">
-                                    {{item.factories[0]?.factorie.name}}
+                                    <ng-container *ngFor="let fac of item.factories; let i = index">
+                                        {{fac.factorie?.name + (i == item.factories.length - 1 ? '' : ', ')}}
+                                    </ng-container>
+                                    <!-- <ng-container *ngIf="item.factories?.length == 1">
+                                        {{item.factories[0]?.factorie.name}}
+                                    </ng-container>
+                                    <ng-container *ngIf="item.factories?.length == 2">
+                                        {{item.factories[0]?.factorie.name}}
+                                        {{item.factories[1]?.factorie.name}}
+                                    </ng-container> -->
                                 </ng-container>
-                                <ng-container>
+                                <ng-container *ngIf="item.factories?.length == 0">
                                     -
                                 </ng-container>
                             </td>

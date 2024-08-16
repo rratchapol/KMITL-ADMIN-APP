@@ -29,13 +29,52 @@ import { ThaiDatePipe } from 'app/shared/date-thai.component.pipe';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
+import { ChartComponent } from "ng-apexcharts";
+import {
+    ApexNonAxisChartSeries,
+    ApexResponsive,
+    ApexChart
+} from "ng-apexcharts";
+import {
+    ApexAxisChartSeries,
+    ApexDataLabels,
+    ApexPlotOptions,
+    ApexYAxis,
+    ApexLegend,
+    ApexStroke,
+    ApexXAxis,
+    ApexFill,
+    ApexTooltip
+} from "ng-apexcharts";
+// import { log } from 'console';
+
+export type ChartsOptions = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
+    yaxis: ApexYAxis;
+    xaxis: ApexXAxis;
+    fill: ApexFill;
+    tooltip: ApexTooltip;
+    stroke: ApexStroke;
+    legend: ApexLegend;
+};
+export type ChartOptions = {
+    series: ApexNonAxisChartSeries;
+    chart: ApexChart;
+    responsive: ApexResponsive[];
+    labels: any;
+};
 @Component({
     selector: 'project',
     templateUrl: './project.component.html',
+    styleUrls: ["./project.component.css"],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
+        NgApexchartsModule,
         DataTablesModule,
         TranslocoModule,
         MatIconModule,
@@ -63,7 +102,8 @@ import { FormsModule } from '@angular/forms';
         ShareModule,
         ThaiDatePipe,
         CommonModule,
-        FormsModule
+        FormsModule,
+        NgApexchartsModule
     ],
     providers: [ThaiDatePipe, DatePipe]
 })
@@ -198,6 +238,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
     public itemData: any;
     public ccsData: any;
     @ViewChildren('mapCanvas') mapCanvases: QueryList<ElementRef>;
+
+
+    @ViewChild("chart") chart: ChartComponent;
+    public chartOptions: Partial<ChartOptions>;
+    public chartOptions1: Partial<ChartOptions>;
+    public chartOptions2: Partial<ChartsOptions>;
+
+
     /**
      * Constructor
      */
@@ -210,7 +258,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private _farmmerService: NewsService,
         private cdr: ChangeDetectorRef,
         private datePipe: DatePipe,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private route: ActivatedRoute
     ) {
 
         this.verticalStepperForm = this._formBuilder.group({
@@ -256,6 +305,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     searchInputControl: FormControl = new FormControl();
     activityControl: FormControl = new FormControl();
     plotControl: FormControl = new FormControl();
+    yearControl: FormControl = new FormControl();
     page: number = 0;
 
     years: number[] = [];
@@ -266,7 +316,222 @@ export class ProjectComponent implements OnInit, OnDestroy {
     imageUrl = "https://page365.zendesk.com/hc/article_attachments/900009033263/______________.jpg";
     startmonth: any;
     endmonth: any;
+    groupyear: any;
+    income: any;
+    deduct: any;
+    profiles: any;
     ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.Id = params['id'];
+            console.log("ดู ID", this.Id);
+          });
+
+          this._farmmerService.profiles(this.Id).subscribe((resp: any) => {
+            this.profiles = resp
+            console.log("ดู profiles ชื่อ บัตร", this.profiles);
+            this.cdr.detectChanges();
+        });
+
+        console.log("ดู ID", this.Id);
+        
+        this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
+            this.dbincome = resp.data;
+            if (this.dbincome && this.dbincome.Income && this.dbincome.Income.length > 0 && this.dbincome.Deduct && this.dbincome.Deduct.length > 0) {
+                const income = parseFloat(this.dbincome.Income[0]) || 0;
+                const deduct = parseFloat(this.dbincome.Deduct[0]) || 0;
+                this.income = income;
+                this.deduct = deduct;
+                console.log("ดู กิจกรรมมม", income, deduct);
+
+                if (income === 0 && deduct === 0) {
+                    this.chartOptions = {
+                        series: [0, 0],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["รายจ่าย ไม่มี", "รายรับ ไม่มี"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                } else {
+                    this.chartOptions = {
+                        series: [deduct, income],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["รายจ่าย", "รายรับ"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                }
+                this.cdr.detectChanges();
+            } else {
+                console.error('ข้อมูลไม่ครบถ้วนหรือไม่ถูกต้อง', this.dbincome);
+                this.chartOptions = null;
+            }
+        });
+
+
+        this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
+            this.dbactivity = resp.data
+            console.log("ดู this.dbactivity", this.dbactivity);
+            if (this.dbactivity) {
+                const price1 = parseFloat(this.dbactivity[0]?.total_paid) || 0;
+                const price2 = parseFloat(this.dbactivity[1]?.total_paid) || 0;
+                const price3 = parseFloat(this.dbactivity[2]?.total_paid) || 0;
+                const price4 = parseFloat(this.dbactivity[3]?.total_paid) || 0;
+                const price5 = parseFloat(this.dbactivity[4]?.total_paid) || 0;
+                const price6 = parseFloat(this.dbactivity[5]?.total_paid) || 0;
+                const price7 = parseFloat(this.dbactivity[6]?.total_paid) || 0;
+                const price8 = parseFloat(this.dbactivity[7]?.total_paid) || 0;
+
+                console.log("ดู กิจกรรมมม8888888", price1, price2);
+
+                if (price1 === 0 && price2 === 0 && price3 === 0 && price4 === 0 && price5 === 0 && price6 === 0 && price7 === 0 && price8 === 0) {
+                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
+                    this.chartOptions1 = null;
+                } else {
+                    this.chartOptions1 = {
+                        series: [price1, price2, price3, price4, price5, price6, price7, price8],
+                        chart: {
+                            type: "donut"
+                        },
+                        labels: ["ไถและเตรียมดิน", "ปลูกอ้อย", "ให้น้ำ", "ฉีดพ่นน้ำหมักปุ๋ยยูเรีย", "ฉีดพ่นสารกำจัดศัตรูพืช", "ใส่ปุ๋ย", "ตัดอ้อย", "ขนส่งอ้อย"],
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200
+                                    },
+                                    legend: {
+                                        position: "bottom"
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                }
+                this.cdr.detectChanges();
+            } else {
+                console.error('ข้อมูลไม่ครบถ้วนหรือไม่ถูกต้อง', this.dbactivity);
+                this.chartOptions1 = null;
+            }
+        });
+
+        this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
+            this.dbweekly = resp.data
+            console.log("ดู dbweekly ว่าขนาดเท่าไหร่", this.dbweekly.income[0]);
+            console.log("ดู dbweekly ว่าขนาดเท่าไหร่", this.dbweekly.deduct);
+            if (this.dbweekly) {
+                const day1in = parseFloat(Object.values(this.dbweekly.income[0])[0] as string) || 0;
+                const day2in = parseFloat(Object.values(this.dbweekly.income[1])[0] as string) || 0;
+                const day3in = parseFloat(Object.values(this.dbweekly.income[2])[0] as string) || 0;
+                const day4in = parseFloat(Object.values(this.dbweekly.income[3])[0] as string) || 0;
+                const day5in = parseFloat(Object.values(this.dbweekly.income[4])[0] as string) || 0;
+                const day6in = parseFloat(Object.values(this.dbweekly.income[5])[0] as string) || 0;
+                const day7in = parseFloat(Object.values(this.dbweekly.income[6])[0] as string) || 0;
+
+                const day1de = parseFloat(Object.values(this.dbweekly.deduct[0])[0] as string) || 0;
+                const day2de = parseFloat(Object.values(this.dbweekly.deduct[1])[0] as string) || 0;
+                const day3de = parseFloat(Object.values(this.dbweekly.deduct[2])[0] as string) || 0;
+                const day4de = parseFloat(Object.values(this.dbweekly.deduct[3])[0] as string) || 0;
+                const day5de = parseFloat(Object.values(this.dbweekly.deduct[4])[0] as string) || 0;
+                const day6de = parseFloat(Object.values(this.dbweekly.deduct[5])[0] as string) || 0;
+                const day7de = parseFloat(Object.values(this.dbweekly.deduct[6])[0] as string) || 0;
+        
+                console.log("ดู dbweekly", this.dbweekly);
+                console.log("ดู dbweekly", day2in);
+                console.log("ดู dbweekly", day2de);
+                this.cdr.detectChanges();
+                if (day1in === 0 && day2in === 0 && day3in === 0 && day4in === 0 && day5in === 0 && day6in === 0 && day7in === 0 && day1de === 0 && day2de === 0 && day3de === 0 && day4de === 0 && day5de === 0 && day6de === 0 && day7de === 0) {
+                    console.warn('ทั้งรายรับและรายจ่ายเป็น 0 ไม่สามารถแสดงแผนภูมิได้');
+                    this.chartOptions1 = null;
+                } else {
+                    this.chartOptions2 = {
+                        series: [
+                            {
+                                name: "รายรับ",
+                                data: [day1in, day2in, day3in, day4in, day5in, day6in, day7in]
+                            },
+                            {
+                                name: "รายจ่าย",
+                                data: [day1de, day2de, day3de, day4de, day5de, day6de, day7de]
+                            }
+                        ],
+                        chart: {
+                            type: "bar",
+                            height: 350
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: "55%",
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ["transparent"]
+                        },
+                        xaxis: {
+                            categories: [
+                                "จันทร์",
+                                "อังคาร",
+                                "พุธ",
+                                "พฤหัสบดี",
+                                "ศุกร์",
+                                "เสาร์",
+                                "อาทิตย์"
+                            ]
+                        },
+                        yaxis: {
+                            title: {
+                                text: "B (บาท)"
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return " " + val + " บาท";
+                                }
+                            }
+                        }
+                    };
+                    this.cdr.detectChanges();
+                }
+            }
+        });
+
+
         const currentDate = new Date();
         this.updateDates(currentDate);
         const startOfMonth = this.getCurrentMonthStartDate(currentDate);
@@ -290,20 +555,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
         console.log("aaaaaaaaa", this.ccsData);
 
-
-
         this.activatedRoute.params.subscribe((params) => {
-            // console.log(params);
             this.Id = params.id;
             this._changeDetectorRef.markForCheck();
-            this._farmmerService.getAPIFarmmer().subscribe((resp: any) => {
-                const data1 = resp.find(item => item.Quota_id === 285)
-                console.log('ata', data1)
-                this.itemData = resp.find(item => item.Quota_id === +this.Id)
-                console.log('item_data', this.itemData)
-            });
+            // this._farmmerService.getAPIFarmmer().subscribe((resp: any) => {
+            //     const data1 = resp.find(item => item.Quota_id === 285)
+            //     console.log('ata', data1)
+            //     this.itemData = resp.find(item => item.Quota_id === +this.Id)
+            //     console.log('item_data', this.itemData)
+            // });
 
             this.loadCCSData();
+            this.loadCCS();
             this.loadmyplot();
             this.initializeCalendar();
             this.plotCalendar();
@@ -337,6 +600,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
             },
         };
     }
+
+
+    allValuesAreZero(): boolean {
+        return this.dbweekly.income.slice(0, 8).every(item =>
+          Object.values(item).every(value => value === 0)
+        );
+      }
+
     private apiKey: string = 'AIzaSyD4w6es-jk17lkWGFzIEpq0S8nhf1ZaunM';
     getMapImageUrl(lat: number, lng: number, coOrPoints: number[][]): string {
         const zoom = 13; // Adjust as needed
@@ -349,47 +620,81 @@ export class ProjectComponent implements OnInit, OnDestroy {
         // return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&maptype=${maptype}&style=${style}&key=${this.apiKey}`;
     }
 
-    drawPolygon(ctx: CanvasRenderingContext2D, points: number[][]): void {
-        if (points.length < 2) return;
 
-        ctx.beginPath();
-        ctx.moveTo(points[0][0], points[0][1]);
 
-        points.slice(1).forEach(point => {
-            ctx.lineTo(point[0], point[1]);
-        });
 
-        ctx.closePath();
-        ctx.strokeStyle = '#FF0000'; // Set the color of the polygon border
-        ctx.lineWidth = 2; // Set the width of the polygon border
-        ctx.stroke();
-    }
 
     @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef;
     profile: any;
     myplots: any;
     allplot: any
+    year: any;
+    grouplastyear: any;
+    firstYear: any;
+    lastYear: any;
+    dbactivity: any;
+    dbincome: any;
+    dbweekly: any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
 
         console.log(`Selected Tab Index: ${selectedTabIndex}`);
         console.log(`Selected Tab Label: ${tabLabel}`);
-        if (selectedTabIndex == 0) { }
+        if (selectedTabIndex == 0) {
+            this._farmmerService.dashboardactivitytype(this.Id).subscribe((resp: any) => {
+                this.dbactivity = resp.data
+                console.log("ดู กิจกรรมมม", this.dbactivity);
+                this.cdr.detectChanges();
+            });
+            this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
+                this.dbincome = resp.data
+                console.log("ดู กิจกรรมมม", this.dbincome.Income[0]);
+                this.cdr.detectChanges();
+            });
+            this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
+                this.dbweekly = resp.data
+                console.log("ดู กิจกรรมมม", this.dbweekly);
+                this.cdr.detectChanges();
+            });
+        }
         if (selectedTabIndex == 1) {
-            this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.profile = resp
-                console.log("ดู กิจกรรมมม", this.profile);
+            // this._farmmerService.profile(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            //     this.profile = resp
+            //     console.log("ดู กิจกรรมมม", this.profile);
+            //     this.cdr.detectChanges();
+            // });
 
+            this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
+                this.groupyear = resp
+                console.log("ดู groupyear", this.groupyear);
+                this.firstYear = this.groupyear[0];
+                this.lastYear = this.groupyear[this.groupyear.length - 1];
+                this._farmmerService.profile(this.Id, this.firstYear.value, this.lastYear.value).subscribe((resp: any) => {
+                    this.profile = resp
+                    console.log("ดู กิจกรรมมม", this.profile);
+                    this.cdr.detectChanges();
+                });
             });
 
         }
         if (selectedTabIndex == 2) {
-            this._farmmerService.plot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
-                this.myplots = resp
-                console.log("ดู กิจกรรมมม", this.myplots);
-
+            this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
+                this.groupyear = resp
+                this.grouplastyear = resp[resp.length - 1];
+                console.log("ดู groupyear", this.groupyear.value);
+                this._farmmerService.plot(this.Id, this.grouplastyear.value).subscribe((resp: any) => {
+                    this.myplots = resp
+                    console.log("ดู กิจกรรมมม", this.myplots);
+                    this.cdr.detectChanges();
+                });
             });
+            // this._farmmerService.plot(this.Id, this.grouplastyear).subscribe((resp: any) => {
+            //     this.myplots = resp
+            //     console.log("ดู กิจกรรมมม", this.myplots);
+            //     this.cdr.detectChanges();
+            // });
+
         }
         if (selectedTabIndex == 3) {
             const currentDate = new Date();
@@ -401,17 +706,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยปลูกใหม่";
+            this.activitys = "";
+            this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
-
+                this.cdr.detectChanges();
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 this.last_page = resp.last_page;
                 console.log("ดู กิจกรรมมม", this.cane);
                 console.log("ดู lastpage", this.last_page);
-
+                this.cdr.detectChanges();
             });
             this.searchInputControl.valueChanges.subscribe(value => {
                 this.search = value;
@@ -419,7 +726,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.activityControl.valueChanges.subscribe(value => {
@@ -428,7 +735,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.plotControl.valueChanges.subscribe(value => {
@@ -437,7 +744,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.range.valueChanges.subscribe(val => {
@@ -453,6 +760,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
+                        this.cdr.detectChanges();
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
@@ -469,16 +777,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 end: ['']
             });
             this.sugartype = "อ้อยตอ";
+            this.activitys = "";
+            this.activityControl.setValue(null);
             this._farmmerService.getplotframmer(this.Id).subscribe((resp: any) => {
                 this.allplot = resp
                 console.log("ดู แปลงชาวนา", this.allplot);
-
+                this.cdr.detectChanges();
             });
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 this.last_page = resp.last_page;
-                console.log("ดู กิจกรรมมม", this.cane);
-
+                console.log("ดู กิจกรรมมม cane", this.cane);
+                this.cdr.detectChanges();
             });
             this.searchInputControl.valueChanges.subscribe(value => {
                 this.search = value;
@@ -486,7 +796,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.activityControl.valueChanges.subscribe(value => {
@@ -495,7 +805,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.plotControl.valueChanges.subscribe(value => {
@@ -504,7 +814,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                     this.cane = resp.data
                     console.log("ดู กิจกรรมมม", this.cane);
-
+                    this.cdr.detectChanges();
                 });
             });
             this.range.valueChanges.subscribe(val => {
@@ -520,6 +830,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this._farmmerService.getsugarcane(this.Id, this.startday, this.endday, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                         this.cane = resp.data
                         console.log("ดู กิจกรรมมม", this.cane);
+                        this.cdr.detectChanges();
                     });
                 }
                 console.log(`Start Date: ${this.startday}, End Date: ${this.endday}`);  // เพื่อตรวจสอบค่าใน console
@@ -534,26 +845,51 @@ export class ProjectComponent implements OnInit, OnDestroy {
     // google: any;
     @ViewChildren('mapContainer') mapContainers!: QueryList<ElementRef>;
 
+    formatYearPeriod(yearPeriod: number): string {
+        if (!yearPeriod) return '';
 
+        const yearString = yearPeriod.toString();
+        if (yearString.length !== 4) return yearString;
 
+        const firstYear = parseInt(yearString.slice(0, 2)) + 2500;
+        const secondYear = parseInt(yearString.slice(2)) + 2500;
+
+        return `${firstYear}/${secondYear}`;
+    }
 
     openImage(imageUrl: string) {
         window.open(imageUrl, '_blank');
     }
 
-
+    ccs: any;
+    loadCCS(): void {
+        const currentDate = new Date();
+        this.updateDates(currentDate);
+        const startOfMonth = this.getCurrentMonthStartDate(currentDate);
+        const endOfMonth = this.getCurrentMonthEndDate(currentDate);
+        console.log('Start of month:', startOfMonth);
+        console.log('End of month:', endOfMonth);
+        this._farmmerService.getAPICCS(this.Id, startOfMonth, endOfMonth).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
+    }
 
 
 
     loadCCSData(): void {
         this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
             this.ccsData = resp || [];
-            this.events = this.ccsData.map(item => ({
-                start: item.CCS_Date,
-                // title: item.bill_no
-            }));
-            console.log("events loaded", this.events);
 
+            console.log("events loaded", this.events);
+            const uniqueDates = new Set(this.ccsData.map(item => {
+                return new Date(item.CCS_Date).toISOString().split('T')[0];
+            }));
+            this.events = Array.from(uniqueDates).map(date => ({
+                start: date,
+                display: 'list-item',
+                allDay: true
+            }));
             // อัปเดต events ใน calendarOptions
             if (this.calendarOptions) {
                 this.calendarOptions.events = this.events;
@@ -561,6 +897,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+
+
     myplot: any
     loadmyplot(): void {
         this._farmmerService.myplot(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
@@ -571,7 +910,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }));
             console.log("events loaded", this.events);
             console.log("events loaded plot", this.myplot);
-            console.log("รวมรายจ่าย", this.myplot[0].laborwages + this.myplot[0].insecticidecost);
+            // console.log("รวมรายจ่าย", this.myplot[0].laborwages + this.myplot[0].insecticidecost);
 
 
             // อัปเดต events ใน calendarOptions
@@ -627,6 +966,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.originalEndDate = this.enddate;
         this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.originalStartDate, this.originalEndDate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     private formatDate(date: Date): string {
@@ -651,12 +994,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
         } else {
             // ถ้ากดวันใหม่ ให้อัปเดตวันที่
             this.startdate = selectionInfo.startStr;
-            this.enddate = selectionInfo.startStr;
+            this.enddate = selectionInfo.endStr || selectionInfo.startStr;
+            // Adjust the end date if it's over by a day
+            if (new Date(this.enddate) > new Date(this.startdate)) {
+                this.enddate = new Date(new Date(this.enddate).setDate(new Date(this.enddate).getDate() - 1)).toISOString().split('T')[0];
+            }
             this.selectedDate = selectionInfo.startStr;
         }
         console.log("วันที่เริ่ม:", this.startdate, "วันที่สิ้นสุด:", this.enddate);
-        this.loadCCSData(); // โหลดข้อมูลใหม่ตามวันที่เลือก
+        // this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     // เพิ่มฟังก์ชันใหม่เพื่อจัดการเมื่อยกเลิกการเลือก
@@ -665,8 +1016,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.enddate = this.originalEndDate;
         this.selectedDate = null;
         console.log("ยกเลิกการเลือก - วันที่เริ่ม:", this.startdate, "วันที่สิ้นสุด:", this.enddate);
-        this.loadCCSData(); // โหลดข้อมูลใหม่ตามวันที่เดิม
+        // this.loadCCSData();
         this.loadmyplot();
+        this._farmmerService.getAPICCS(this.Id, this.startdate, this.enddate).subscribe((resp: any) => {
+            this.ccs = resp || [];
+            this.cdr.detectChanges();
+        });
     }
 
     goToProfile(id: any): void {
@@ -683,7 +1038,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
-
+                this.cdr.detectChanges();
             });
         }
     }
@@ -697,7 +1052,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.getsugarcane(this.Id, this.startdate, this.enddate, this.sugartype, this.search, this.plot, this.activitys, this.page).subscribe((resp: any) => {
                 this.cane = resp.data
                 console.log("ดู กิจกรรมมม", this.cane);
-
+                this.cdr.detectChanges();
             });
         }
 
@@ -705,22 +1060,36 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     onStartYearChange(selectedYear: number) {
         console.log('Selected start year:', selectedYear);
-        this._farmmerService.profile(this.Id, selectedYear, this.enddate).subscribe((resp: any) => {
+        this.firstYear.value = selectedYear;
+        this._farmmerService.profile(this.Id, selectedYear, this.lastYear.value).subscribe((resp: any) => {
             this.profile = resp
             console.log("ดู กิจกรรมมม", this.profile);
-
+            this.cdr.detectChanges();
         });
     }
 
     onEndYearChange(selectedYear: number) {
+        this.lastYear.value = selectedYear;
         console.log('Selected start year:', selectedYear);
-        this._farmmerService.profile(this.Id, this.startdate, selectedYear).subscribe((resp: any) => {
+        this._farmmerService.profile(this.Id, this.firstYear.value, selectedYear).subscribe((resp: any) => {
             this.profile = resp
             console.log("ดู กิจกรรมมม", this.profile);
-
+            this.cdr.detectChanges();
         });
     }
 
+    onYearChange(selectedYear: number) {
+        console.log('Selected start year:', selectedYear);
+        this._farmmerService.plot(this.Id, selectedYear).subscribe((resp: any) => {
+            this.myplots = resp;
+            console.log("ดู กิจกรรมมม", this.myplots);
+            this.cdr.detectChanges();
+        });
+    }
+
+    spinner: string = 'assets/images/Spinner.gif';
+    chart0: string = 'assets/images/chart0.png';
+    barchart0: string = 'assets/images/barchart0.png';
 
 
     /**

@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FarmmerRoute } from './farmmer-routing';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -39,7 +39,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     imports: [
         RouterModule.forChild(FarmmerRoute),
         ShareModule,
-        NgxDropzoneModule
+        NgxDropzoneModule,
+        FormsModule
     ]
 })
 export class FarmmerModule { }

@@ -123,7 +123,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         const that = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 25,
+            pageLength: 10,
             serverSide: true,
             processing: true,
             language: {
