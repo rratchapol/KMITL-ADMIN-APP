@@ -25,11 +25,7 @@ export class VendorService {
 
     Savedata(formData: FormData): Observable<any> {
         return this._httpClient
-<<<<<<< HEAD
-            .post(environment.baseURL + '/api/vendor', formData)
-=======
             .post(environment.baseURL + '/api/feature', formData)
->>>>>>> e3df95c91a01955594538d1f67fa26c66d1e083a
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
