@@ -294,7 +294,7 @@ export class NewsService {
 
     create(formData: FormData): Observable<any> {
         return this._httpClient
-            .put(environment.baseURL + '/api/company/1', formData)
+            .post(environment.baseURL + '/api/company', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

@@ -232,6 +232,19 @@ export const appRoutes: Route[] = [
                             import('app/modules/admin/employee/page.routes'),
                     },
                     {
+                        path: 'company',
+                        canActivate: [],
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/company/company.module'
+                                    ).then((m) => m.CompanyModule),
+                            },
+                        ],
+                    },
+                    {
                         path: 'permission',
                         children: [
                             {

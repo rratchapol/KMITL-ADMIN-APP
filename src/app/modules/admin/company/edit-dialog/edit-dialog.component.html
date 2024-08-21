@@ -1,0 +1,45 @@
+<div class="md:max-w-lg mx-auto">
+  <h1 mat-dialog-title class="text-xl font-semibold mb-4">เพิ่มโรงงาน</h1>
+  <div mat-dialog-content>
+      <form [formGroup]="editForm">
+
+          <div class="-mx-3 md:flex mb-2">
+              <div class="md:w-full px-3">
+                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                      <mat-label>ชื่อโรงงาน</mat-label>
+                      <input matInput [placeholder]="'กรอกชื่อโรงงาน'" [formControlName]="'name'">
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="-mx-3 md:flex mb-2">
+              <div class="md:w-full px-3">
+                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                      <mat-label>เบอร์โทร</mat-label>
+                      <input matInput [placeholder]="'กรอกเบอร์โทร'" [formControlName]="'phone'">
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="-mx-3 md:flex mb-2">
+              <div class="md:w-full px-3">
+                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                      <mat-label>อีเมล</mat-label>
+                      <input matInput [placeholder]="'กรอกอีเมล'" [formControlName]="'email'">
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="-mx-3 md:flex mb-2">
+              <div class="md:w-full px-3">
+                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                      <mat-label>ที่อยู่</mat-label>
+                      <textarea type="text" matInput [placeholder]="'กรอกที่อยู่'" row="5"
+                          [formControlName]="'address'"></textarea>
+                  </mat-form-field>
+              </div>
+          </div>
+      </form>
+  </div>
+  <div mat-dialog-actions class="flex justify-center md-4">
+      <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400" (click)="onCancelClick()">ยกเลิก</button>
+      <button mat-button class="px-4 py-2 bg-[#0a1c3a] text-white hover:bg-gray-600 ml-2 rounded-md" (click)="update()">บันทึก</button> &nbsp;
+  </div>
+</div>

@@ -63,9 +63,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'admin.user',
         title: 'ข้อมูลบริษัท',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:pencil-square',
-        link: '/admin/employee/detail',
+        // link: '/admin/employee/detail',
+        children: [
+            {
+                id: 'admin.contractor-type',
+                title: 'จัดการข้อมูลโรงงาน',
+                type: 'basic',
+                link: '/admin/company/list',
+            },
+            {
+                id: 'admin.contractor',
+                title: 'จัดการข้อมูลบริษัท',
+                type: 'basic',
+                link: '/admin/company/detail',
+            },
+        ],
     },
  
 ];
