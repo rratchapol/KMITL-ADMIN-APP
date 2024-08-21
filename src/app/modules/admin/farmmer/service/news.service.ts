@@ -294,7 +294,7 @@ export class NewsService {
 
     create(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/company', formData)
+            .put(environment.baseURL + '/api/company/1', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -326,5 +326,15 @@ export class NewsService {
                 frammer_id: Id
             })
             .pipe();
+    }
+
+    image(formData: FormData): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/upload_images', formData)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(environment.baseURL+'/'+response.data);
+                })
+            );
     }
 }

@@ -73,6 +73,8 @@ export class DetailComponent implements OnInit {
     isLoading: boolean = false;
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     addForm: FormGroup;
+    image1: FormGroup;
+    imagepath: FormGroup;
     permissiondata: any[];
     Id: any;
     item: any;
@@ -120,6 +122,10 @@ export class DetailComponent implements OnInit {
             image4: '',
             image5: '',
         });
+        this.imagepath = this.formBuilder.group({
+            image: '',
+            path:'images/company/',
+        });
         
     }
     itemData:any;
@@ -164,11 +170,11 @@ export class DetailComponent implements OnInit {
                     link3: this.itemData.link3,
                     link4: this.itemData.link4,
                     link5: this.itemData.link5,
-                    // image1: this.itemData.image1,
-                    // image2: this.itemData.image2,
-                    // image3: this.itemData.image3,
-                    // image4: this.itemData.image4,
-                    // image5: this.itemData.image5,
+                    image1: this.itemData.image1,
+                    image2: this.itemData.image2,
+                    image3: this.itemData.image3,
+                    image4: this.itemData.image4,
+                    image5: this.itemData.image5,
 
                 });
                 if (this.itemData.image1) this.uploadedImages1 = this.itemData.image1;
@@ -211,13 +217,13 @@ export class DetailComponent implements OnInit {
         });
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
-                const formData = new FormData();
-                Object.entries(this.addForm.value).forEach(
-                    ([key, value]: any[]) => {
-                        formData.append(key, value);
-                    }
-                );
-                // const formData = this.addForm.value
+                // const formData = new FormData();
+                // Object.entries(this.addForm.value).forEach(
+                //     ([key, value]: any[]) => {
+                //         formData.append(key, value);
+                //     }
+                // );
+                const formData = this.addForm.value
                     this._service.create(formData).subscribe({
                         next: (resp: any) => {
                             // this._router
@@ -257,69 +263,196 @@ export class DetailComponent implements OnInit {
         });
     }
 
-    files: File[] = [];
-    onSelect(event: { addedFiles: File[] }): void {
-        this.files = [];
 
+        // files: File[] = [];
+    // onSelect(event: { addedFiles: File[] }): void {
+    //     this.files = [];
+
+    //     // เพิ่มรูปใหม่
+    //     const newFiles = event.addedFiles;
+    //     this.files.push(...newFiles);
+    //     const file = this.files[0];
+    //     this.addForm.patchValue({
+    //         image1: file,
+    //     });
+    // }
+
+    files: File[] = [];
+    file1:any;
+    file2:any;
+    file3:any;
+    file4:any;
+    file5:any;
+    onSelect1(event: { addedFiles: File[] }): void {
+        this.files = [];
+        this.uploadedImages1 = null;
+        this.addForm.patchValue({
+            image1: '',
+        });
         // เพิ่มรูปใหม่
         const newFiles = event.addedFiles;
         this.files.push(...newFiles);
         const file = this.files[0];
-        this.addForm.patchValue({
-            image1: file,
+        this.imagepath.patchValue({
+            image: file,
+        });
+        const formData = new FormData();
+        Object.entries(this.imagepath.value).forEach(
+            ([key, value]: any[]) => {
+                formData.append(key, value);
+            }
+        );
+        this._service.image(formData).subscribe((resp: any) => {
+            this.file1 = resp
+            console.log("ดู profiles ชื่อ บัตร", this.file1);
+            this.addForm.patchValue({
+                image1: this.file1,
+            });
+            console.log(this.addForm.value)
         });
     }
+
 
     files2: File[] = [];
     onSelect2(event: { addedFiles: File[] }): void {
         this.files2 = [];
-
+        this.uploadedImages2 = null;
         // เพิ่มรูปใหม่
         const newFiles = event.addedFiles;
         this.files2.push(...newFiles);
         const file = this.files2[0];
-        this.addForm.patchValue({
-            image2: file,
+        this.imagepath.patchValue({
+            image: file,
+        });
+        const formData = new FormData();
+        Object.entries(this.imagepath.value).forEach(
+            ([key, value]: any[]) => {
+                formData.append(key, value);
+            }
+        );
+        this._service.image(formData).subscribe((resp: any) => {
+            this.file2 = resp
+            console.log("ดู profiles ชื่อ บัตร", this.file2);
+            this.addForm.patchValue({
+                image2: this.file2,
+            });
+            console.log(this.addForm.value)
         });
     }
 
     files3: File[] = [];
     onSelect3(event: { addedFiles: File[] }): void {
         this.files3 = [];
-
+        this.uploadedImages3 = null;
         // เพิ่มรูปใหม่
         const newFiles = event.addedFiles;
         this.files3.push(...newFiles);
         const file = this.files3[0];
-        this.addForm.patchValue({
-            image3: file,
+        this.imagepath.patchValue({
+            image: file,
+        });
+        const formData = new FormData();
+        Object.entries(this.imagepath.value).forEach(
+            ([key, value]: any[]) => {
+                formData.append(key, value);
+            }
+        );
+        this._service.image(formData).subscribe((resp: any) => {
+            this.file3 = resp
+            console.log("ดู profiles ชื่อ บัตร", this.file3);
+            this.addForm.patchValue({
+                image3: this.file3,
+            });
+            console.log(this.addForm.value)
         });
     }
 
     files4: File[] = [];
     onSelect4(event: { addedFiles: File[] }): void {
         this.files4 = [];
-
+        this.uploadedImages4 = null;
         // เพิ่มรูปใหม่
         const newFiles = event.addedFiles;
         this.files4.push(...newFiles);
         const file = this.files4[0];
-        this.addForm.patchValue({
-            image4: file,
+        this.imagepath.patchValue({
+            image: file,
+        });
+        const formData = new FormData();
+        Object.entries(this.imagepath.value).forEach(
+            ([key, value]: any[]) => {
+                formData.append(key, value);
+            }
+        );
+        this._service.image(formData).subscribe((resp: any) => {
+            this.file4 = resp
+            console.log("ดู profiles ชื่อ บัตร",this.file4);
+            this.addForm.patchValue({
+                image4: this.file4,
+            });
+            console.log(this.addForm.value)
         });
     }
 
     files5: File[] = [];
     onSelect5(event: { addedFiles: File[] }): void {
         this.files5 = [];
-
+        this.uploadedImages5 = null;
+        this.addForm.patchValue({
+            image5: '',
+        });
         // เพิ่มรูปใหม่
         const newFiles = event.addedFiles;
         this.files5.push(...newFiles);
         const file = this.files5[0];
-        this.addForm.patchValue({
-            image5: file,
+        this.imagepath.patchValue({
+            image: file,
         });
+        const formData = new FormData();
+        Object.entries(this.imagepath.value).forEach(
+            ([key, value]: any[]) => {
+                formData.append(key, value);
+            }
+        );
+        this._service.image(formData).subscribe((resp: any) => {
+            this.file5 = resp
+            console.log("ดู profiles ชื่อ บัตร",this.file5);
+            this.addForm.patchValue({
+                image5: this.file5,
+            });
+            console.log(this.addForm.value)
+        });
+    }
+
+    onRemove(file: File): void {
+        const index = this.files.indexOf(file);
+        if (index >= 0) {
+            this.files.splice(index, 1);
+        }
+    }
+    onRemove2(file: File): void {
+        const index = this.files2.indexOf(file);
+        if (index >= 0) {
+            this.files2.splice(index, 1);
+        }
+    }
+    onRemove3(file: File): void {
+        const index = this.files3.indexOf(file);
+        if (index >= 0) {
+            this.files3.splice(index, 1);
+        }
+    }
+    onRemove4(file: File): void {
+        const index = this.files4.indexOf(file);
+        if (index >= 0) {
+            this.files4.splice(index, 1);
+        }
+    }
+    onRemove5(file: File): void {
+        const index = this.files5.indexOf(file);
+        if (index >= 0) {
+            this.files5.splice(index, 1);
+        }
     }
 
 }
