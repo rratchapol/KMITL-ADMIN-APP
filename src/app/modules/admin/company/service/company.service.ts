@@ -6,7 +6,7 @@ import { Observable, map, of, switchMap } from 'rxjs';
 @Injectable({
     providedIn: 'root',
 })
-export class VendorService {
+export class JournalService {
     // delete(id: any) {
     //     throw new Error('Method not implemented.');
     // }
@@ -15,7 +15,10 @@ export class VendorService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL +'/api/feature_page', dataTablesParameters)
+            .post(
+                environment.baseURL + '/api/factorie_page',
+                dataTablesParameters
+            )
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -23,10 +26,9 @@ export class VendorService {
             );
     }
 
-    Savedata(formData: FormData): Observable<any> {
+    create(formData: FormData): Observable<any> {
         return this._httpClient
-        // .post(environment.baseURL + '/api/vendor', formData)
-            .post(environment.baseURL + '/api/feature', formData)
+            .post(environment.baseURL + '/api/factorie', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -36,7 +38,7 @@ export class VendorService {
 
     getPermission(): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + '/api/get_feature')
+            .get(environment.baseURL + 'api/get_permission')
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -45,7 +47,7 @@ export class VendorService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `/api/feature/${Id}`)
+            .get(environment.baseURL + `/api/factorie/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -53,15 +55,27 @@ export class VendorService {
             );
     }
 
-    update(Id: any, data: any): Observable<any> {
+    update(name: any,address: any,phone: any,email: any,Id:any): Observable<any> {
+        console.log("ssssss");
         return this._httpClient
-            .post(environment.baseURL + `/api/update_feature`, data)
+            .put(environment.baseURL + `/api/factorie/${Id}`, {
+                name: name,
+                address: address,
+                phone: phone,
+                email: email
+            })
             .pipe();
     }
 
+    // update(Id: any, data: FormData): Observable<any> {
+    //     return this._httpClient
+    //         .put(environment.baseURL + `api/customer/${Id}`, data)
+    //         .pipe();
+    // }
+
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/feature/${Id}`)
+            .delete(environment.baseURL + `/api/factorie/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

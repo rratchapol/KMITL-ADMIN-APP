@@ -1,4 +1,4 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+<div class=" sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
     <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
@@ -61,10 +61,18 @@
                     <tbody>
                         <tr *ngFor="let item of dataRow; let i = index">
                             <td>{{item.name}}</td>
-                            <td>{{item.contractor_type_id ? item.contractor : '-'}}</td>
+                            <!-- <td>{{item.contractor_type_id ? item.contractor : '-'}}</td> -->
+                            <td>
+                                <ng-container *ngIf="item.feature_contractors?.length != 0">
+                                    <ng-container *ngFor="let fac of item.feature_contractors">
+                                        {{fac.feature?.name + (i == item.feature_contractors.length - 1 ? '' : ', ')}}
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="item.feature_contractors?.length == 0">
+                                    -
+                                </ng-container>
+                            </td>
                             <td>{{item.phone}}</td>
-                            <!-- <td>{{item.facetories_contractors[0].facetorie.name}}</td> -->
-                            <!-- <td>โรงงานสระบุรี</td> -->
                             <td>
                                 <ng-container *ngIf="item.facetories_contractors?.length != 0">
                                     <ng-container *ngFor="let fac of item.facetories_contractors">

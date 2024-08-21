@@ -1,0 +1,221 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" >
+                    ข้อมูลบริษัท
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <form [formGroup]="addForm">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                    <!-- <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>สังกัดโรงงาน</mat-label>
+                                <input matInput [placeholder]="''" [formControlName]="'factory_affiliation'" >
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>สำนักงานใหญ่</mat-label>
+                                <input matInput [placeholder]="'กรอกสำนักงานใหญ่'" [formControlName]="'head_office'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>โทรศัพท์</mat-label>
+                                <input matInput [placeholder]="'กรอกโทรศัพท์'" [formControlName]="'phone'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>E-mail</mat-label>
+                                <input matInput [placeholder]="'กรอก E-mail'" [formControlName]="'email'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <mat-label>เวลาทำการ</mat-label>
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/4 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>วันเริ่ม</mat-label>
+                                <input matInput [placeholder]="'กรอกวันเริ่ม'" [formControlName]="'date_start'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/4 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>วันสิ้นสุด</mat-label>
+                                <input matInput [placeholder]="'กรอกวันสิ้นสุด'" [formControlName]="'date_end'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/4 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เวลาเริ่ม</mat-label>
+                                <input matInput [placeholder]="'กรอกเวลาเริ่ม'" [formControlName]="'time_start'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/4 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>เวลาปิด</mat-label>
+                                <input matInput [placeholder]="'กรอกเวลาปิด'" [formControlName]="'time_end'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-1">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>Link 1</mat-label>
+                                <input matInput [placeholder]="'กรอก link Youtube'" [formControlName]="'link1'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>Link 2</mat-label>
+                                <input matInput [placeholder]="'กรอก link Facebook'" [formControlName]="'link2'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:w-1/2 px-5">
+                            <mat-label>Icon 1</mat-label>
+                        </div>
+                        <div class="md:w-1/2 px-5">
+                            <mat-label>Icon 2</mat-label>
+                        </div>
+                    </div>
+
+
+                    <div class=" md:flex mb-15 gap-10">
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect1($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages1">เลือก Icon 1</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages1" src="{{ uploadedImages1 }}" class="w-[230px]" alt="Icon 1">
+
+                                <div *ngFor="let f of files">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect2($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages2">เลือก Icon 2</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages2" src="{{ uploadedImages2 }}" class="w-[230px]" alt="Icon 2">
+
+                                <div *ngFor="let f of files2">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove2(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>Link 3</mat-label>
+                                <input matInput [placeholder]="'กรอก link Tiktok'" [formControlName]="'link3'">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>Link 4</mat-label>
+                                <input matInput [placeholder]="'กรอก link Website'" [formControlName]="'link4'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:w-1/2 px-5">
+                            <mat-label>Icon 1</mat-label>
+                        </div>
+                        <div class="md:w-1/2 px-5">
+                            <mat-label>Icon 2</mat-label>
+                        </div>
+                    </div>
+
+                    <div class=" md:flex mb-15 gap-10">
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect3($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages3">เลือก Icon 3</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages3" src="{{ uploadedImages3 }}" class="w-[230px]" alt="Icon 3">
+
+                                <div *ngFor="let f of files3">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove3(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect4($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages4">เลือก Icon 4</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages4" src="{{ uploadedImages4 }}" class="w-[230px]" alt="Icon 4">
+
+                                <div *ngFor="let f of files4">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove4(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>Link 3</mat-label>
+                                <input matInput [placeholder]="'กรอก link Tiktok'" [formControlName]="'link5'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:w-1/2 px-5">
+                            <mat-label>Icon 5</mat-label>
+                        </div>
+                        <div class="md:w-1/2 px-5">
+                        </div>
+                    </div>
+
+                    <div class=" md:flex mb-6 gap-10">
+                        <div class="flex items-center justify-center w-full">
+                            <ngx-dropzone (change)="onSelect5($event)" [accept]="'image/*'" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <ngx-dropzone-label *ngIf="!uploadedImages5">เลือก Icon 5</ngx-dropzone-label>
+                                <img *ngIf="uploadedImages5" src="{{ uploadedImages5 }}" class="w-[230px]" alt="Icon 5">
+
+                                <div *ngFor="let f of files5">
+                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove5(f)" class="w-full"></ngx-dropzone-image-preview>
+                                </div>
+                            </ngx-dropzone>
+                        </div>
+                        <div class="flex items-center justify-center w-full"></div>
+
+                    </div>
+             
+
+                    <div mat-dialog-actions class="flex justify-end md-4">
+                        <!-- <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400" (click)="backTo()">ยกเลิก</button> -->
+                        <button mat-button class="px-4 py-2 bg-[#0a1c3a] text-white rounded-md hover:bg-gray-600 ml-2" (click)="Submit()">บันทึก</button> &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
