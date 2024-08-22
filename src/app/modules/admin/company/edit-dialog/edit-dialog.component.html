@@ -1,41 +1,56 @@
 <div class="md:max-w-lg mx-auto">
-  <h1 mat-dialog-title class="text-xl font-semibold mb-4">เพิ่มโรงงาน</h1>
+  <h1 mat-dialog-title class="text-xl font-semibold">แก้ไขโรงงาน</h1>
   <div mat-dialog-content>
       <form [formGroup]="editForm">
 
-          <div class="-mx-3 md:flex mb-2">
-              <div class="md:w-full px-3">
-                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                      <mat-label>ชื่อโรงงาน</mat-label>
-                      <input matInput [placeholder]="'กรอกชื่อโรงงาน'" [formControlName]="'name'">
-                  </mat-form-field>
-              </div>
-          </div>
-          <div class="-mx-3 md:flex mb-2">
-              <div class="md:w-full px-3">
-                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                      <mat-label>เบอร์โทร</mat-label>
-                      <input matInput [placeholder]="'กรอกเบอร์โทร'" [formControlName]="'phone'">
-                  </mat-form-field>
-              </div>
-          </div>
-          <div class="-mx-3 md:flex mb-2">
-              <div class="md:w-full px-3">
-                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                      <mat-label>อีเมล</mat-label>
-                      <input matInput [placeholder]="'กรอกอีเมล'" [formControlName]="'email'">
-                  </mat-form-field>
-              </div>
-          </div>
-          <div class="-mx-3 md:flex mb-2">
-              <div class="md:w-full px-3">
-                  <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                      <mat-label>ที่อยู่</mat-label>
-                      <textarea type="text" matInput [placeholder]="'กรอกที่อยู่'" row="5"
-                          [formControlName]="'address'"></textarea>
-                  </mat-form-field>
-              </div>
-          </div>
+    
+        <div class=" md:flex ">
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>ชื่อโรงงาน</mat-label>
+                    <input matInput [placeholder]="'กรอกชื่อโรงงาน'" [formControlName]="'name'">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="md:flex ">
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>เบอร์โทร</mat-label>
+                    <input matInput [placeholder]="'กรอกเบอร์โทร'" [formControlName]="'phone'">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="md:flex ">
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>อีเมล</mat-label>
+                    <input matInput [placeholder]="'กรอกอีเมล'" [formControlName]="'email'">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="md:flex ">
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>ที่อยู่</mat-label>
+                    <textarea type="text" matInput [placeholder]="'กรอกที่อยู่'" row="5"
+                        [formControlName]="'address'"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="md:flex ">
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>ละติจูด</mat-label>
+                    <input matInput [placeholder]="'กรอกละติจูด'" [formControlName]="'lat'">
+                </mat-form-field>
+            </div>
+            <div class="md:w-full px-3">
+                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                    <mat-label>ลองจิจูด</mat-label>
+                    <input matInput [placeholder]="'กรอกลองจิจูด'" [formControlName]="'lon'">
+                </mat-form-field>
+            </div>
+        </div>
       </form>
   </div>
   <div mat-dialog-actions class="flex justify-center md-4">

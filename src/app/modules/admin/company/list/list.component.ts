@@ -104,7 +104,7 @@ export class ListComponent implements OnInit {
     addElement() {
         // this._router.navigate(['employee/form'])
         const dialogRef = this.dialog.open(FormDialogComponent, {
-            width: '500px', // กำหนดความกว้างของ Dialog
+            width: '600px', // กำหนดความกว้างของ Dialog
             height: 'auto',
         });
 
@@ -115,7 +115,7 @@ export class ListComponent implements OnInit {
 
     editElement(element: any) {
         const dialogRef = this.dialog.open(EditDialogComponent, {
-            width: '400px', // กำหนดความกว้างของ Dialog
+            width: '600px', // กำหนดความกว้างของ Dialog
             height: 'auto',
             data: element, // ส่งข้อมูลเริ่มต้นไปยัง Dialog
         });
@@ -130,7 +130,7 @@ export class ListComponent implements OnInit {
     editDailog(id: any): void {
         this.dialog
             .open(EditDialogComponent, {
-                width: '500px', // กำหนดความกว้างของ Dialog
+                width: '600px', // กำหนดความกว้างของ Dialog
                 height: 'auto',
 
                 disableClose: false,
