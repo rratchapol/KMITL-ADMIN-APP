@@ -27,6 +27,8 @@ export class FormDialogComponent implements OnInit {
             phone: ['', [Validators.required]],
             email: ['', [Validators.required]],
             address: ['', [Validators.required]],
+            lat: ['', [Validators.required]],
+            lon: ['', [Validators.required]],
         });
     }
 

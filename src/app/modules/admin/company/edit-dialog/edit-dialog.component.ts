@@ -38,6 +38,8 @@ export class EditDialogComponent implements OnInit {
             phone: [this.data.phone],
             email: [this.data.email],
             address: [this.data.address],
+            lat: [this.data.lat],
+            lon: [this.data.lon],
         });
         this._Service.getById(this.data).subscribe((resp: any) => {
             this.itemData = resp;
@@ -48,6 +50,8 @@ export class EditDialogComponent implements OnInit {
                 phone: this.itemData.phone,
                 email: this.itemData.email,
                 address: this.itemData.address,
+                lat: this.itemData.lat,
+                lon: this.itemData.lon,
                 
             });
             console.log(this.editForm.value);
@@ -106,11 +110,7 @@ export class EditDialogComponent implements OnInit {
         console.log(this.editForm.value.email);
         this.flashMessage = null;
         this.flashErrorMessage = null;
-        // Return if the form is invalid
-        // if (this.formData.invalid) {
-        // return;
-        // }
-        // Open the confirmation dialog
+  
         const confirmation = this._fuseConfirmationService.open({
             title: 'แก้ไขข้อมูล',
             message: 'คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ',
@@ -133,22 +133,8 @@ export class EditDialogComponent implements OnInit {
             dismissible: true,
         });
 
-        // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe(async (result) => {
-            // If the confirm button pressed...
             if (result === 'confirmed') {
-                // if (this.files.length) {
-                // const formData1 = new FormData();
-                // formData1.append('file', this.files[0]);
-                // formData1.append('path', 'package');
-                // const ImgPath = await lastValueFrom(
-                // this._uploadService.uploadFile(formData1)
-                // );
-                // this.formData.patchValue({
-                // image: ImgPath,
-                // });
-                // }
-
                 const formData = new FormData();
                 Object.entries(this.editForm.value).forEach(
                     ([key, value]: any[]) => {
@@ -156,7 +142,7 @@ export class EditDialogComponent implements OnInit {
                     }
                 );
                 console.log(formData);
-                this._Service.update(this.editForm.value.name,this.editForm.value.address,this.editForm.value.phone,this.editForm.value.email,this.data).subscribe({
+                this._Service.update(this.editForm.value.name,this.editForm.value.address,this.editForm.value.phone,this.editForm.value.email,this.editForm.value.lat,this.editForm.value.lon,this.data).subscribe({
                     next: (resp: any) => {
                         this.dialogRef.close();
                     },
