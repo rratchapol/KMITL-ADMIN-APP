@@ -29,6 +29,7 @@ export class FormDialogComponent implements OnInit {
             address: ['', [Validators.required]],
             lat: ['', [Validators.required]],
             lon: ['', [Validators.required]],
+            factory_id: ['', [Validators.required]],
         });
     }
 
