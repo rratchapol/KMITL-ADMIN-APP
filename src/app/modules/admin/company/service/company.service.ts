@@ -55,7 +55,7 @@ export class JournalService {
             );
     }
 
-    update(name: any,address: any,phone: any,email: any,lat:any,lon:any,Id:any): Observable<any> {
+    update(name: any,address: any,phone: any,email: any,lat:any,lon:any,factory_id,Id:any): Observable<any> {
         console.log("ssssss");
         return this._httpClient
             .put(environment.baseURL + `/api/factorie/${Id}`, {
@@ -64,7 +64,8 @@ export class JournalService {
                 phone: phone,
                 email: email,
                 lat: lat,
-                lon: lon
+                lon: lon,
+                factory_id: factory_id
             })
             .pipe();
     }

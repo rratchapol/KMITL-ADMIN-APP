@@ -40,6 +40,7 @@ export class EditDialogComponent implements OnInit {
             address: [this.data.address],
             lat: [this.data.lat],
             lon: [this.data.lon],
+            factory_id: [this.data.factory_id],
         });
         this._Service.getById(this.data).subscribe((resp: any) => {
             this.itemData = resp;
@@ -52,6 +53,7 @@ export class EditDialogComponent implements OnInit {
                 address: this.itemData.address,
                 lat: this.itemData.lat,
                 lon: this.itemData.lon,
+                factory_id: this.itemData.factory_id,
                 
             });
             console.log(this.editForm.value);
@@ -142,7 +144,7 @@ export class EditDialogComponent implements OnInit {
                     }
                 );
                 console.log(formData);
-                this._Service.update(this.editForm.value.name,this.editForm.value.address,this.editForm.value.phone,this.editForm.value.email,this.editForm.value.lat,this.editForm.value.lon,this.data).subscribe({
+                this._Service.update(this.editForm.value.name,this.editForm.value.address,this.editForm.value.phone,this.editForm.value.email,this.editForm.value.lat,this.editForm.value.lon,this.editForm.value.factory_id,this.data).subscribe({
                     next: (resp: any) => {
                         this.dialogRef.close();
                     },

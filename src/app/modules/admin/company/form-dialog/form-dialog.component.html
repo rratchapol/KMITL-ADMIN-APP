@@ -12,7 +12,13 @@
                 </div>
             </div>
             <div class="md:flex ">
-                <div class="md:w-full px-3">
+                <div class="md:w-1/2 px-3">
+                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                        <mat-label>หมายเลขโรงงาน</mat-label>
+                        <input matInput [placeholder]="'กรอกหมายเลขโรงงาน'" [formControlName]="'factory_id'">
+                    </mat-form-field>
+                </div>
+                <div class="md:w-1/2 px-3">
                     <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
                         <mat-label>เบอร์โทร</mat-label>
                         <input matInput [placeholder]="'กรอกเบอร์โทร'" [formControlName]="'phone'">
