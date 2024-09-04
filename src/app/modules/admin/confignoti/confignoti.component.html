@@ -1,0 +1,60 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 flemin-w-0">
+            <!-- Title -->
+            <div class="flex flex-row mt-2 justify-between">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    จัดการ Config
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <form [formGroup]="addForm">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+
+
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>ประเภทแจ้งเตือน</mat-label>
+                                <mat-select [formControlName]="'title'" >
+                                    <mat-option value="'กิจกรรมเพาะปลูก'">กิจกรรมเพาะปลูก</mat-option>
+                                    <mat-option value="'คิวอ้อย'">คิวอ้อย</mat-option>
+                                    <mat-option value="'แจ้งรับคิว'">แจ้งรับคิว</mat-option>
+                                    <mat-option value="'บิลอ้อย'">บิลอ้อย</mat-option>
+                                    <mat-option value="'วิทยุ'">วิทยุ</mat-option>
+                                    <mat-option value="'วารสาร'">วารสาร</mat-option>
+                                    <mat-option value="'ข่าวสาร'">ข่าวสาร</mat-option>
+                                    <mat-option value="'เงินค่าอ้อยออก'">เงินค่าอ้อยออก</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-1/2 px-3">
+                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                <mat-label>รายละเอียด</mat-label>
+                                <input matInput [placeholder]="'กรอกรายละเอียด'" [formControlName]="'body'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div mat-dialog-actions class="flex justify-end mt-2">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Submit()">
+                                บันทึกข้อมูล
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

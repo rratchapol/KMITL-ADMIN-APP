@@ -54,6 +54,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/admin/chat',
     },
     {
+        id: 'admin.chat',
+        title: 'แจ้งเตือน',
+        type: 'basic',
+        icon: 'heroicons_outline:bell',
+        link: '/admin/confignoti',
+    },
+    {
         id: 'admin.user',
         title: 'การจัดการผู้ใช้',
         type: 'basic',

@@ -246,6 +246,19 @@ export const appRoutes: Route[] = [
                         ],
                     },
                     {
+                        path: 'confignoti',
+                        canActivate: [],
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/confignoti/confignoti.module'
+                                    ).then((m) => m.ConfignotiModule),
+                            },
+                        ],
+                    },
+                    {
                         path: 'company',
                         canActivate: [],
                         children: [

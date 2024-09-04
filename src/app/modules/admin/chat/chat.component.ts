@@ -26,7 +26,8 @@ export class NewChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.env = environment.baseURL
+    this.env = environment.baseURL + '/'
+    console.log(this.env)
     this.getMessages();
     this.intervalId = setInterval(() => {
       this.checkNewMessages();
@@ -78,6 +79,7 @@ export class NewChatComponent implements OnInit, OnDestroy {
         id: chat.id,
         name: chat.frammer.name,
         meeting: chat.meeting,
+        image: chat.frammer.image,
         chat_msgs: chat.chat_msgs
       }));
 
