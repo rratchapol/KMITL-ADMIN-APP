@@ -51,7 +51,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'แชท',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',
-        link: '/admin/apps/chat',
+        link: '/admin/chat',
     },
     {
         id: 'admin.user',
@@ -81,7 +81,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
         ],
     },
- 
+
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {

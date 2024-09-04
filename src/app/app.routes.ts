@@ -3,6 +3,7 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
+import { NewChatComponent } from './modules/admin/chat/chat.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -232,6 +233,19 @@ export const appRoutes: Route[] = [
                             import('app/modules/admin/employee/page.routes'),
                     },
                     {
+                        path: 'chat',
+                        canActivate: [],
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/chat/chat.module'
+                                    ).then((m) => m.NewchatModule),
+                            },
+                        ],
+                    },
+                    {
                         path: 'company',
                         canActivate: [],
                         children: [
@@ -241,6 +255,18 @@ export const appRoutes: Route[] = [
                                     import(
                                         'app/modules/admin/company/company.module'
                                     ).then((m) => m.CompanyModule),
+                            },
+                        ],
+                    },
+                    {
+                        path: 'permission',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/permission/permission.module'
+                                    ).then((m) => m.PermissionModule),
                             },
                         ],
                     },
@@ -268,7 +294,7 @@ export const appRoutes: Route[] = [
                             },
                         ],
                     },
-         
+
 
                     // Apps
                     {

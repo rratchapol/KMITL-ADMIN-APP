@@ -84,7 +84,7 @@ export class AuthService
             {
                 // Store the access token in the local storage
                 this.accessToken = response.token;
-
+                localStorage.setItem('user', JSON.stringify(response.data));
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -144,7 +144,7 @@ export class AuthService
     {
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
-
+        localStorage.removeItem('user');
         // Set the authenticated flag to false
         this._authenticated = false;
 
