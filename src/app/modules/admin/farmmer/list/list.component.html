@@ -79,14 +79,15 @@
             <table class="table row-border hover w-full text-center whitespace-nowrap">
                 <thead class="bg-gray-700 text-black">
                     <tr class="bg-gray-200">
-                        <th class="border-b-2 w-1/8 p-3">เลขบัตรประชาชน</th>
-                        <th class="border-b-2 w-1/8 p-3">ชื่อเกษตรกร</th>
-                        <th class="border-b-2 w-1/8 p-3">เลขที่โควต้า</th>
-                        <th class="border-b-2 w-1/8 p-3">เบอร์ติดต่อ</th>
-                        <th class="border-b-2 w-1/8 p-3">เขต</th>
-                        <th class="border-b-2 w-1/8 p-3">พื้นที่ (ไร่)</th>
-                        <th class="border-b-2 w-1/8 p-3">จำนวนแปลง</th>
-                        <th class="border-b-2 w-1/8 p-3"></th>
+                        <th class="border-b-2 w-1/9 p-3">เลขบัตรประชาชน</th>
+                        <th class="border-b-2 w-1/9 p-3">ชื่อเกษตรกร</th>
+                        <th class="border-b-2 w-1/9 p-3">เลขที่โควต้า</th>
+                        <th class="border-b-2 w-1/9 p-3">เบอร์ติดต่อ</th>
+                        <th class="border-b-2 w-1/9 p-3">เขต</th>
+                        <th class="border-b-2 w-1/9 p-3">พื้นที่ (ไร่)</th>
+                        <th class="border-b-2 w-1/9 p-3">จำนวนแปลง</th>
+                        <th class="border-b-2 w-1/9 p-3">สถานะการบันทึกกิจกรรม</th>
+                        <th class="border-b-2 w-1/9 p-3"></th>
                     </tr>
                 </thead>
                 <tbody *ngIf="farmmer?.length != 0">
@@ -98,6 +99,7 @@
                         <td class="p-3">{{ item.area ?? '-' }}</td>
                         <td class="p-3">{{ item.station_total ?? '-' }}</td>
                         <td class="p-3">{{ item.area_total ?? '-' }}</td>
+                        <td class="p-3">{{ '✓' }}</td>
                         <td class="p-3">
                             <button (click)="goToProfile(item.Quota_id)"
                                 class="border-2 border-green-500 text-green-500 w-full rounded-md p-2 font-bold hover:bg-green-500 hover:text-white">

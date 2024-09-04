@@ -1,4 +1,5 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
+<!-- <div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent"> -->
+<div class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
     <div
         class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-3 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
@@ -272,7 +273,7 @@
                                         </div>
                                         <div class="max-w-md mx-auto my-8 px-4" *ngIf="profile">
                                             <div class="flex flex-col sm:flex-row justify-between ">
-                                                <div class="w-full sm:w-1/2">
+                                                <div class="w-full sm:w-1/2" *ngIf="groupyear && groupyear.length > 0">
                                                     <label for="start-year"
                                                         class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
                                                     <select (ngModelChange)="onStartYearChange($event)" id="start-year"
@@ -281,10 +282,9 @@
                                                         <option *ngFor="let year of groupyear" [value]="year.value">{{
                                                             year.text }}</option>
                                                     </select>
-
                                                 </div>
 
-                                                <div class="w-full sm:w-1/2">
+                                                <div class="w-full sm:w-1/2" *ngIf="groupyear && groupyear.length > 0">
                                                     <label for="end-year"
                                                         class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
                                                     <select (ngModelChange)="onEndYearChange($event)" id="end-year"
@@ -365,7 +365,8 @@
                         </div> -->
                         <div class="w-1/6">
                             <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                <mat-select [formControl]="yearControl" (selectionChange)="onYearChange($event.value)">
+                                <mat-select [formControl]="yearControl" (selectionChange)="onYearChange($event.value)"
+                                    placeholder="เลือกปี">
                                     <mat-option *ngFor="let year of groupyear" [value]="year.value">
                                         {{ year.text }}
                                     </mat-option>
@@ -378,8 +379,9 @@
                                 <div
                                     class="sm:col-span-1 flex flex-col flex-auto p-2 bg-[#ffffff] shadow rounded-md overflow-hidden text-black mb-2">
                                     <div *ngIf="item?.center && item.center[0] !== null; else noData">
-                                        <div *ngFor="let map of item.center; let i = index" class="mb-2">                       
-                                            <img [src]="getMapImageUrl(map[1], map[0], item.co_or_points)" alt="Map image" />
+                                        <div *ngFor="let map of item.center; let i = index" class="mb-2">
+                                            <img [src]="getMapImageUrl(map[1], map[0], item.co_or_points)"
+                                                alt="Map image" />
                                         </div>
                                     </div>
                                     <ng-template #noData>
@@ -453,7 +455,7 @@
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select [formControl]="plotControl">
+                                            <mat-select [formControl]="plotControl" placeholder="แปลงที่ทำ">
                                                 <mat-option [value]="">
                                                     ทั้งหมด
                                                 </mat-option>
@@ -465,7 +467,7 @@
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select [formControl]="activityControl">
+                                            <mat-select [formControl]="activityControl" placeholder="กิจกรรมที่ทำ">
                                                 <mat-option [value]="">
                                                     ทั้งหมด
                                                 </mat-option>
@@ -983,6 +985,7 @@
                                             <mat-date-range-picker #picker></mat-date-range-picker>
                                         </mat-form-field>
                                     </div>
+
                                 </div>
                                 <div class="flex flex-col sm:flex-row items-start">
                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
@@ -1005,7 +1008,7 @@
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select [formControl]="plotControl">
+                                            <mat-select [formControl]="plotControl" placeholder="แปลงที่ทำ">
                                                 <mat-option [value]="">
                                                     ทั้งหมด
                                                 </mat-option>
@@ -1017,7 +1020,7 @@
                                     </div>
                                     <div class="md:w-1/4">
                                         <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense w-full px-2">
-                                            <mat-select [formControl]="activityControl">
+                                            <mat-select [formControl]="activityControl" placeholder="กิจกรรมที่ทำ">
                                                 <mat-option [value]="">
                                                     ทั้งหมด
                                                 </mat-option>
@@ -1537,9 +1540,9 @@
                 </mat-tab> -->
                 <mat-tab label="CCS">
                     <ng-template matTabContent>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-6 w-full min-w-0">
                             <div
-                                class="sm:col-span-2 md:col-span-3 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex flex-col sm:flex-row items-start justify-between">
                                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                     </div>
@@ -1549,7 +1552,7 @@
                                 </div>
                             </div>
                             <div
-                                class="sm:col-span-1 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                class="sm:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                                 <div class="flex flex-col sm:flex-row items-center justify-between mb-3">
                                     <div
                                         class="flex items-center justify-center text-lg font-medium tracking-tight leading-6 truncate w-full">
