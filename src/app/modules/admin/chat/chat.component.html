@@ -38,7 +38,7 @@
                     <div #chatContainer class="overflow-y-auto p-4" style="height: 400px;">
                         <div *ngFor="let msg of chat_msgs; let i = index" (contextmenu)="onRightClick($event, i)">
                             <!-- Incoming message -->
-                            <div *ngIf="msg.user_id === null; else otherMsg" class="flex justify-start mb-4">
+                            <div *ngIf="msg.user_id !== this.userdata.id; else otherMsg" class="flex justify-start mb-4">
                                 <div *ngIf="msg.type === 'text'" class="bg-gray-100 rounded-lg p-3 text-black">
                                     {{ msg.message }}
                                 </div>
@@ -53,7 +53,7 @@
                             <!-- Outgoing message -->
                             <ng-template #otherMsg>
                                 <div class="flex justify-end mb-4">
-                                    <div class="bg-blue-500 text-white rounded-lg p-3">
+                                    <div *ngIf="msg.user_id === this.userdata.id; else otherMsg" class="bg-blue-500 text-white rounded-lg p-3">
                                         <p *ngIf="msg.type === 'text'">{{ msg.message }}</p>
                                         <a *ngIf="msg.type === 'image'" [href]="this.env + msg.message" target="_blank">
                                             <img [src]="this.env + msg.message" class="rounded-lg" style="max-width: 20vw; max-height: 30vh;">
