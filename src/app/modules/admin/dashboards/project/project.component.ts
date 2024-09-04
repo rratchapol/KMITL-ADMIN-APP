@@ -1,9 +1,9 @@
-import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, formatDate, NgClass, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatOptionModule, MatRippleModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatOptionModule, MatRippleModule, NativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
@@ -47,7 +47,7 @@ import {
     ApexTooltip
 } from "ng-apexcharts";
 // import { log } from 'console';
-
+import {  MAT_DATE_FORMATS } from '@angular/material/core';
 export type ChartsOptions = {
     series: ApexAxisChartSeries;
     chart: ApexChart;
@@ -66,6 +66,28 @@ export type ChartOptions = {
     responsive: ApexResponsive[];
     labels: any;
 };
+
+export class ThaiDateAdapter extends NativeDateAdapter {
+    format(date: Date, displayFormat: string): string {
+      // กำหนดรูปแบบที่ต้องการที่นี่
+      return formatDate(date, 'd/MM/yyyy', 'th-TH');
+    }
+  
+    // สามารถปรับแต่งได้เพิ่มเติมตามต้องการ
+  }
+
+  export const THAI_DATE_FORMATS = {
+    parse: {
+      dateInput: 'LL',
+    },
+    display: {
+      dateInput: 'd/MM/yyyy', // แสดงวันที่ในรูปแบบวัน/เดือน/ปี
+      monthYearLabel: 'MMMM yyyy',
+      dateA11yLabel: 'd MMMM yyyy',
+      monthYearA11yLabel: 'MMMM yyyy',
+    },
+  };
+
 @Component({
     selector: 'project',
     templateUrl: './project.component.html',
@@ -105,7 +127,7 @@ export type ChartOptions = {
         FormsModule,
         NgApexchartsModule
     ],
-    providers: [ThaiDatePipe, DatePipe]
+    providers: [ThaiDatePipe, DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'th-TH' },{ provide: MAT_DATE_FORMATS, useValue: THAI_DATE_FORMATS }]
 })
 export class ProjectComponent implements OnInit, OnDestroy {
     dtOptions: DataTables.Settings = {};
@@ -666,15 +688,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
             // });
 
             this._farmmerService.groupyear(this.Id).subscribe((resp: any) => {
-                this.groupyear = resp
-                console.log("ดู groupyear", this.groupyear);
-                this.firstYear = this.groupyear[0];
-                this.lastYear = this.groupyear[this.groupyear.length - 1];
-                this._farmmerService.profile(this.Id, this.firstYear.value, this.lastYear.value).subscribe((resp: any) => {
-                    this.profile = resp
-                    console.log("ดู กิจกรรมมม", this.profile);
-                    this.cdr.detectChanges();
-                });
+                if (resp && resp.length > 0) {
+                    this.groupyear = resp
+                    console.log("ดู groupyear", this.groupyear);
+                    this.firstYear = this.groupyear[0];
+                    this.lastYear = this.groupyear[this.groupyear.length - 1];
+                    this._farmmerService.profile(this.Id, this.firstYear.value, this.lastYear.value).subscribe((resp: any) => {
+                        this.profile = resp
+                        console.log("ดู กิจกรรมมม", this.profile);
+                        this.cdr.detectChanges();
+                    });
+                }
             });
 
         }
