@@ -118,7 +118,7 @@ export class ConfignotiComponent implements OnInit {
                     .Savedata(this.addForm.value)
                     .subscribe({
                         next: (resp: any) => {
-                            window.location.reload()
+                            this.addForm.reset()
                         },
 
                         error: (err: any) => {
