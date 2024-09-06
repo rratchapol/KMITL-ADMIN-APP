@@ -16,8 +16,8 @@ export class NewsService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/frammer_page', dataTablesParameters)
-            // .post('http://192.168.1.162/trr-api/public/api/frammer_page', dataTablesParameters)
+            // .post('https://asha-tech.co.th/trr-api/public/api/frammer_page', dataTablesParameters)
+            .post(environment.baseURL + 'api/frammer_page', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -97,7 +97,7 @@ export class NewsService {
     getplotframmer(id:any): Observable<any> {
         const currentYear = new Date().getFullYear();
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/get_frammer_area', { 
+            .post(environment.baseURL + '/api/get_frammer_area' , { 
                 frammer_id: id,
                 year: currentYear
             })
@@ -113,8 +113,8 @@ export class NewsService {
         //     activity = "";
         // }
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
-            // .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', {
+            // .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
+            .post(environment.baseURL + '/api/factoryactivity_page', {
                 columns: [],
                 length: 10,
                 order: [
@@ -143,8 +143,8 @@ export class NewsService {
 
     myplot(id: number, begin_date: any, end_date:any): Observable<any> {
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
-            // .post('http://192.168.1.162/trr-api/public/api/factoryactivity_page', {
+            // .post('https://asha-tech.co.th/trr-api/public/api/factoryactivity_page',{
+            .post(environment.baseURL + '/api/factoryactivity_page', {
                 columns: [],
                 length: 10,
                 order: [
