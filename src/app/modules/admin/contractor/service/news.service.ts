@@ -15,7 +15,8 @@ export class NewsService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post('https://asha-tech.co.th/trr-api/public/api/contractor_page', dataTablesParameters)
+            // .post('https://asha-tech.co.th/trr-api/public/api/contractor_page', dataTablesParameters)
+            .post(environment.baseURL + '/api/contractor_page', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
