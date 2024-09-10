@@ -272,31 +272,28 @@
                                             <img [src]="spinner" alt="Loading..." class="my-8 ml-100">
                                         </div>
                                         <div class="max-w-md mx-auto my-8 px-4" *ngIf="profile">
-                                            <div class="flex flex-col sm:flex-row justify-between ">
+                                            <div class="flex flex-col sm:flex-row justify-between gap-4">
                                                 <div class="w-full sm:w-1/2" *ngIf="groupyear && groupyear.length > 0">
-                                                    <label for="start-year"
-                                                        class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
+                                                    <label for="start-year" class="block mb-2 font-bold text-gray-700">ปีเริ่มต้น:</label>
                                                     <select (ngModelChange)="onStartYearChange($event)" id="start-year"
                                                         [(ngModel)]="startYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
-                                                            year.text }}</option>
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{ year.text }}</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="w-full sm:w-1/2" *ngIf="groupyear && groupyear.length > 0">
-                                                    <label for="end-year"
-                                                        class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
+                                                    <label for="end-year" class="block mb-2 font-bold text-gray-700">ปีสิ้นสุด:</label>
                                                     <select (ngModelChange)="onEndYearChange($event)" id="end-year"
                                                         [(ngModel)]="endYear"
                                                         class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{
-                                                            year.text }}
-                                                        </option>
+                                                        <option *ngFor="let year of groupyear" [value]="year.value">{{ year.text }}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
+
+
 
 
 
@@ -1532,7 +1529,7 @@
                                         <p>{{map[0] ?? ''}}</p>
                                         <p>{{map[1] ?? ''}}</p>
                                         <img [src]="getMapImageUrl(map[1], map[0])" alt="Map image" />
-                                        <p class="mb-1  text-white border-t-[1px]"></p>                                       
+                                        <p class="mb-1  text-white border-t-[1px]"></p>
                                     </div>
                             </div>
                         </div>
