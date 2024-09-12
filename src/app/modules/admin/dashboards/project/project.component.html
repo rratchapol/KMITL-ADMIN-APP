@@ -137,12 +137,12 @@
                             <div
                                 class="sm:col-span-2 md:col-span-4 flex flex-col md:flex-row p-8 bg-card shadow rounded-2xl overflow-hidden">
                                 <ng-container *ngIf="dbincome">
-                                    <ng-container *ngIf="dbincome.Income == 0 && dbincome.Deduct == 0">
+                                    <ng-container *ngIf="dbincome.Income == 0 && totalAmountPaid == 0">
                                         <div class="flex flex-col items-center justify-center w-1/4">
                                             <img [src]="chart0" alt="Loading..." class="w-full h-auto p-1">
                                         </div>
                                     </ng-container>
-                                    <ng-container *ngIf="dbincome.Income > 0 || dbincome.Deduct > 0">
+                                    <ng-container *ngIf="dbincome.Income > 0 || totalAmountPaid > 0">
                                         <div class="flex flex-col items-center justify-center w-2/5"
                                             *ngIf="chartOptions && chartOptions.series && chartOptions.series.length > 0">
                                             <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
@@ -157,7 +157,7 @@
                                         class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
                                         <div class="text-sm font-medium text-center">รายรับ</div>
                                         <div class="text-xl font-semibold">
-                                            {{income}}
+                                            {{ totalAmountPaid | number: '1.0-0' }}
                                         </div>
                                     </div>
                                     <!-- รายจ่าย -->
@@ -165,7 +165,7 @@
                                         class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
                                         <div class="text-sm font-medium text-center">รายจ่าย</div>
                                         <div class="text-xl font-semibold">
-                                            {{deduct}}
+                                            {{deduct | number: '1.0-0' }}
                                         </div>
                                     </div>
                                     <!-- ยอดรวม -->
@@ -173,7 +173,7 @@
                                         class="flex flex-col items-center justify-center py-3 px-4 rounded-2xl bg-blue-900 text-white w-full md:w-1/3">
                                         <div class="text-sm font-medium text-center">ยอดรวม</div>
                                         <div class="text-xl font-semibold">
-                                            {{income - deduct}}
+                                            {{totalAmountPaid - deduct | number: '1.0-0' }}
                                         </div>
                                     </div>
                                 </div>
