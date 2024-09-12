@@ -328,6 +328,17 @@ export class NewsService {
             .pipe();
     }
 
+    receive(Id: any): Observable<any> {
+        return this._httpClient
+            .post('https://canegrow.com:28099/api/queue_quota', {
+                FacID: 1,
+                QuotaID: Id,
+                Begin_date: '12/01/2023',
+                End_date: '03/31/2024',
+            })
+            .pipe();
+    }
+
     image(formData: FormData): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/upload_images', formData)

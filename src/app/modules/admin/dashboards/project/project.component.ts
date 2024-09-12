@@ -342,6 +342,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     income: any;
     deduct: any;
     profiles: any;
+    totalAmountPaid: any;
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.Id = params['id'];
@@ -358,6 +359,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
         
         this._farmmerService.dashboardincomededuct(this.Id).subscribe((resp: any) => {
             this.dbincome = resp.data;
+            // this._farmmerService.receive(this.Id).subscribe((resp: any) => {
+            //     this.receive = resp.data
+            //     console.log("ดู รายรับ (receive)", this.receive);
+            //     this.totalAmountPaid = this.receive.reduce((sum: number, item: any) => sum + item.amountpaid_cane, 0);
+            //     console.log("รวม amountpaid_cane ทั้งหมด:", this.totalAmountPaid);
+            //     this.cdr.detectChanges();
+            // });
             if (this.dbincome && this.dbincome.Income && this.dbincome.Income.length > 0 && this.dbincome.Deduct && this.dbincome.Deduct.length > 0) {
                 const income = parseFloat(this.dbincome.Income[0]) || 0;
                 const deduct = parseFloat(this.dbincome.Deduct[0]) || 0;
@@ -365,7 +373,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.deduct = deduct;
                 console.log("ดู กิจกรรมมม", income, deduct);
 
-                if (income === 0 && deduct === 0) {
+                if (this.totalAmountPaid === 0 && deduct === 0) {
                     this.chartOptions = {
                         series: [0, 0],
                         chart: {
@@ -388,7 +396,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     };
                 } else {
                     this.chartOptions = {
-                        series: [deduct, income],
+                        series: [deduct, this.totalAmountPaid],
                         chart: {
                             type: "donut"
                         },
@@ -621,6 +629,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 },
             },
         };
+
+
+        this._farmmerService.receive(this.Id).subscribe((resp: any) => {
+            this.receive = resp.data
+            console.log("ดู รายรับ (receive)", this.receive);
+            this.totalAmountPaid = this.receive.reduce((sum: number, item: any) => sum + item.amountpaid_cane, 0);
+            console.log("รวม amountpaid_cane ทั้งหมด:", this.totalAmountPaid);
+            this.cdr.detectChanges();
+        });
     }
 
 
@@ -657,6 +674,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     dbactivity: any;
     dbincome: any;
     dbweekly: any;
+    receive: any;
     onTabChange(event: any) {
         const selectedTabIndex = event.index;
         const tabLabel = event.tab.textLabel;
@@ -677,6 +695,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
             this._farmmerService.dashboardweekly(this.Id).subscribe((resp: any) => {
                 this.dbweekly = resp.data
                 console.log("ดู กิจกรรมมม", this.dbweekly);
+                this.cdr.detectChanges();
+            });
+            this._farmmerService.receive(this.Id).subscribe((resp: any) => {
+                this.receive = resp.data
+                console.log("ดู รายรับ (receive)", this.receive);
+                const totalAmountPaid = this.receive.reduce((sum: number, item: any) => sum + item.amountpaid_cane, 0);
+                console.log("รวม amountpaid_cane ทั้งหมด:", totalAmountPaid);
                 this.cdr.detectChanges();
             });
         }
