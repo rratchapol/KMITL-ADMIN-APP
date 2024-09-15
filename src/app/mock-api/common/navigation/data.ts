@@ -24,6 +24,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/admin/journal/list',
     },
     {
+        id: 'admin.faq',
+        title: 'FAQ',
+        type: 'basic',
+        icon: 'heroicons_outline:academic-cap',
+        link: '/admin/faq/list',
+    },
+    {
         id: 'contractor',
         title: 'ผู้รับเหมา',
         type: 'collapsable',

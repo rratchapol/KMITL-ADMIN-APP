@@ -201,6 +201,19 @@ export const appRoutes: Route[] = [
                         ],
                     },
                     {
+                        path: 'faq',
+                        canActivate: [],
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/faq/faq.module'
+                                    ).then((m) => m.FaqModule),
+                            },
+                        ],
+                    },
+                    {
                         path: 'contractor',
                         canActivate: [],
                         children: [
