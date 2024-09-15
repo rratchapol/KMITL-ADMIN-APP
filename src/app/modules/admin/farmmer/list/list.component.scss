@@ -25,3 +25,21 @@ table {
   th.mat-sort-header-sorted {
     color: black;
   }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columns of equal width */
+    grid-template-rows: repeat(2, 1fr); /* 2 rows of equal height */
+    gap: 10px; /* Space between grid items */
+  }
+  
+  .grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    box-sizing: border-box; /* Ensure padding and border are included in the element’s total width and height */
+  }
+  

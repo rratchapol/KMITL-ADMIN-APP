@@ -42,7 +42,7 @@ export class ListComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement!: DataTableDirective;
     dataRow: any = [];
-
+    numbers: number[] = [];
     displayedColumns: string[] = [
         'manage',
         'no',
@@ -63,6 +63,9 @@ export class ListComponent implements OnInit {
     searchTerm: string = '';
     currentPage: number = 1;
     totalPages: number = 1;
+    quotas: any[] = []
+    months: any[] = []
+
     constructor(
         private dialog: MatDialog,
         private _liveAnnouncer: LiveAnnouncer,
@@ -77,9 +80,20 @@ export class ListComponent implements OnInit {
         });
         this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
             this.farmmer = resp;
-            console.log("farmer ok", this.farmmer)
+            this.quotas = [];
+            this.farmmer.forEach(element => {
+                this.quotas.push(element.Quota_id);
+
+            });
+
+            this._Service.getEvents(this.quotas).subscribe((resp: any) => {
+                this.months = resp;
+                console.log(this.months);
+            });
             this._changeDetectorRef.markForCheck();
         });
+        this.numbers = Array.from({ length: 12 }, (_, i) => i); // Creates an array [0, 1, 2, ..., 12]
+
     }
 
     ngOnInit(): void {
@@ -93,7 +107,16 @@ export class ListComponent implements OnInit {
     searchFarmers(): void {
         this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
             this.farmmer = resp;
-            console.log("farmer ok", this.farmmer);
+            this.quotas = [];
+            this.farmmer.forEach(element => {
+                this.quotas.push(element.Quota_id);
+
+            });
+
+            this._Service.getEvents(this.quotas).subscribe((resp: any) => {
+                this.months = resp;
+                console.log(this.months);
+            });
             this._changeDetectorRef.markForCheck();
         });
     }
@@ -108,6 +131,17 @@ export class ListComponent implements OnInit {
     loadFarmers(): void {
         this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
             this.farmmer = resp;
+            this.quotas = [];
+            this.farmmer.forEach(element => {
+                this.quotas.push(element.Quota_id);
+
+            });
+
+            this._Service.getEvents(this.quotas).subscribe((resp: any) => {
+                this.months = resp;
+                console.log(this.months);
+            });
+            // console.log(this.quotas);
             console.log("เปลี่ยนหน้า page, this.farmmer", this.farmmer);
             this.totalPages = resp.length
             console.log("เปลี่ยนหน้า page, this.farmmer", this.totalPages);
@@ -366,5 +400,10 @@ export class ListComponent implements OnInit {
             })
             .afterClosed()
             .subscribe(() => { });
+    }
+
+    getMonthClass(data: any): string {
+        console.log(data);
+        return data === false ? 'bg-red' : 'bg-green';
     }
 }

@@ -72,10 +72,10 @@
                     </tr>
                 </tbody> -->
 
-                <div class="flex justify-end mb-4">
-                    <input type="text" placeholder="ค้นหา..." class="border p-2 rounded-md w-1/5"
-                           [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)">
-                </div>
+            <div class="flex justify-end mb-4">
+                <input type="text" placeholder="ค้นหา..." class="border p-2 rounded-md w-1/5" [(ngModel)]="searchTerm"
+                    (ngModelChange)="onSearchChange($event)">
+            </div>
             <table class="table row-border hover w-full text-center whitespace-nowrap">
                 <thead class="bg-gray-700 text-black">
                     <tr class="bg-gray-200">
@@ -99,7 +99,49 @@
                         <td class="p-3">{{ item.area ?? '-' }}</td>
                         <td class="p-3">{{ item.station_total ?? '-' }}</td>
                         <td class="p-3">{{ item.area_total ?? '-' }}</td>
-                        <td class="p-3">{{ '✓' }}</td>
+                        <td class="p-3">
+                            <div class="grid-container">
+                                <ng-container *ngFor="let month of months; let n = index">
+                                    <ng-container *ngIf="month.quota_id == item.Quota_id">
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jan == true">1</div>
+                                        <div class="grid-item" *ngIf="month?.months?.jan == false">1</div>
+                                        
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.feb == true">2</div>
+                                        <div class="grid-item" *ngIf="month?.months?.feb == false">2</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.mar == true">3</div>
+                                        <div class="grid-item" *ngIf="month?.months?.mar == false">3</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.apr == true">4</div>
+                                        <div class="grid-item" *ngIf="month?.months?.apr == false">4</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.may == true">5</div>
+                                        <div class="grid-item" *ngIf="month?.months?.may == false">5</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jun == true">6</div>
+                                        <div class="grid-item" *ngIf="month?.months?.jun == false">6</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jul == true">7</div>
+                                        <div class="grid-item" *ngIf="month?.months?.jul == false">7</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.aug == true">8</div>
+                                        <div class="grid-item" *ngIf="month?.months?.aug == false">8</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.sep == true">9</div>
+                                        <div class="grid-item" *ngIf="month?.months?.sep == false">9</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.oct == true">10</div>
+                                        <div class="grid-item" *ngIf="month?.months?.oct == false">10</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.nov == true">11</div>
+                                        <div class="grid-item" *ngIf="month?.months?.nov == false">11</div>
+
+                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.dec == true">12</div>
+                                        <div class="grid-item" *ngIf="month?.months?.dec == false">12</div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </td>
                         <td class="p-3">
                             <button (click)="goToProfile(item.Quota_id)"
                                 class="border-2 border-green-500 text-green-500 w-full rounded-md p-2 font-bold hover:bg-green-500 hover:text-white">
@@ -117,18 +159,16 @@
             </table>
 
             <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
-                <button *ngIf="currentPage >= 2"
-                    class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
+                <button *ngIf="currentPage >= 2" class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
                     (click)="changePage(currentPage - 1)" [disabled]="currentPage <= 1">&laquo;
                 </button>
                 <p class="border py-2 px-3 rounded ">{{ currentPage }}</p>
-                <button *ngIf="farmmer?.length == 10"
-                    class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
-                    (click)="changePage(currentPage + 1)" >
+                <button *ngIf="farmmer?.length == 10" class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
+                    (click)="changePage(currentPage + 1)">
                     &raquo;
                 </button>
             </div>
-            
+
 
         </div>
     </div>
