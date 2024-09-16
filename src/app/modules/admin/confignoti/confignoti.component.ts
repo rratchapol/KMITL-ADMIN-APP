@@ -5,11 +5,13 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ConfignotiService } from './confignoti.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-confignoti',
     templateUrl: './confignoti.component.html',
     styleUrls: ['./confignoti.component.scss'],
+    providers: [DatePipe],
 })
 export class ConfignotiComponent implements OnInit {
     isLoading: boolean = false;
@@ -48,7 +50,8 @@ export class ConfignotiComponent implements OnInit {
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: ConfignotiService,
         public activatedRoute: ActivatedRoute,
-        private http: HttpClient
+        private http: HttpClient,
+        private datePipe: DatePipe
     ) {
         this.addForm = this.formBuilder.group({
             title: '',
@@ -81,7 +84,7 @@ export class ConfignotiComponent implements OnInit {
 
     addDate(data?: any) {
         const d = this.formBuilder.group({
-          day: [new Date()],
+          day: '',
           time: this.formBuilder.array([]),
         });
 
@@ -96,7 +99,7 @@ export class ConfignotiComponent implements OnInit {
       addTime(data?: any) {
         const formvalueday = data.get("time") as FormArray;
         const t = this.formBuilder.group({
-          hour: [new Date()],
+          hour: '',
         });
 
         if (data) {
@@ -119,7 +122,18 @@ export class ConfignotiComponent implements OnInit {
         f.removeAt(index);
       }
     Submit(): void {
-        console.log(this.addForm.value);
+
+        const formattedData = this.addForm.value.date.map((group: any) => {
+            return {
+              ...group,
+              day: this.datePipe.transform(group.day, 'yyyy-MM-dd')  // แปลงวันที่เป็นรูปแบบ yyyy-MM-dd
+            };
+          });
+
+          const formData = {
+            ...this.addForm.value,
+            date: formattedData  // ใช้ข้อมูลที่แปลงแล้ว
+          };
 
         const confirmation = this._fuseConfirmationService.open({
             title: 'บันทึกข้อมูล',
@@ -156,7 +170,7 @@ export class ConfignotiComponent implements OnInit {
                 //     }
                 // );
                 this._service
-                    .Savedata(this.addForm.value)
+                    .Savedata(formData)
                     .subscribe({
                         next: (resp: any) => {
                             // this.addForm.reset()
