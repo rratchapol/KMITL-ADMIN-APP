@@ -1,59 +1,39 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { PdpaService } from '../service/pdpa.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ConfignotiService } from './confignoti.service';
 
 @Component({
-    selector: 'app-confignoti',
-    templateUrl: './confignoti.component.html',
-    styleUrls: ['./confignoti.component.scss'],
+    selector: 'app-edit-pdpa',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.scss'],
 })
-export class ConfignotiComponent implements OnInit {
+export class EditComponent implements OnInit {
     isLoading: boolean = false;
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     addForm: FormGroup;
     permissiondata: any[];
     item: any;
     imageUrls: string[] = [];
-    config = {
-        placeholder: '',
-        tabsize: 2,
-        height: '200px',
-        uploadImagePath: '/api/upload',
-        toolbar: [
-            ['misc', ['codeview', 'undo', 'redo']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['fontsize', ['fontname', 'fontsize']],
-            ['para', ['ul', 'ol', 'paragraph', 'height']],
-            ['insert'],
-        ],
-        fontNames: [
-            'Helvetica',
-            'Arial',
-            'Arial Black',
-            'Comic Sans MS',
-            'Courier New',
-            'Roboto',
-            'Times',
-        ],
-    };
     constructor(
         private _router: Router,
         private formBuilder: FormBuilder,
         private _fuseConfirmationService: FuseConfirmationService,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _service: ConfignotiService,
+        private _service: PdpaService,
         public activatedRoute: ActivatedRoute,
         private http: HttpClient
     ) {
         this.addForm = this.formBuilder.group({
+            id: '',
             title: '',
-            body: '',
-            date: this.formBuilder.array([]),
+            detail: '',
+            image: '',
+            notify_status: '',
+            status: '',
         });
     }
 
@@ -61,13 +41,19 @@ export class ConfignotiComponent implements OnInit {
         this.activatedRoute.params.subscribe((params) => {
             // console.log(params);
             const id = params.id;
-
+            this._service.getById(id).subscribe((resp: any) => {
+                this.item = resp;
+                this.addForm.patchValue({
+                    ...this.item,
+                });
+                console.log(this.item.image);
+                // this.files.push(this.item.image);
+                this.imageUrls.push(this.item.image);
+            });
         });
         // สร้าง Reactive Form
     }
-    get date() {
-        return this.addForm.get("date") as FormArray;
-      }
+
     selectedFile: File = null;
     onFileChange(event) {
         this.selectedFile = (event.target as HTMLInputElement).files[0];
@@ -79,51 +65,12 @@ export class ConfignotiComponent implements OnInit {
         // this.addForm.get('image').updateValueAndValidity();
     }
 
-    addDate(data?: any) {
-        const d = this.formBuilder.group({
-          day: [new Date()],
-          time: this.formBuilder.array([]),
-        });
-
-        if (data) {
-          d.patchValue({
-            ...data,
-          });
-        }
-
-        this.date.push(d);
-      }
-      addTime(data?: any) {
-        const formvalueday = data.get("time") as FormArray;
-        const t = this.formBuilder.group({
-          hour: [new Date()],
-        });
-
-        if (data) {
-          t.patchValue({
-            ...data,
-          });
-        }
-        formvalueday.push(t);
-      }
-      deletedate(){
-
-      }
-      removeDate(index: number) {
-        this.date.removeAt(index);
-      }
-      removeTime(form: FormGroup, index: number) {
-        console.log(form,index)
-        const f = form.get("time") as FormArray;
-
-        f.removeAt(index);
-      }
     Submit(): void {
         console.log(this.addForm.value);
 
         const confirmation = this._fuseConfirmationService.open({
-            title: 'บันทึกข้อมูล',
-            message: 'คุณต้องการบันทึกข้อมูลใช่หรือไม่ ?',
+            title: 'แก้ไขข้อมูล',
+            message: 'คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ?',
             icon: {
                 show: false,
                 name: 'heroicons_outline:exclamation',
@@ -147,19 +94,28 @@ export class ConfignotiComponent implements OnInit {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                // const formData = new FormData();
-                // Object.entries(this.addForm.value).forEach(
-                //     ([key, value]: any[]) => {
-                //         if (value !== '' && value !== 'null' && value !== null){
-                //             formData.append(key, value);
-                //         }
-                //     }
-                // );
+                const formData = new FormData();
+                Object.entries(this.addForm.value).forEach(
+                    ([key, value]: any[]) => {
+                        if (
+                            value !== '' &&
+                            value !== 'null' &&
+                            value !== null
+                        ) {
+                            formData.append(key, value);
+                        }
+                        if (key === 'image') {
+                            formData.append(key, this.selectedFile);
+                        }
+                    }
+                );
                 this._service
-                    .Savedata(this.addForm.value)
+                    .update(formData)
                     .subscribe({
                         next: (resp: any) => {
-                            // this.addForm.reset()
+                            this._router
+                                .navigateByUrl('news/list')
+                                .then(() => {});
                         },
 
                         error: (err: any) => {
@@ -198,14 +154,18 @@ export class ConfignotiComponent implements OnInit {
     }
 
     Cancel(): void {
-        this._router.navigateByUrl('config/edit/1').then(() => {});
+        this._router.navigateByUrl('news/list').then(() => {});
     }
 
     files: File[] = [];
     url_logo: string;
     onSelect(event: { addedFiles: File[] }): void {
+        this.files = [];
+
+        // เพิ่มรูปใหม่
+        const newFiles = event.addedFiles;
+        this.files.push(...newFiles);
         this.files.push(...event.addedFiles);
-        this.imageUrls = [];
         const file = this.files[0];
         this.addForm.patchValue({
             image: file,
@@ -219,6 +179,6 @@ export class ConfignotiComponent implements OnInit {
         }
     }
     backTo() {
-        this._router.navigate(['config/edit/1']);
+        this._router.navigate(['news/list']);
     }
 }

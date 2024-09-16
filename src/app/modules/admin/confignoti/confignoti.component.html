@@ -47,7 +47,59 @@
                             </mat-form-field>
                         </div>
                     </div>
+                    <div class="p-fluid" [formArrayName]="'date'">
+                        <div class="flex justify-content-between">
+                          <h1 class="mt-2 text-2xl"><b>วันที่ต้องการแจ้งเตือน</b></h1>
 
+                          <button class="ml-12 mb-10" mat-flat-button [color]="'primary'" (click)="addDate()">
+                            เพิ่มวันที่  </button>
+
+                        </div>
+
+                        <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2" *ngFor="let day of date.controls; let i = index" [formGroupName]="i">
+                            <div class="flex justify-between items-center">
+                                <!-- ฟอร์มเลือกวันที่ -->
+                                <mat-form-field appearance="fill" class="md:w-1/2 px-3">
+                                  <mat-label>วันที่แจ้งเตือน</mat-label>
+                                  <input matInput [matDatepicker]="picker" formControlName="day">
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                                <!-- ปุ่มลบวันที่ -->
+                                <div class="field col-3 pt-5">
+                                  <button mat-flat-button [color]="'warn'" (click)="removeDate(i)">
+                                    ลบ
+                                  </button>
+                                </div>
+
+                        </div>
+                     <div class="p-fluid" [formArrayName]="'time'">
+                        <div class="flex justify-content-between">
+                          <h1 class="mt-2 text-xl"><b>เวลา</b></h1>
+                          <button class="ml-12 mb-10" mat-flat-button [color]="'primary'" (click)="addTime(day)">
+                            เพิ่มเวลา  </button>
+
+                        </div>
+
+                        <div class="card" *ngFor="let time of day.controls.time.controls; let j = index" [formGroupName]="j">
+                            <div class="flex justify-between items-center">
+                            <div class="md:w-1/2 px-3">
+                                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
+                                    <mat-label>เวลาที่แจ้งเตือน</mat-label>
+                                    <input matInput type="time"  [formControlName]="'hour'">
+                                </mat-form-field>
+                            </div>
+                            <div class="field col-3 pt-5">
+                                <button mat-flat-button [color]="'warn'" (click)="removeTime(day,j)">
+                                  ลบ
+                                </button>
+                              </div>
+                        </div>
+                    </div>
+                    </div>
+                        </div>
+                    </div>
                     <div mat-dialog-actions class="flex justify-end mt-2">
                         <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Submit()">
                                 บันทึกข้อมูล

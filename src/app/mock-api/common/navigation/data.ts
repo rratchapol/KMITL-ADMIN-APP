@@ -62,25 +62,22 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'admin.chat',
-        title: 'แจ้งเตือน',
-        type: 'basic',
-        icon: 'heroicons_outline:bell',
-        link: '/admin/confignoti',
-    },
-    {
-        id: 'admin.user',
-        title: 'การจัดการผู้ใช้',
-        type: 'basic',
+        title: 'ตั้งค่าระบบ',
         icon: 'heroicons_outline:pencil-square',
-        link: '/admin/employee/list',
-    },
-    {
-        id: 'admin.user',
-        title: 'ข้อมูลบริษัท',
         type: 'collapsable',
-        icon: 'heroicons_outline:pencil-square',
-        // link: '/admin/employee/detail',
         children: [
+            {
+                id: 'admin.chat',
+                title: 'แจ้งเตือน',
+                type: 'basic',
+                link: '/admin/confignoti',
+            },
+            {
+                id: 'admin.chat',
+                title: 'PDPA',
+                type: 'basic',
+                // link: '/admin/confignoti',
+            },
             {
                 id: 'admin.contractor-type',
                 title: 'จัดการข้อมูลโรงงาน',
@@ -93,8 +90,25 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/admin/company/detail',
             },
+            {
+                id: 'admin.user',
+                title: 'จัดการผู้ใช้งาน',
+                type: 'basic',
+                link: '/admin/employee/list',
+            },
         ],
     },
+
+
+    // {
+    //     id: 'admin.user',
+    //     title: 'ข้อมูลบริษัท',
+    //     type: 'collapsable',
+    //     icon: 'heroicons_outline:pencil-square',
+    //     children: [
+
+    //     ],
+    // },
 
 ];
 export const compactNavigation: FuseNavigationItem[] = [

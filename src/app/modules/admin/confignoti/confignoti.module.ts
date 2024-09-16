@@ -21,6 +21,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ConfignotiComponent } from './confignoti.component';
 import { FormsModule } from '@angular/forms';
 import { ConfignotiRoute } from './confignoti.routes';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
 // import moment from 'moment';
 
@@ -33,6 +34,11 @@ import { ConfignotiRoute } from './confignoti.routes';
         ShareModule,
         FormsModule,
         NgxDropzoneModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
     ],
+    providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'th-TH' },  // ตั้งค่า Locale ให้เป็นภาษาไทย
+      ],
 })
 export class ConfignotiModule {}
