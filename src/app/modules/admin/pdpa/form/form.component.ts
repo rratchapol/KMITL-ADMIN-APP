@@ -68,8 +68,7 @@ export class FormComponent implements OnInit {
             id: '',
             title: '',
             detail: '<p>Hello Quill</p>..',
-            image: '',
-            notify_status: '',
+            status: '',
         });
     }
 
@@ -86,9 +85,7 @@ export class FormComponent implements OnInit {
                         ...this.item,
                     });
 
-                    this.addForm.patchValue({
-                        image: '',
-                    });
+          
                     // console.log(this.item.image);
                     // this.files.push(this.item.image);
                     if (this.item.image) this.uploadedImages = this.item.image;
@@ -99,8 +96,7 @@ export class FormComponent implements OnInit {
                 id: '',
                 title: '',
                 detail: '<p>กรอกรายระเอียด</p>',
-                image: '',
-                notify_status: '1',
+                status: '1',
             });
         }
     }
