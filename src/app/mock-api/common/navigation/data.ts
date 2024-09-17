@@ -76,7 +76,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'admin.chat',
                 title: 'PDPA',
                 type: 'basic',
-                // link: '/admin/confignoti',
+                link: '/admin/pdpa/list',
             },
             {
                 id: 'admin.contractor-type',

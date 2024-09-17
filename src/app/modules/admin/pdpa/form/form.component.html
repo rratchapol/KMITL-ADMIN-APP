@@ -9,10 +9,10 @@
             <!-- Title -->
             <div class="flex flex-row mt-2 justify-between">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="!this.Id">
-                    เพิ่มข่าวสาร
+                    เพิ่ม PDPA
                 </h2>
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate" *ngIf="this.Id">
-                    แก้ไขข่าวสาร
+                    แก้ไข PDPA
                 </h2>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     <div class="-mx-3 md:flex mb-6">
                         <div class="md:w-full px-3">
                             <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                                <mat-label>หัวข้อข่าวสาร</mat-label>
+                                <mat-label>หัวข้อ PDPA</mat-label>
                                 <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
                             </mat-form-field>
                         </div>
@@ -42,26 +42,13 @@
 
                         </div>
                     </div>
-                    <div class="md:w-full">
-
-                        <div class="flex items-center justify-center w-full">
-                            <ngx-dropzone (change)="onSelect($event)" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                <ngx-dropzone-label *ngIf="!uploadedImages">เลือกรูปภาพปกข่าวสาร</ngx-dropzone-label>
-                                <img *ngIf="uploadedImages" src="{{ uploadedImages }}" class="w-[120px]" alt="Default Image">
-
-                                <div *ngFor="let f of files">
-                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)" class="w-full"></ngx-dropzone-image-preview>
-                                </div>
-                            </ngx-dropzone>
-
-                        </div>
-                    </div>
+                  
                     <div class="mb-4 mt-4">
                         <label class=" block text-sm font-medium text-gray-700  pl-4">สถานะ</label>
                         <div class="mt-1 ">
                             <mat-radio-group formControlName="notify_status">
-                                <mat-radio-button value="1">แจ้งเตือน</mat-radio-button>
-                                <mat-radio-button value="0">ไม่แจ้งเตือน</mat-radio-button>
+                                <mat-radio-button value="Y">เปิดการใช้งาน</mat-radio-button>
+                                <mat-radio-button value="N">ยังไม้เปิดการใช้งาน</mat-radio-button>
                             </mat-radio-group>
                         </div>
                     </div>
@@ -72,6 +59,55 @@
                     </div>
                 </div>
             </div>
+            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1" *ngIf="this.Id">
+                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                    <div class="-mx-3 md:flex mb-6">
+                        <div class="md:w-full px-3">
+                           <label for="รายการผุู้กดยอมรับ">รายการผุู้กดยอมรับ</label>
+                        </div>
+                    </div>
+                    <div class="-mx-3 md:flex mb-2">
+                        <div class="md:min-w-full px-3 mb-6 md:mb-0">
+                            <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
+                                <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                                    <thead>
+                                        <tr class="text-center bg-slate-50 mt-10">
+                                            <th class="border-bottom-0 w-20">ลำดับ</th>
+                                            <th class="border-bottom-0 w-20">รหัสโคสต้า</th>
+                                            <th class="border-bottom-0 w-150">ชื่อเกษตรกร</th>
+                                            <th class="border-bottom-0 w-50">วันที่ยอมรับ</th>
+                                            <th class="border-bottom-0 w-20">จัดการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="dataRow?.length != 0">
+                                        <tr *ngFor="let item of dataRow; let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.quota_id}}</td>
+                                            <td>{{item.frammer?.name ?? "-"}}</td>
+                                            <td>
+                                                {{item.created_at | date : 'dd/MM/yyyy hh:mm aa'}}
+                                            </td>
+                                            <td>
+                                                <button mat-icon-button color="accent" (click)="edit(item.id)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="dataRow?.length == 0">
+                                        <tr>
+                                            <td colspan="5" class="no-data-available text-center">ไม่มีข้อมูล !</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
         </div>
+     
     </form>
+
 </div>

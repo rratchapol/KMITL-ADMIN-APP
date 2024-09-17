@@ -272,6 +272,19 @@ export const appRoutes: Route[] = [
                         ],
                     },
                     {
+                        path: 'pdpa',
+                        canActivate: [],
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import(
+                                        'app/modules/admin/pdpa/pdpa.module'
+                                    ).then((m) => m.PDPAModule),
+                            },
+                        ],
+                    },
+                    {
                         path: 'company',
                         canActivate: [],
                         children: [

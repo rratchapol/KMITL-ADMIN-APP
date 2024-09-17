@@ -37,36 +37,14 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="flex flex-col sm:flex-col md:flex-row px-3">
-                        <div class="flex items-center w-full md:w-1/2 justify-center">
-                            <ngx-dropzone (change)="onSelect($event)"
-                                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                <ngx-dropzone-label>เลือกรูปภาพ</ngx-dropzone-label>
-                                <div *ngFor="let f of files">
-                                    <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)"
-                                        class="h-auto max-w-full">
-                                    </ngx-dropzone-image-preview>
-                                </div>
-                            </ngx-dropzone>
 
-                        </div>
-                        <div class="flex items-center w-full md:w-1/2 justify-center mt-4 md:mt-0">
-                            <div *ngFor="let f of imageUrls">
-                                <img [src]="f" alt="Image preview"
-                                    class="max-w-sm rounded border bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800"
-                                    />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:w-full px-3">
-
-                    </div>
+   
                     <div class="mb-2 mt-4">
                         <label class=" block text-sm font-medium text-gray-700 pl-4 justify-start">สถานะ</label>
                         <div class="mt-1 ">
                             <mat-radio-group formControlName="notify_status">
-                                <mat-radio-button [value]="1">แจ้งเตือน</mat-radio-button>
-                                <mat-radio-button [value]="0" class="pl-5">ไม่แจ้งเตือน</mat-radio-button>
+                                <mat-radio-button [value]="1">เปิดการใช้งาน</mat-radio-button>
+                                <mat-radio-button [value]="0" class="pl-5">ยังไม่เปิดใช้งาน</mat-radio-button>
                             </mat-radio-group>
                         </div>
                     </div>

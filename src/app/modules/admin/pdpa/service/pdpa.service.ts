@@ -15,7 +15,7 @@ export class PdpaService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/news_page', dataTablesParameters)
+            .post(environment.baseURL + '/api/pdpa_page', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -23,9 +23,20 @@ export class PdpaService {
             );
     }
 
+    getPageRegister(dataTablesParameters: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/pdpa_register_page', dataTablesParameters)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    
     create(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/news', formData)
+            .post(environment.baseURL + '/api/pdpa', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -44,7 +55,7 @@ export class PdpaService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `/api/news/${Id}`)
+            .get(environment.baseURL + `/api/pdpa/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -66,7 +77,7 @@ export class PdpaService {
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/news/${Id}`)
+            .delete(environment.baseURL + `/api/pdpa/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

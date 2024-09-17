@@ -155,11 +155,11 @@ export class ListComponent implements OnInit {
         });
     }
     edit(Id: any) {
-        this._router.navigate(['admin/news/edit/' + Id]);
+        this._router.navigate(['admin/pdpa/edit/' + Id]);
     }
 
     new() {
-        this._router.navigate(['admin/news/form']);
+        this._router.navigate(['admin/pdpa/form']);
     }
     // this._Service.getById(this.data).subscribe((resp: any) => {
     //     this.itemData = resp;
