@@ -70,7 +70,7 @@ export class ConfignotiComponent implements OnInit {
     }
     get date() {
         return this.addForm.get("date") as FormArray;
-      }
+    }
     selectedFile: File = null;
     onFileChange(event) {
         this.selectedFile = (event.target as HTMLInputElement).files[0];
@@ -84,56 +84,56 @@ export class ConfignotiComponent implements OnInit {
 
     addDate(data?: any) {
         const d = this.formBuilder.group({
-          day: '',
-          time: this.formBuilder.array([]),
+            day: '',
+            time: this.formBuilder.array([]),
         });
 
         if (data) {
-          d.patchValue({
-            ...data,
-          });
+            d.patchValue({
+                ...data,
+            });
         }
 
         this.date.push(d);
-      }
-      addTime(data?: any) {
+    }
+    addTime(data?: any) {
         const formvalueday = data.get("time") as FormArray;
         const t = this.formBuilder.group({
-          hour: '',
+            hour: '',
         });
 
         if (data) {
-          t.patchValue({
-            ...data,
-          });
+            t.patchValue({
+                ...data,
+            });
         }
         formvalueday.push(t);
-      }
-      deletedate(){
+    }
+    deletedate() {
 
-      }
-      removeDate(index: number) {
+    }
+    removeDate(index: number) {
         this.date.removeAt(index);
-      }
-      removeTime(form: FormGroup, index: number) {
-        console.log(form,index)
+    }
+    removeTime(form: FormGroup, index: number) {
+        console.log(form, index)
         const f = form.get("time") as FormArray;
 
         f.removeAt(index);
-      }
+    }
     Submit(): void {
 
         const formattedData = this.addForm.value.date.map((group: any) => {
             return {
-              ...group,
-              day: this.datePipe.transform(group.day, 'yyyy-MM-dd')  // แปลงวันที่เป็นรูปแบบ yyyy-MM-dd
+                ...group,
+                day: this.datePipe.transform(group.day, 'yyyy-MM-dd')  // แปลงวันที่เป็นรูปแบบ yyyy-MM-dd
             };
-          });
+        });
 
-          const formData = {
+        const formData = {
             ...this.addForm.value,
             date: formattedData  // ใช้ข้อมูลที่แปลงแล้ว
-          };
+        };
 
         const confirmation = this._fuseConfirmationService.open({
             title: 'บันทึกข้อมูล',
@@ -173,7 +173,27 @@ export class ConfignotiComponent implements OnInit {
                     .Savedata(formData)
                     .subscribe({
                         next: (resp: any) => {
-                            // this.addForm.reset()
+                            this._fuseConfirmationService.open({
+                                title: 'สำเร็จ',
+                                message: "บันทึกข้อมูลสำเร็จ",
+                                icon: {
+                                    show: true,
+                                    name: 'heroicons_outline:exclamation',
+                                    color: 'success',
+                                },
+                                actions: {
+                                    confirm: {
+                                        show: false,
+                                        label: 'ตกลง',
+                                        color: 'primary',
+                                    },
+                                    cancel: {
+                                        show: false,
+                                        label: 'ยกเลิก',
+                                    },
+                                },
+                                dismissible: true,
+                            });
                         },
 
                         error: (err: any) => {
@@ -200,19 +220,17 @@ export class ConfignotiComponent implements OnInit {
                                 },
                                 dismissible: true,
                             });
-                            console.log(err.error.message);
                         },
                     });
             }
         });
-        console.log(this.addForm.value);
     }
     data(data: any, formData: FormData) {
         throw new Error('Method not implemented.');
     }
 
     Cancel(): void {
-        this._router.navigateByUrl('config/edit/1').then(() => {});
+        this._router.navigateByUrl('config/edit/1').then(() => { });
     }
 
     files: File[] = [];

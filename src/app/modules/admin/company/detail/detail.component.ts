@@ -226,9 +226,27 @@ export class DetailComponent implements OnInit {
                 const formData = this.addForm.value
                     this._service.create(formData).subscribe({
                         next: (resp: any) => {
-                            // this._router
-                                // .navigateByUrl('admin/journal/list')
-                                // .then(() => {});
+                            this._fuseConfirmationService.open({
+                                title: 'สำเร็จ',
+                                message: "บันทึกข้อมูลสำเร็จ",
+                                icon: {
+                                    show: true,
+                                    name: 'heroicons_outline:exclamation',
+                                    color: 'success',
+                                },
+                                actions: {
+                                    confirm: {
+                                        show: false,
+                                        label: 'ตกลง',
+                                        color: 'primary',
+                                    },
+                                    cancel: {
+                                        show: false,
+                                        label: 'ยกเลิก',
+                                    },
+                                },
+                                dismissible: true,
+                            });
                         },
 
                         error: (err: any) => {

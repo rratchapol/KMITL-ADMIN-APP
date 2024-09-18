@@ -4,7 +4,8 @@
     <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
         <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
 
             <div class="flex flex-wrap items-center font-medium">
@@ -23,19 +24,7 @@
             <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">ข้อมูล PDPA ทั้งหมด</div>
 
             <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
-                <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
-                    <mat-select [formControl]="status">
-                        <mat-option [value]="''">
-                            เลือกสถานะ
-                        </mat-option>
-                        <mat-option [value]="'active'">
-                            Active
-                        </mat-option>
-                        <mat-option [value]="'inactive'">
-                            Inactive
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+
                 <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="new()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                     <span class="ml-2 mr-1">เพิ่ม PDPA</span>
@@ -47,9 +36,9 @@
             <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
                 <thead>
                     <tr class="text-center bg-slate-50 mt-10">
-                        <th class="border-bottom-0 w-190">หัวข้อ</th>1
-                        <th class="border-bottom-0 w-20">สมาชิก</th>
-                        <th class="border-bottom-0 w-20">สถานะ</th>
+                        <th class="border-bottom-0 w-auto">หัวข้อ</th>1
+                        <th class="border-bottom-0 w-80">สมาชิกที่ยอมรับ</th>
+                        <th class="border-bottom-0 w-60">สถานะ</th>
                         <th class="border-bottom-0 w-50">วันที่ลงประกาศ</th>
                         <th class="border-bottom-0 w-20">จัดการ</th>
                     </tr>
@@ -57,8 +46,16 @@
                 <tbody *ngIf="dataRow?.length != 0">
                     <tr *ngFor="let item of dataRow; let i = index">
                         <td>{{item.title}}</td>
-                        <td>0</td>
-                        <td>{{item.status}}</td>
+                        <td>{{item.views}} บัญชี</td>
+                        <td>
+                            <div *ngIf="item.status === 'N'" class="bg-red-200 p-1 rounded-md text-red-800 font-bold text-center">
+                                ยังไม่เปิดใช้งาน
+                            </div>
+                            <div *ngIf="item.status === 'Y'"
+                                class="bg-green-200 p-1 rounded-md text-green-800 font-bold text-center">
+                                เปิดการใช้งาน
+                            </div>
+                        </td>
                         <td>
                             {{item.created_at | date : 'dd/MM/yyyy hh:mm aa'}}
                         </td>
