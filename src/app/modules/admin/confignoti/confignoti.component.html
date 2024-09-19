@@ -10,7 +10,7 @@
             <!-- Title -->
             <div class="flex flex-row mt-2 justify-between">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    จัดการ Config
+                    แจ้งเตือน
                 </h2>
             </div>
         </div>
@@ -26,7 +26,7 @@
                         <div class="md:w-1/2 px-3">
                             <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
                                 <mat-label>ประเภทแจ้งเตือน</mat-label>
-                                <mat-select [formControlName]="'title'" >
+                                <mat-select [formControlName]="'title'" (selectionChange)="onSelectNoti($event.value)">
                                     <mat-option value="กิจกรรมเพาะปลูก">กิจกรรมเพาะปลูก</mat-option>
                                     <mat-option value="คิวอ้อย">คิวอ้อย</mat-option>
                                     <mat-option value="แจ้งรับคิว">แจ้งรับคิว</mat-option>
@@ -97,9 +97,49 @@
                               </div>
                         </div>
                     </div>
+
+
+
                     </div>
+
+
                         </div>
+
                     </div>
+                    <table class="table row-border hover w-full text-center whitespace-nowrap">
+                        <thead class="bg-gray-700 text-black">
+                          <tr class="bg-gray-200">
+                            <th class="border-b-2 w-1/9 p-3">วันที่</th>
+                            <th class="border-b-2 w-1/9 p-3">จำนวนการแจ้งเตือน</th>
+                            <th class="border-b-2 w-1/9 p-3">รายละเอียดการแจ้งเตือน</th>
+                          </tr>
+                        </thead>
+
+                        <tbody *ngIf="datenoti?.length > 0">
+                          <tr *ngFor="let item of datenoti; let i = index" class="hover:bg-gray-100 whitespace-nowrap">
+                            <td class="p-3">{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                            <td class="p-3">{{ item.total ?? '-' }}</td>
+                            <td class="p-3">
+                              <!-- Loop through item.days array -->
+                              <div *ngFor="let day of item.days" class="bg-gray-100 p-2 rounded mb-1">
+                                <div>
+                                  <strong>เวลาแจ้งเตือน: </strong>{{ day.time ?? '-' }}  <!-- Replace someField with the correct field from days array -->
+                                </div>
+                                <div>
+                                  <strong>รายละเอียด: </strong>{{ day.title ?? '-' }}  <!-- Replace detail with the appropriate data you want to display -->
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+
+                        <tbody *ngIf="datenoti?.length == 0">
+                          <tr>
+                            <td colspan="3" class="no-data-available align-center text-center">ไม่มีข้อมูล !</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
                     <div mat-dialog-actions class="flex justify-end mt-2">
                         <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Submit()">
                                 บันทึกข้อมูล

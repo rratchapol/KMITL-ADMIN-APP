@@ -20,6 +20,7 @@ export class ConfignotiComponent implements OnInit {
     permissiondata: any[];
     item: any;
     imageUrls: string[] = [];
+    datenoti: string[] = [];
     config = {
         placeholder: '',
         tabsize: 2,
@@ -81,7 +82,13 @@ export class ConfignotiComponent implements OnInit {
         //   }
         // this.addForm.get('image').updateValueAndValidity();
     }
-
+    onSelectNoti(event:any){
+        console.log(event)
+        this._service.getDate(event).subscribe((resp:any)=>{
+            this.datenoti = resp
+            console.log(this.datenoti)
+        })
+    }
     addDate(data?: any) {
         const d = this.formBuilder.group({
             day: '',
