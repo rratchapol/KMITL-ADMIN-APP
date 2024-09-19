@@ -112,6 +112,8 @@
                             <th class="border-b-2 w-1/9 p-3">วันที่</th>
                             <th class="border-b-2 w-1/9 p-3">จำนวนการแจ้งเตือน</th>
                             <th class="border-b-2 w-1/9 p-3">รายละเอียดการแจ้งเตือน</th>
+                            <th class="border-b-2 w-1/9 p-3">จัดการ</th>
+
                           </tr>
                         </thead>
 
@@ -121,14 +123,26 @@
                             <td class="p-3">{{ item.total ?? '-' }}</td>
                             <td class="p-3">
                               <!-- Loop through item.days array -->
-                              <div *ngFor="let day of item.days" class="bg-gray-100 p-2 rounded mb-1">
+                              <div *ngFor="let day of item.days" class="bg-gray-100 p-2 rounded mb-1 flex justify-between">
+                               <div>
                                 <div>
                                   <strong>เวลาแจ้งเตือน: </strong>{{ day.time ?? '-' }}  <!-- Replace someField with the correct field from days array -->
                                 </div>
                                 <div>
                                   <strong>รายละเอียด: </strong>{{ day.title ?? '-' }}  <!-- Replace detail with the appropriate data you want to display -->
                                 </div>
+                            </div>
+                            <div>
+                                <button mat-icon-button color="accent" (click)="deletesub(item.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                               </div>
+                            </td>
+                            <td class="">
+                                <button mat-icon-button color="accent" (click)="delete(item.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
                             </td>
                           </tr>
                         </tbody>

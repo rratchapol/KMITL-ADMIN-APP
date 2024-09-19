@@ -78,9 +78,13 @@ getDate(name: string): Observable<any> {
 }
 
 
-  deleteMessage(messageId: number): Observable<any> {
-    return this.http.delete(environment.baseURL + `/api/chat_msg/${messageId}`);
+  delete(id: number): Observable<any> {
+    return this.http.delete(environment.baseURL + `/api/notify_alert/${id}`);
   }
+  deletesub(id: number): Observable<any> {
+    return this.http.delete(environment.baseURL + `/api/notify_alert_day/${id}`);
+  }
+
 }
 
 
