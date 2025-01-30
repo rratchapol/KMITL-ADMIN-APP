@@ -35,13 +35,7 @@ export class FormComponent implements OnInit {
             this.Id = params.id;
         });
         this.addForm = this.formBuilder.group({
-            id:'',
-            no: '',
-            title: '',
-            detail: '',
-            file: '',
-            image: '',
-            notify_status: '',
+            category_name: '',
         });
     }
 
@@ -51,18 +45,11 @@ export class FormComponent implements OnInit {
             this.activatedRoute.params.subscribe((params) => {
                 // console.log(params);
                 const id = params.id;
-                this._service.getById(id).subscribe((resp: any) => {
+                this._service.getByIdtest(id).subscribe((resp: any) => {
                     this.item = resp;
+                    console.log("ddddddd",resp);
                     this.addForm.patchValue({
-                        ...this.item,
-                    });
-
-                    this.addForm.patchValue({
-                        image: '',
-                    });
-
-                    this.addForm.patchValue({
-                        file: '',
+                        category_name: this.item.category_name,
                     });
                     // console.log(this.item.image);
                     // this.files.push(this.item.image);
@@ -73,13 +60,7 @@ export class FormComponent implements OnInit {
             });
         } else {
             this.addForm.patchValue({
-                id:'',
-                no: '',
-                title: '',
-                detail: '',
-                image: '',
-                file: '',
-                notify_status: '1',
+                category_name: '',
             });
         }
     }
@@ -96,7 +77,7 @@ export class FormComponent implements OnInit {
     }
 
     Submit(): void {
-        console.log(this.addForm.value);
+        console.log(this.addForm.value, this.Id);
         // const end =  moment(this.addForm.value.register_date).format('YYYY-MM-DD')
         // console.log(end)
         // this.addForm.patchValue({
@@ -128,14 +109,10 @@ export class FormComponent implements OnInit {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                const formData = new FormData();
-                Object.entries(this.addForm.value).forEach(
-                    ([key, value]: any[]) => {
-                        formData.append(key, value);
-                    }
-                );
+                const formData = this.addForm.value;
+           
                 if (!this.Id) {
-                    this._service.create(formData).subscribe({
+                    this._service.createtest(formData).subscribe({
                         next: (resp: any) => {
                             this._router
                                 .navigateByUrl('admin/journal/list')
@@ -170,7 +147,7 @@ export class FormComponent implements OnInit {
                         },
                     });
                 } else {
-                    this._service.update(formData).subscribe({
+                    this._service.updatetest(formData,this.Id).subscribe({
                         next: (resp: any) => {
                             this._router
                                 .navigateByUrl('admin/journal/list')

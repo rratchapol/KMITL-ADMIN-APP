@@ -79,7 +79,7 @@ export class AuthService
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post(environment.baseURL + '/api/login', credentials).pipe(
+        return this._httpClient.post(environment.baseURL + 'api/admin/login', credentials).pipe(
             switchMap((response: any) =>
             {
                 // Store the access token in the local storage

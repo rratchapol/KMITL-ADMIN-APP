@@ -10,7 +10,7 @@ import { NewChatComponent } from './modules/admin/chat/chat.component';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     // Redirect empty path to '/dashboards/project'
-    { path: '', pathMatch: 'full', redirectTo: 'admin/farmmer/list' },
+    { path: '', pathMatch: 'full', redirectTo: 'admin/faq/list' },
 
     // Redirect signed-in user to the '/dashboards/project'
     //
@@ -20,7 +20,7 @@ export const appRoutes: Route[] = [
     {
         path: 'signed-in-redirect',
         pathMatch: 'full',
-        redirectTo: 'admin/farmmer/list',
+        redirectTo: 'admin/faq/list',
     },
 
     // Auth routes for guests

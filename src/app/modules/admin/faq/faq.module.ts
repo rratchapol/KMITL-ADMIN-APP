@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ListComponent } from './list/list.component';
+
 import { FormComponent } from './form/form.component';
 import { EditComponent } from './edit/edit.component';
 import { RouterModule } from '@angular/router';
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShareModule } from 'app/share.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CheckComponent } from './checkproduct/list.component';
 // import moment from 'moment';
 
 
@@ -34,7 +36,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
         FormComponent,
         EditComponent,
         EditDialogComponent,
-        FormDialogComponent
+        FormDialogComponent,
+        CheckComponent
     ],
     imports: [
         RouterModule.forChild(FaqRoute),

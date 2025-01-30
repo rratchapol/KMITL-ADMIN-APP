@@ -15,8 +15,8 @@ export class FaqService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(
-                environment.baseURL + '/api/faq_page',
+            .get(
+                environment.baseURL + '/api/customer',
                 dataTablesParameters
             )
             .pipe(
@@ -25,6 +25,61 @@ export class FaqService {
                 })
             );
     }
+
+    
+    // getPagetest(dataTablesParameters: any): Observable<any> {
+    //     return this._httpClient
+    //         .post(
+    //             'http://127.0.0.1:8000/api/users_page',
+    //             dataTablesParameters
+    //         )
+    //         .pipe(
+    //             switchMap((response: any) => {
+    //                 return of(response.data);
+    //             })
+    //         );
+    // }
+
+    getPagetest(dataTablesParameters: any): Observable<any> {
+        // Mock data for testing
+        const mockResponse = {
+          data: [
+            {
+              No: 1,
+              name: 'John Doe',
+              email: 'john.doe@example.com',
+              mobile: '0812345678',
+              faculty: 'Engineering',
+              department: 'Computer Science',
+              class_year: '3',
+            },
+            {
+              No: 2,
+              name: 'Jane Smith',
+              email: 'jane.smith@example.com',
+              mobile: '0898765432',
+              faculty: 'Business',
+              department: 'Marketing',
+              class_year: '4',
+            },
+            {
+              No: 3,
+              name: 'Alan Turing',
+              email: 'alan.turing@example.com',
+              mobile: '0823456789',
+              faculty: 'Science',
+              department: 'Mathematics',
+              class_year: '2',
+            },
+          ],
+          totalRecords: 3,
+          currentPage: dataTablesParameters.page || 1,
+          perPage: dataTablesParameters.perPage || 10,
+        };
+    
+        return of(mockResponse); // Return mocked data as an Observable
+      }
+    
 
     create(formData: FormData): Observable<any> {
         return this._httpClient

@@ -60,7 +60,7 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
         DataTablesModule,
     ],
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class CheckComponent implements OnInit, AfterViewInit {
     isLoading: boolean = false;
     dtOptions: DataTables.Settings = {};
     positions: any[];
@@ -132,7 +132,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             ajax: (dataTablesParameters: any, callback) => {
                 dataTablesParameters.status = null;
                 that._service
-                    .getPage(dataTablesParameters)
+                    .getPagetests(dataTablesParameters)
                     .subscribe((resp: any) => {
                         this.dataRow = resp.data;
                         this.pages.current_page = resp.current_page;

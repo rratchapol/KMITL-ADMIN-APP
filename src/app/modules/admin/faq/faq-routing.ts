@@ -2,6 +2,7 @@ import { Route, } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { EditComponent } from './edit/edit.component';
+import { CheckComponent } from './checkproduct/list.component';
 
 export const FaqRoute: Route[] = [
     {
@@ -16,5 +17,9 @@ export const FaqRoute: Route[] = [
         path: 'edit/:id',
         component: FormComponent
     },
+    {
+        path: 'check',
+        component: CheckComponent
+    }   
 
 ];

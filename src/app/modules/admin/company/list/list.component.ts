@@ -223,7 +223,7 @@ export class ListComponent implements OnInit {
             },
             ajax: (dataTablesParameters: any, callback) => {
                 that._Service
-                    .getPage(dataTablesParameters)
+                    .getPagetest(dataTablesParameters)
                     .subscribe((resp) => {
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;

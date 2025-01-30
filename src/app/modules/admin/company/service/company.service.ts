@@ -94,4 +94,28 @@ export class JournalService {
     //   })
     //   );
     //   }
+
+
+    getPagetest(dataTablesParameters: any): Observable<any> {
+        // Mock data for testing
+        const mockResponse = {
+          data: [
+            {
+                name: "นที พานที",
+                section: 'โดนเบี้ยวนัด',
+                detail: 'โดนเบี้ยวนัดจากนาย กวี ปีแสง สั่งเเล้วตกลงเเล้ว แต่ไม่มาส่ง',
+              },
+              {
+                name: "นารา พาไป",
+                section: 'คุกคาม',
+                detail: 'โดนคุกคามจากนาย นที พานที ในเเชท',
+              },
+          ],
+          totalRecords: 3,
+          currentPage: dataTablesParameters.page || 1,
+          perPage: dataTablesParameters.perPage || 10,
+        };
+    
+        return of(mockResponse); // Return mocked data as an Observable
+      }
 }

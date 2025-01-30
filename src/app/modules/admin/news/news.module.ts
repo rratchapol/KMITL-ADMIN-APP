@@ -9,6 +9,8 @@ import { FormDialogComponent } from './form-dialog/form-dialog.component';
 import { ShareModule } from 'app/modules/share.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { QuillModule } from 'ngx-quill'; // Updated import statement
+import { C } from '@fullcalendar/core/internal-common';
+import { CheckproductComponent } from './checkproduct/list.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +19,7 @@ import { QuillModule } from 'ngx-quill'; // Updated import statement
         EditComponent,
         EditDialogComponent,
         FormDialogComponent,
+        CheckproductComponent
     ],
     imports: [
         RouterModule.forChild(NewsRoute),

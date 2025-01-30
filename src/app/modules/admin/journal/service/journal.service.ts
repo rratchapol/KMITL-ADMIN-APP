@@ -15,8 +15,8 @@ export class JournalService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(
-                environment.baseURL + '/api/journal_page',
+            .get(
+                environment.baseURL + '/api/admin',
                 dataTablesParameters
             )
             .pipe(
@@ -26,12 +26,90 @@ export class JournalService {
             );
     }
 
+    // getPagetest(dataTablesParameters: any): Observable<any> {
+    //     return this._httpClient
+    //         .post(
+    //             'http://127.0.0.1:8000/api/categories_page',
+    //             dataTablesParameters
+    //         )
+    //         .pipe(
+    //             switchMap((response: any) => {
+    //                 return of(response.data);
+    //             })
+    //         );
+    // }
+
+    getPagetest(dataTablesParameters: any): Observable<any> {
+        // Mock data for testing
+        const mockResponse = {
+          data: [
+            {
+                // no: "พัดลม",
+                name: 'นาวี พาไว',
+              },
+              {
+                // no: "พัดลม",
+                name: 'กรุณา พาที',
+              },
+              {
+                // no: "พัดลม",
+                name: 'สมศรี จามาล',
+              },
+          ],
+          totalRecords: 3,
+          currentPage: dataTablesParameters.page || 1,
+          perPage: dataTablesParameters.perPage || 10,
+        };
+    
+        return of(mockResponse); // Return mocked data as an Observable
+      }
+
     create(formData: FormData): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/journal', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
+                })
+            );
+    }
+
+    createtest(formData: FormData): Observable<any> {
+        return this._httpClient
+            .post('http://127.0.0.1:8000/api/categories', formData)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    updatetest(formData: FormData,Id: any): Observable<any> {
+        return this._httpClient
+            .put(`http://127.0.0.1:8000/api/categories/${Id}`, formData)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getByIdtest(Id: any): Observable<any> {
+        return this._httpClient
+            .get(`http://127.0.0.1:8000/api/categories/${Id}`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            );
+    }
+
+    deletetest(Id: any): Observable<any> {
+        return this._httpClient
+            .delete(`http://127.0.0.1:8000/api/categories/${Id}`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
                 })
             );
     }

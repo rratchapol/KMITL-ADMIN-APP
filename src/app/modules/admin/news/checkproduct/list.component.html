@@ -7,7 +7,7 @@
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5  bg-white ">
         <div class="flex justify-between">
-            <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">สินค้าทั้งหมด</div>
+            <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">สินค้าที่รอตรวจสอบ</div>
 
             <!-- <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
                 <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
@@ -56,10 +56,15 @@
                         <td>
                             <!-- <button mat-icon-button color="accent" (click)="edit(item.id)">
                                 <mat-icon>edit</mat-icon>
-                            </button> -->
+                            </button>
                             <button mat-icon-button color="accent" (click)="delete(item.id)">
                                 <mat-icon>delete</mat-icon>
-                            </button>
+                            </button> -->
+                            
+                                <button class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50" (click)="editDialog(item)">
+                                    <span class="ml-2 mr-1">ตรวจสอบ</span>
+                                </button>
+                            
                         </td>
                     </tr>
                 </tbody>

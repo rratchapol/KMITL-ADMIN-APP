@@ -69,7 +69,7 @@ export class AuthSignInComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email: ['', [Validators.required]],
+            username: ['', [Validators.required]],
             password: ['', Validators.required],
             rememberMe: [''],
         });

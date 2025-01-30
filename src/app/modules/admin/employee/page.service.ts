@@ -112,12 +112,11 @@ export class PageService {
      * @param search
      */
 
-    getPage(dataTablesParameters: any): Observable<DataTablesResponse> {
+    getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(
-                environment.baseURL + '/api/user_page',
-                dataTablesParameters,
-                this.httpOptionsFormdata
+            .get(
+                environment.baseURL + '/api/post',
+                dataTablesParameters
             )
             .pipe(
                 switchMap((response: any) => {
@@ -125,4 +124,52 @@ export class PageService {
                 })
             );
     }
+
+    getPagetest(dataTablesParameters: any): Observable<any> {
+        // Mock data for testing
+        const mockResponse = {
+          data: [
+            {
+                name: "พัดลม",
+                detail: 'ต้องการหน้ากว้าง ขนาดกลาง',
+                tag: 'พัดลม',
+              },
+              {
+                name: "iphone 11 ",
+                detail: 'iphone 11 ขอใช้งานได้ สภาพดีหน่อย',
+                tag: 'มือถือ',
+              },
+              {
+                name: "เสื้อ adidas ",
+                detail: 'เสื้อ adidas มือ2 ของแท้ราคาถูก',
+                tag: 'เสื้อผ้า',
+              },
+          ],
+          totalRecords: 3,
+          currentPage: dataTablesParameters.page || 1,
+          perPage: dataTablesParameters.perPage || 10,
+        };
+    
+        return of(mockResponse); // Return mocked data as an Observable
+      }
+
+      getPagetests(dataTablesParameters: any): Observable<any> {
+        // Mock data for testing
+        const mockResponse = {
+          data: [
+            {
+                name: "มีด",
+                detail: 'ต้องมีดด่วน จะไปมีเรื่อง',
+                tag: 'พัดลม',
+              },
+
+          ],
+          totalRecords: 3,
+          currentPage: dataTablesParameters.page || 1,
+          perPage: dataTablesParameters.perPage || 10,
+        };
+    
+        return of(mockResponse); // Return mocked data as an Observable
+      }
+
 }

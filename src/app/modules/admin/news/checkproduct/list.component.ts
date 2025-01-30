@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Route, Router } from '@angular/router';
-import { FaqService } from '../service/faq.service';
+import { NewsService } from '../service/news.service';
 import { DataTableDirective } from 'angular-datatables';
 import { EditComponent } from '../edit/edit.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -33,7 +33,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class CheckproductComponent implements OnInit {
 
 
     dataRows = [
@@ -94,7 +94,7 @@ export class ListComponent implements OnInit {
         private _liveAnnouncer: LiveAnnouncer,
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _Service: FaqService,
+        private _Service: NewsService,
         private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
@@ -256,8 +256,8 @@ export class ListComponent implements OnInit {
             },
             ajax: (dataTablesParameters: any, callback) => {
                 that._Service
-                    .getPage(dataTablesParameters)
-                    // .getPagetest(dataTablesParameters)
+                    // .getPage(dataTablesParameters)
+                    .getPagetests(dataTablesParameters)
                     .subscribe((resp) => {
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;

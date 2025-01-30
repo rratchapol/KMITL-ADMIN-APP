@@ -3,6 +3,8 @@ import { PageComponent } from './page.component';
 import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { DetailComponent } from './detail/detail.component';
+import { C } from '@fullcalendar/core/internal-common';
+import { CheckComponent } from './check/list.component';
 
 export default [
     // {
@@ -57,6 +59,19 @@ export default [
                     // products  : () => inject(InventoryService).getProducts(),
                     // tags      : () => inject(InventoryService).getTags(),
                     // vendors   : () => inject(InventoryService).getVendors(),
+                },
+            },
+        ],
+    },
+    {
+        path     : '',
+        component: PageComponent,
+        children : [
+            {
+                path     : 'check',
+                component: CheckComponent,
+                resolve  : {
+
                 },
             },
         ],

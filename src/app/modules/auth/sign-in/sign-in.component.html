@@ -4,7 +4,7 @@
             <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
                 <!-- Logo -->
                 <div class="w-12">
-                    <img src="assets/images/logo/209809.webp">
+                    <!-- <img src="assets/images/logo/209809.webp"> -->
                 </div>
 
                 <!-- Title -->
@@ -27,12 +27,12 @@
 
                     <!-- Email field -->
                     <mat-form-field class="w-full">
-                        <mat-label>Email</mat-label>
-                        <input id="email" matInput [formControlName]="'email'">
-                        <mat-error *ngIf="signInForm.get('email').hasError('required')">
-                            email is required
+                        <mat-label>usernane</mat-label>
+                        <input id="username" matInput [formControlName]="'username'">
+                        <mat-error *ngIf="signInForm.get('username').hasError('required')">
+                            usernane is required
                         </mat-error>
-                        <mat-error *ngIf="signInForm.get('email').hasError('username')">
+                        <mat-error *ngIf="signInForm.get('username').hasError('username')">
                             Please enter a valid email
                         </mat-error>
                     </mat-form-field>

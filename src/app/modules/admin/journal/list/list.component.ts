@@ -202,7 +202,7 @@ export class ListComponent implements OnInit {
         });
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
-                this._Service.delete(itemid).subscribe((resp) => {
+                this._Service.deletetest(itemid).subscribe((resp) => {
                     this.rerender();
                 });
             }
@@ -225,6 +225,7 @@ export class ListComponent implements OnInit {
             ajax: (dataTablesParameters: any, callback) => {
                 that._Service
                     .getPage(dataTablesParameters)
+                    // .getPagetest(dataTablesParameters)
                     .subscribe((resp) => {
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;
@@ -236,7 +237,8 @@ export class ListComponent implements OnInit {
                         } else {
                             this.pages.begin = 0;
                         }
-                        that.dataRow = resp.data;
+                        that.dataRow = resp;
+                        console.log('that.dataRow', that.dataRow);
                         callback({
                             recordsTotal: resp.total,
                             recordsFiltered: resp.total,
@@ -248,7 +250,7 @@ export class ListComponent implements OnInit {
                 { data: 'actioon', orderable: false },
                 { data: 'no', orderable: false },
                 { data: 'code', orderable: false },
-                { data: 'name', orderable: false },
+                // { data: 'name', orderable: false },
             ],
         };
     }
