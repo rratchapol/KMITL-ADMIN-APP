@@ -77,6 +77,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'admin.chat',
+        title: 'Tags',
+        type: 'basic',
+        icon: 'heroicons_outline:chat-bubble-left-right',
+        link: '/admin/company/list',
+    },
+    {
+        id: 'admin.chat',
+        title: 'แบน',
+        type: 'basic',
+        icon: 'heroicons_outline:chat-bubble-left-right',
+        link: '/admin/company/list',
+    },
+    {
+        id: 'admin.chat',
         title: 'รีพอร์ต',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',
