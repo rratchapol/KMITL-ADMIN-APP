@@ -223,6 +223,8 @@ export class ListComponent implements OnInit {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
             },
             ajax: (dataTablesParameters: any, callback) => {
+                dataTablesParameters.status = "ok";
+                // dataTablesParameters.product_type = "ฟรี"; 
                 that._Service
                     .getPage(dataTablesParameters)
                     // .getPagetest(dataTablesParameters)

@@ -15,7 +15,17 @@ export class NewsService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + '/api/product', dataTablesParameters)
+            .post(environment.baseURL + '/api/product', dataTablesParameters)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getPages(dataTablesParameters: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/product', dataTablesParameters)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

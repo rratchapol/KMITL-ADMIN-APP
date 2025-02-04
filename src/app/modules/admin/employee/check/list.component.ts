@@ -130,9 +130,10 @@ export class CheckComponent implements OnInit, AfterViewInit {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
             },
             ajax: (dataTablesParameters: any, callback) => {
-                dataTablesParameters.status = null;
+                // dataTablesParameters.status = null;
+                dataTablesParameters.status = "wait";
                 that._service
-                    .getPagetests(dataTablesParameters)
+                    .getPages(dataTablesParameters)
                     .subscribe((resp: any) => {
                         this.dataRow = resp.data;
                         this.pages.current_page = resp.current_page;

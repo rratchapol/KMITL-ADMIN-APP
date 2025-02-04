@@ -255,9 +255,11 @@ export class CheckproductComponent implements OnInit {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
             },
             ajax: (dataTablesParameters: any, callback) => {
+                dataTablesParameters.status = "wait";
+
                 that._Service
                     // .getPage(dataTablesParameters)
-                    .getPagetests(dataTablesParameters)
+                    .getPages(dataTablesParameters)
                     .subscribe((resp) => {
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;

@@ -130,7 +130,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
             },
             ajax: (dataTablesParameters: any, callback) => {
-                dataTablesParameters.status = null;
+                // dataTablesParameters.status = null;
+                dataTablesParameters.status = "ok";
                 that._service
                     .getPage(dataTablesParameters)
                     .subscribe((resp: any) => {
