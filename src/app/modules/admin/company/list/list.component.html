@@ -18,42 +18,40 @@
     <!-- Main -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5  bg-white ">
         <div class="flex justify-between">
-            <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">การเเจ้งเตือนทั้งหมด</div>
+            <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">คำต้องห้าม</div>
 
-            <!-- <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
           
                 <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                    <span class="ml-2 mr-1">เพิ่มโรงงาน</span>
+                    <span class="ml-2 mr-1">เพิ่มคำต้องห้าม</span>
                 </button>
-            </div> -->
+            </div>
         </div>
 
         <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
             <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
                 <thead class="whitespace-nowrap">
-                    <tr class="text-center bg-slate-50 mt-10">
+                    <tr class="text-center bg-black mt-10 text-white">
                         <th class="border-bottom-0 " style="width: 10%;">ลำดับ</th>
-                        <th class="border-bottom-0 ">ชื่อ</th>
-                        <th class="border-bottom-0 ">หัวข้อ</th>
-                        <th class="border-bottom-0 ">รายละเอียด</th>
-                        <th class="border-bottom-0 "></th>
+                        <th class="border-bottom-0 " style="width: 70%;">คำต้องห้าม</th>
+                        <th class="border-bottom-0 " style="width: 20%;">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="dataRow?.length != 0">
                     <tr *ngFor="let item of dataRow; let i = index">
                         <td> {{i}}</td>
-                        <td>{{item?.name || '-'}}</td>
-                        <td>{{item?.section || '-'}}</td>
-                        <td> {{item?.detail || '-'}}</td>
+                        <td>{{item?.word || '-'}}</td>
                         
                         <td style="white-space: nowrap;" class="text-center">
                             <button mat-icon-button color="accent" (click)="editDailog(item.id)">
-                                <mat-icon>visibility</mat-icon>
+                                <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button color="accent" (click)="delete(item.id)">
                                 <mat-icon>delete</mat-icon>
                             </button>
+
+                            
                         </td>
                     </tr>
                 </tbody>

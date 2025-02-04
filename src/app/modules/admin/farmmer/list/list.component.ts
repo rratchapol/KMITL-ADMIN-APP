@@ -74,33 +74,14 @@ export class ListComponent implements OnInit {
         private _Service: NewsService,
         private _fuseConfirmationService: FuseConfirmationService
     ) {
-        this._Service.getProvince().subscribe((resp: any) => {
-            this.province = resp;
-            this._changeDetectorRef.markForCheck();
-        });
-        this._Service.getAPIFarmmer(this.searchTerm, this.currentPage).subscribe((resp: any) => {
-            this.farmmer = resp;
-            this.quotas = [];
-            this.farmmer.forEach(element => {
-                this.quotas.push(element.Quota_id);
-
-            });
-
-            this._Service.getEvents(this.quotas).subscribe((resp: any) => {
-                this.months = resp;
-                console.log(this.months);
-            });
-            this._changeDetectorRef.markForCheck();
-        });
-        this.numbers = Array.from({ length: 12 }, (_, i) => i); // Creates an array [0, 1, 2, ..., 12]
+ 
 
     }
 
     ngOnInit(): void {
 
         this.loadTable();
-        this.searchFarmers();
-        this.loadFarmers();
+
     }
 
     // ฟังก์ชันที่เรียกใช้เมื่อต้องการค้นหา
@@ -192,12 +173,11 @@ export class ListComponent implements OnInit {
         // const menu = getpermission.find((e) => e.menu_id == 4);
         // return menu.save == 0;
     }
-    addElement(element: any) {
+    addElement() {
         // this._router.navigate(['employee/form'])
         const dialogRef = this.dialog.open(FormDialogComponent, {
-            width: '500px', // กำหนดความกว้างของ Dialog
+            width: '600px', // กำหนดความกว้างของ Dialog
             height: 'auto',
-            data: element, // ส่งข้อมูลเริ่มต้นไปยัง Dialog
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -328,7 +308,7 @@ export class ListComponent implements OnInit {
                     } else {
                         this.pages.begin = 0;
                     }
-                    that.dataRow = this.farmmer;
+                    that.dataRow = resp.data;
                     this._changeDetectorRef.markForCheck();
 
                     callback({
@@ -342,68 +322,7 @@ export class ListComponent implements OnInit {
             //     { data: 'id_card_number', orderable: false },
             //     { data: 'name', orderable: false },
             //     { data: 'qouta', orderable: false },
-            //     { data: 'phone', orderable: false },
-            //     // { data: 'no', orderable: false },
-            //     { data: 'no', orderable: false },
-            //     { data: 'area', orderable: false },
-            //     { data: 'count_area', orderable: false },
-            //     { data: 'action', orderable: false },
             // ],
         };
-    }
-
-
-    // loadTable(): void {
-    //     const that = this;
-    //     this.dtOptions = {
-    //         pagingType: "full_numbers",
-    //         pageLength: 10,
-    //         serverSide: true,
-    //         processing: true,
-    //         language: {
-    //             url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json",
-    //         },
-    //         ajax: (dataTablesParameters: any, callback) => {
-    //             dataTablesParameters.status = null;
-    //              that._Service.getPage(dataTablesParameters).subscribe((resp: any) => {
-    //                  this.dataRow = resp.data;
-    //                  console.log('111',this.dataRow)
-    //                  this.pages.current_page = resp.current_page;
-    //                  this.pages.last_page = resp.last_page;
-    //                  this.pages.per_page = resp.per_page;
-    //                  if (resp.currentPage > 1) {
-    //                      this.pages.begin =
-    //                          parseInt(resp.itemsPerPage) * (parseInt(resp.currentPage) - 1);
-    //                  } else {
-    //                      this.pages.begin = 0;
-    //                  }
-
-    //                  callback({
-    //                      recordsTotal: resp.data.total,
-    //                      recordsFiltered: resp.data.total,
-    //                      data: [],
-    //                  });
-    //                  this._changeDetectorRef.markForCheck();
-    //                  console.log(resp)
-    //              });
-    //         },
-    //     };
-    // }
-
-    showPicture(imgObject: any): void {
-        this.dialog
-            .open(PictureComponent, {
-                autoFocus: false,
-                data: {
-                    imgSelected: imgObject,
-                },
-            })
-            .afterClosed()
-            .subscribe(() => { });
-    }
-
-    getMonthClass(data: any): string {
-        console.log(data);
-        return data === false ? 'bg-red' : 'bg-green';
     }
 }

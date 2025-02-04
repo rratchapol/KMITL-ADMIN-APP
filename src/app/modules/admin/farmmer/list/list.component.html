@@ -4,172 +4,68 @@
     <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
         <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>
-    <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
+    <!-- <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-5 sm:py-6 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
 
             <div class="flex flex-wrap items-center font-medium">
                 <div>
-                    <a class="whitespace-nowrap text-black-500">เกษตรกร</a>
+                    <a class="whitespace-nowrap text-black-500">โรงงาน</a>
                 </div>
-                <div class="flex items-center ml-1 whitespace-nowrap">/
-                    <a class="ml-1 text-black-500">รายชื่อเกษตรกร</a>
-                </div>
+ 
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Main -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5  bg-white ">
-        <div class="m-5 flex justify-between border-b-2">
-            <div class="mb-5 text-xl font-extrabold tracking-tight">รายชื่อเกษตรกร</div>
-        </div>
-        <!-- <div class="mx-5 mt-5 flex justify-between">
-            <div class="text-xl font-extrabold tracking-tight w-full md:w-1/4 ">
-                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                    <mat-select [formControl]="data" value>
-                        <mat-option [value]="'1'">
-                            เลือกจังหวัด
-                        </mat-option>
-                        <mat-option *ngFor="let item of this.province;" [value]="item.name">
-                            {{item.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <div class="flex justify-between">
+            <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">สถานที่นัดรับ</div>
+
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
+          
+                <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">เพิ่มสถานที่นัดรับ</span>
+                </button>
             </div>
-        </div> -->
+        </div>
 
         <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
-            <!-- <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
-                <thead>
-                    <tr class="bg-gray-50">
-                        <th class="border-bottom-0 w-50">เลขบัตรประชาชน</th>
-                        <th class="border-bottom-0 w-50">ชื่อเกษตรกร</th>
-                        <th class="border-bottom-0 w-50">เลขที่โควต้า</th>
-                        <th class="border-bottom-0 w-50">เบอร์ติดต่อ</th>
-                        <th class="border-bottom-0 w-50">จังหวัด</th>
-                        <th class="border-bottom-0 w-50">เขต</th>
-                        <th class="border-bottom-0 w-50">พื้นที่ (ไร่)</th>
-                        <th class="border-bottom-0 w-50">จำนวนแปลง</th>
-                        <th class="border-bottom-0 w-50"></th>
+            <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                <thead class="whitespace-nowrap">
+                    <tr class="text-center bg-black mt-10 text-white">
+                        <th class="border-bottom-0 " style="width: 10%;">ลำดับ</th>
+                        <th class="border-bottom-0 " style="width: 70%;">สถานที่</th>
+                        <th class="border-bottom-0 " style="width: 20%;">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="dataRow?.length != 0">
                     <tr *ngFor="let item of dataRow; let i = index">
-                        <td>{{item.idcard ?? '-'}}</td>
-                        <td>{{item.name ?? '-'}}</td>
-                        <td>{{item.qouta ?? '-'}}</td>
-                        <td>{{item.phone ?? '-'}}</td>
-                        <td>{{item.province_name ?? '-'}}</td>
-                        <td>{{item.country_name ?? '-'}}</td>
-                        <td>{{item.area ?? '-'}}</td>
-                        <td>{{item.count_area ?? '-'}}</td>
-                        <td>
-                            <button (click)="goToProfile(item.qouta)" class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50">
-                                <span class="ml-2 mr-1">รายละเอียด</span>
+                        <td> {{i}}</td>
+                        <td>{{item?.name || '-'}}</td>
+                        
+                        <td style="white-space: nowrap;" class="text-center">
+                            <!-- <button mat-icon-button color="accent" (click)="editDailog(item.id)">
+                                <mat-icon>visibility</mat-icon>
                             </button>
+                            <button mat-icon-button color="accent" (click)="delete(item.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button> -->
 
-                        </td>
-                    </tr>
-                </tbody> -->
-
-            <div class="flex justify-end mb-4">
-                <input type="text" placeholder="ค้นหา..." class="border p-2 rounded-md w-1/5" [(ngModel)]="searchTerm"
-                    (ngModelChange)="onSearchChange($event)">
-            </div>
-            <table class="table row-border hover w-full text-center whitespace-nowrap">
-                <thead class="bg-gray-700 text-black">
-                    <tr class="bg-gray-200">
-                        <th class="border-b-2 w-1/9 p-3">เลขบัตรประชาชน</th>
-                        <th class="border-b-2 w-1/9 p-3">ชื่อเกษตรกร</th>
-                        <th class="border-b-2 w-1/9 p-3">เลขที่โควต้า</th>
-                        <th class="border-b-2 w-1/9 p-3">เบอร์ติดต่อ</th>
-                        <th class="border-b-2 w-1/9 p-3">เขต</th>
-                        <th class="border-b-2 w-1/9 p-3">พื้นที่ (ไร่)</th>
-                        <th class="border-b-2 w-1/9 p-3">จำนวนแปลง</th>
-                        <th class="border-b-2 w-1/9 p-3">สถานะการบันทึกกิจกรรม</th>
-                        <th class="border-b-2 w-1/9 p-3"></th>
-                    </tr>
-                </thead>
-                <tbody *ngIf="farmmer?.length != 0">
-                    <tr *ngFor="let item of farmmer; let i = index" class="hover:bg-gray-100 whitespace-nowrap">
-                        <td class="p-3">{{ item.id_card_number ?? '-' }}</td>
-                        <td class="p-3">{{ item.First_name ?? '-' }} {{ item.Last_name ?? '-' }}</td>
-                        <td class="p-3">{{ item.Quota_id ?? '-' }}</td>
-                        <td class="p-3">{{ item.phone_number ?? '-' }}</td>
-                        <td class="p-3">{{ item.area ?? '-' }}</td>
-                        <td class="p-3">{{ item.station_total ?? '-' }}</td>
-                        <td class="p-3">{{ item.area_total ?? '-' }}</td>
-                        <td class="p-3">
-                            <div class="grid-container">
-                                <ng-container *ngFor="let month of months; let n = index">
-                                    <ng-container *ngIf="month.quota_id == item.Quota_id">
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jan == true">1</div>
-                                        <div class="grid-item" *ngIf="month?.months?.jan == false">1</div>
-                                        
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.feb == true">2</div>
-                                        <div class="grid-item" *ngIf="month?.months?.feb == false">2</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.mar == true">3</div>
-                                        <div class="grid-item" *ngIf="month?.months?.mar == false">3</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.apr == true">4</div>
-                                        <div class="grid-item" *ngIf="month?.months?.apr == false">4</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.may == true">5</div>
-                                        <div class="grid-item" *ngIf="month?.months?.may == false">5</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jun == true">6</div>
-                                        <div class="grid-item" *ngIf="month?.months?.jun == false">6</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.jul == true">7</div>
-                                        <div class="grid-item" *ngIf="month?.months?.jul == false">7</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.aug == true">8</div>
-                                        <div class="grid-item" *ngIf="month?.months?.aug == false">8</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.sep == true">9</div>
-                                        <div class="grid-item" *ngIf="month?.months?.sep == false">9</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.oct == true">10</div>
-                                        <div class="grid-item" *ngIf="month?.months?.oct == false">10</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.nov == true">11</div>
-                                        <div class="grid-item" *ngIf="month?.months?.nov == false">11</div>
-
-                                        <div class="grid-item border-2 border-black-600 bg-green-600" *ngIf="month?.months?.dec == true">12</div>
-                                        <div class="grid-item" *ngIf="month?.months?.dec == false">12</div>
-                                    </ng-container>
-                                </ng-container>
-                            </div>
-                        </td>
-                        <td class="p-3">
-                            <button (click)="goToProfile(item.Quota_id)"
-                                class="border-2 border-green-500 text-green-500 w-full rounded-md p-2 font-bold hover:bg-green-500 hover:text-white">
-                                <span class="whitespace-nowrap ml-2 mr-1">รายละเอียด</span>
+                            <button mat-icon-button color="accent" (click)="editDailog(item.id)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent" (click)="delete(item.id)">
+                                <mat-icon>delete</mat-icon>
                             </button>
                         </td>
                     </tr>
                 </tbody>
-
-                <tbody *ngIf="farmmer?.length == 0">
+                <tbody *ngIf="dataRow?.length == 0">
                     <tr>
-                        <td colspan="" class="no-data-available text-center">ไม่มีข้อมูล !</td>
+                        <td colspan="5" class="no-data-available text-center">ไม่มีข้อมูล !</td>
                     </tr>
                 </tbody>
             </table>
-
-            <div class="flex items-center space-x-1 justify-end w-full pr-4 py-2">
-                <button *ngIf="currentPage >= 2" class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
-                    (click)="changePage(currentPage - 1)" [disabled]="currentPage <= 1">&laquo;
-                </button>
-                <p class="border py-2 px-3 rounded ">{{ currentPage }}</p>
-                <button *ngIf="farmmer?.length == 10" class="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
-                    (click)="changePage(currentPage + 1)">
-                    &raquo;
-                </button>
-            </div>
-
-
         </div>
     </div>
 </div>

@@ -23,10 +23,8 @@ export class FormDialogComponent implements OnInit {
         private _service: NewsService
     ) {
         this.addForm = this.formBuilder.group({
-            title: ['', [Validators.required]],
-            detail: ['', [Validators.required]],
-            image: ['', [Validators.required]],
-            notify_status: ['', [Validators.required]],
+            name: ['', [Validators.required]],
+            address: ['', [Validators.required]],
         });
     }
 

@@ -23,10 +23,9 @@ export class FormDialogComponent implements OnInit {
         private _service: JournalService
     ) {
         this.addForm = this.formBuilder.group({
-            title: ['', [Validators.required]],
-            detail: ['', [Validators.required]],
-            image: ['', [Validators.required]],
-            notify_status: ['', [Validators.required]],
+            name: ['', [Validators.required]],
+            username: ['', [Validators.required]],
+            password: ['', [Validators.required]],
         });
     }
 

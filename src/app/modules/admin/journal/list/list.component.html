@@ -24,10 +24,10 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field> -->
-                <!-- <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="new()">
+                <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                    <span class="ml-2 mr-1">เพิ่มหมวดหมู่</span>
-                </button> -->
+                    <span class="ml-2 mr-1">เพิ่ม admin</span>
+                </button>
             </div>
         </div>
 
@@ -47,9 +47,9 @@
                         <td>{{item.name}}
                         </td>
                         <td>
-                            <button mat-icon-button color="accent" (click)="edit(item.id)">
+                            <!-- <button mat-icon-button color="accent" (click)="edit(item.id)">
                                 <mat-icon>edit</mat-icon>
-                            </button>
+                            </button> -->
                             <button mat-icon-button color="accent" (click)="delete(item.id)">
                                 <mat-icon>delete</mat-icon>
                             </button>

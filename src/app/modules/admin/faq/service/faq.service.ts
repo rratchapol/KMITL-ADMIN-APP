@@ -15,7 +15,7 @@ export class FaqService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .get(
+            .post(
                 environment.baseURL + '/api/customer',
                 dataTablesParameters
             )

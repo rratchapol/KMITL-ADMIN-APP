@@ -15,8 +15,8 @@ export class JournalService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .post(
-                environment.baseURL + '/api/factorie_page',
+            .get(
+                environment.baseURL + '/api/checkpoduct',
                 dataTablesParameters
             )
             .pipe(
@@ -28,7 +28,7 @@ export class JournalService {
 
     create(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/factorie', formData)
+            .post(environment.baseURL + '/api/checkpoduct', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -47,25 +47,20 @@ export class JournalService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `/api/factorie/${Id}`)
+            .get(environment.baseURL + `/api/checkpoduct/${Id}`)
             .pipe(
                 switchMap((response: any) => {
-                    return of(response.data);
+                    return of(response);
                 })
             );
     }
 
-    update(name: any,address: any,phone: any,email: any,lat:any,lon:any,factory_id,Id:any): Observable<any> {
+    update(word: any,Id:any): Observable<any> {
         console.log("ssssss");
         return this._httpClient
-            .put(environment.baseURL + `/api/factorie/${Id}`, {
-                name: name,
-                address: address,
-                phone: phone,
-                email: email,
-                lat: lat,
-                lon: lon,
-                factory_id: factory_id
+            .put(environment.baseURL + `/api/checkpoduct/${Id}`, {
+                word: word,
+
             })
             .pipe();
     }
@@ -78,7 +73,7 @@ export class JournalService {
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/factorie/${Id}`)
+            .delete(environment.baseURL + `/api/checkpoduct/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

@@ -202,7 +202,7 @@ export class ListComponent implements OnInit {
         });
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
-                this._Service.deletetest(itemid).subscribe((resp) => {
+                this._Service.delete(itemid).subscribe((resp) => {
                     this.rerender();
                 });
             }

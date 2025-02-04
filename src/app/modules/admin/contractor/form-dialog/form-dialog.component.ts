@@ -39,20 +39,10 @@ export class FormDialogComponent implements OnInit {
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: NewsService
     ) {
-        this._service.getFeature().subscribe((resp: any)=>{
-            this.contractorType = resp;
-        })
-        this._service.get_factory().subscribe((resp: any)=>{
-            this.factory = resp;
-        })
+
         this.addForm = this.formBuilder.group({
             id: '',
             name: [''],
-            phone: [''],
-            detail: [''],
-            status: ['Yes'],
-            features: this.formBuilder.array([]),
-            factories: this.formBuilder.array([]),
 
         });
     }
@@ -135,6 +125,73 @@ export class FormDialogComponent implements OnInit {
                let formValue = this.addForm.value
        
                 this._service.Savedata(formValue).subscribe({
+                    next: (resp: any) => {
+                        this.onCancelClick();
+                    },
+
+                    error: (err: any) => {
+                        console.log(err);
+                        this.addForm.enable();
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: "เบอร์โทรศัพท์นี้มีแล้วในระบบ",
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: false,
+                                    label: 'Confirm',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                  show: false,
+                                    label: 'Cancel',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                        console.log(err.error.message);
+                    },
+                });
+            }
+        });
+        
+    }
+
+    update(): void {
+    
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'เพิ่มข้อมูล',
+            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ตกลง',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            
+            if (result === 'confirmed') {
+               let formValue = this.addForm.value
+       
+                this._service.updatedata(formValue).subscribe({
                     next: (resp: any) => {
                         this.onCancelClick();
                     },

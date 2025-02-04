@@ -80,22 +80,31 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Tags',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',
-        link: '/admin/company/list',
+        link: '/admin/contractor/list',
     },
     {
         id: 'admin.chat',
-        title: 'แบน',
+        title: 'คำต้องห้าม',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',
         link: '/admin/company/list',
     },
     {
         id: 'admin.chat',
-        title: 'รีพอร์ต',
+        title: 'สถานที่นัดรับ',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',
-        link: '/admin/company/list',
+        link: '/admin/farmmer/list',
     },
+    // {
+    //     id: 'admin.chat',
+    //     title: 'รีพอร์ต',
+    //     type: 'basic',
+    //     icon: 'heroicons_outline:chat-bubble-left-right',
+    //     link: '/admin/company/list',
+    // },
+
+
     // {
     //     id: 'admin.chat',
     //     title: 'ตั้งค่าระบบ',

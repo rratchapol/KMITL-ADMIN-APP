@@ -13,6 +13,7 @@ import { EditComponent } from '../edit/edit.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PictureComponent } from '../picture/picture.component';
 import { FormControl } from '@angular/forms';
+// import { log } from 'console';
 declare var jQuery: any;
 export interface PeriodicElement {
     no: number;
@@ -69,9 +70,9 @@ export class ListComponent implements OnInit {
         private _fuseConfirmationService: FuseConfirmationService
     ) {
 
-        this._Service.get_factory().subscribe((resp: any)=>{
-            this.factoryData = resp;
-        })
+        // this._Service.get_factory().subscribe((resp: any)=>{
+        //     this.factoryData = resp;
+        // })
 
     }
 
@@ -138,7 +139,7 @@ export class ListComponent implements OnInit {
     addDialog() : void{
         this.dialog
             .open(FormDialogComponent, {
-                width: '700px', // กำหนดความกว้างของ Dialog
+                width: '500px', // กำหนดความกว้างของ Dialog
                 height: 'auto',
                 disableClose: false,
                 autoFocus: false,
@@ -222,6 +223,7 @@ export class ListComponent implements OnInit {
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
                 this._Service.delete(itemid).subscribe((resp) => {
+                    
                     this.rerender();
                 });
             }
@@ -236,6 +238,7 @@ export class ListComponent implements OnInit {
     pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };
 
     loadTable(): void {
+        console.log("sssssssssssss");
         const that = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
@@ -252,6 +255,7 @@ export class ListComponent implements OnInit {
                 that._Service
                     .getPage(dataTablesParameters)
                     .subscribe((resp) => {
+                        console.log("ดู getpage");
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;
                         this.pages.per_page = resp.per_page;
@@ -263,8 +267,7 @@ export class ListComponent implements OnInit {
                             this.pages.begin = 0;
                         }
                         that.dataRow = resp.data;
-                        console.log("ค่าใน item table",that.dataRow);
-                        console.log("ค่าใน item table",that.dataRow.facetories_contractors);
+
                         callback({
                             recordsTotal: resp.total,
                             recordsFiltered: resp.total,
@@ -276,7 +279,6 @@ export class ListComponent implements OnInit {
                 { data: 'actioon', orderable: false },
                 { data: 'no', orderable: false },
                 { data: 'code', orderable: false },
-                { data: 'name', orderable: false },
             ],
         };
     }

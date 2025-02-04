@@ -23,13 +23,8 @@ export class FormDialogComponent implements OnInit {
         private _service: JournalService
     ) {
         this.addForm = this.formBuilder.group({
-            name: ['', [Validators.required]],
-            phone: ['', [Validators.required]],
-            email: ['', [Validators.required]],
-            address: ['', [Validators.required]],
-            lat: ['', [Validators.required]],
-            lon: ['', [Validators.required]],
-            factory_id: ['', [Validators.required]],
+            word: ['', [Validators.required]],
+
         });
     }
 

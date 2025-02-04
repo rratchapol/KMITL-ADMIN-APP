@@ -66,7 +66,7 @@ export class JournalService {
 
     create(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/journal', formData)
+            .post(environment.baseURL + '/api/admin/register', formData)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
@@ -147,7 +147,7 @@ export class JournalService {
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/journal/${Id}`)
+            .delete(environment.baseURL + `/api/admin/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

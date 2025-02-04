@@ -223,7 +223,7 @@ export class ListComponent implements OnInit {
             },
             ajax: (dataTablesParameters: any, callback) => {
                 that._Service
-                    .getPagetest(dataTablesParameters)
+                    .getPage(dataTablesParameters)
                     .subscribe((resp) => {
                         this.pages.current_page = resp.current_page;
                         this.pages.last_page = resp.last_page;
@@ -243,12 +243,12 @@ export class ListComponent implements OnInit {
                         });
                     });
             },
-            // columns: [
-            //     { data: 'name', orderable: false },
-            //     { data: 'phone', orderable: false },
-            //     { data: 'email', orderable: false },
-            //     { data: 'address', orderable: false },
-            // ],
+            columns: [
+                { data: 'name', orderable: false },
+                { data: 'phone', orderable: false },
+                { data: 'email', orderable: false },
+                // { data: 'address', orderable: false },
+            ],
         };
     }
     showPicture(imgObject: any): void {

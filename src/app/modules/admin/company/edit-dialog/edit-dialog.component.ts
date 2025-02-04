@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { JournalService } from '../service/company.service';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { lastValueFrom } from 'rxjs';
+import { co } from '@fullcalendar/core/internal-common';
 
 @Component({
     selector: 'app-edit-dialog-news',
@@ -33,27 +34,16 @@ export class EditDialogComponent implements OnInit {
     ngOnInit(): void {
         console.log(this.data); 
         this.editForm = this.formBuilder.group({
-            // id: [this.data.id],
-            name: [this.data.name],
-            phone: [this.data.phone],
-            email: [this.data.email],
-            address: [this.data.address],
-            lat: [this.data.lat],
-            lon: [this.data.lon],
-            factory_id: [this.data.factory_id],
+            id: [this.data.id],
+            word: [this.data.word],
+
         });
         this._Service.getById(this.data).subscribe((resp: any) => {
             this.itemData = resp;
-
+            console.log("this.itemData",this.itemData);
             this.editForm.patchValue({
-                // id: this.itemData.id,
-                name: this.itemData.name,
-                phone: this.itemData.phone,
-                email: this.itemData.email,
-                address: this.itemData.address,
-                lat: this.itemData.lat,
-                lon: this.itemData.lon,
-                factory_id: this.itemData.factory_id,
+                id: this.itemData.id,
+                word: this.itemData.word,
                 
             });
             console.log(this.editForm.value);
@@ -144,7 +134,7 @@ export class EditDialogComponent implements OnInit {
                     }
                 );
                 console.log(formData);
-                this._Service.update(this.editForm.value.name,this.editForm.value.address,this.editForm.value.phone,this.editForm.value.email,this.editForm.value.lat,this.editForm.value.lon,this.editForm.value.factory_id,this.data).subscribe({
+                this._Service.update(this.editForm.value.word,this.editForm.value.id).subscribe({
                     next: (resp: any) => {
                         this.dialogRef.close();
                     },
