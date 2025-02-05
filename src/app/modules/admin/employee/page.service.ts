@@ -68,7 +68,7 @@ export class PageService {
 
     update(data: any, id: any): Observable<any> {
         return this._httpClient
-            .put<any>(environment.baseURL + '/api/update_user/' + id, data)
+            .put<any>(environment.baseURL + '/api/post/' + id, data)
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -78,7 +78,7 @@ export class PageService {
 
     delete(id: any): Observable<any> {
         return this._httpClient.delete<any>(
-            environment.baseURL + '/api/employees/' + id,
+            environment.baseURL + '/api/post/' + id,
             { headers: this.httpOptionsFormdata.headers }
         );
     }
@@ -184,5 +184,16 @@ export class PageService {
     
         return of(mockResponse); // Return mocked data as an Observable
       }
+
+
+      getById(Id: any): Observable<any> {
+        return this._httpClient
+            .get(environment.baseURL + `/api/post/${Id}`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            );
+    }
 
 }

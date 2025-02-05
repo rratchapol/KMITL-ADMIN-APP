@@ -20,7 +20,8 @@ export class EditDialogComponent implements OnInit {
     url_pro: any;
     _changeDetectorRef: any;
     _uploadService: any;
-
+    image:any;
+    product_images: string[] = [];
     constructor(
         private dialogRef: MatDialogRef<EditDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private data: any,
@@ -33,25 +34,48 @@ export class EditDialogComponent implements OnInit {
     ngOnInit(): void {
         this.editForm = this.formBuilder.group({
             id: [this.data.id],
-            title: [this.data.title],
-            detail: [this.data.detail],
-            image: [this.url_pro],
-            notify_status: [this.data.notify_status],
+            product_name: [this.data.product_name],
+            product_images: [this.data.product_images],
+            product_qty: [this.data.product_qty],
+            product_price: [this.data.product_price],
+            product_description: [this.data.product_description],
+            product_category: [this.data.product_category],
+            product_type: [this.data.product_type],
+            seller_id: [this.data.seller_id],
+            date_exp: [this.data.date_exp],
+            product_location: [this.data.product_location],
+            product_condition: [this.data.product_condition],
+            product_defect: [this.data.product_defect],
+            product_years: [this.data.product_years],
+            tag: [this.data.tag],
             status: [this.data.status],
         });
         this._Service.getById(this.data).subscribe((resp: any) => {
             this.itemData = resp;
+            console.log("ดูข้อมูลที่ส่งมา",this.itemData);
+            console.log("ดูข้อมูลที่ส่งมา",this.itemData.product_images);
+            this.image = "http://127.0.0.1:8000/storage/" + this.itemData.product_images;
+            // this.product_images= this.image.split(',');
+            this.product_images = this.itemData.product_images.map(img => "http://127.0.0.1:8000/storage/" + img);
 
+            console.log("ดูข้อมูลที่ส่งมา",this.image);
             this.editForm.patchValue({
                 id: this.itemData.id,
-                title: this.itemData.title,
-                detail: this.itemData.detail,
-                image: this.itemData.image,
-                notify_status: this.itemData.notify_status,
-                status: this.itemData.status,
-            });
-            console.log(this.editForm.value);
-            this.url_pro = this.itemData.image;
+                product_name: this.itemData.product_name,
+                product_images: this.itemData.product_images,
+                product_qty: this.itemData.product_qty,
+                product_price: this.itemData.product_price,
+                product_description: this.itemData.product_description,
+                product_category: this.itemData.product_category,
+                product_type: this.itemData.product_type,
+                seller_id: this.itemData.seller_id,
+                date_exp: this.itemData.date_exp,
+                product_location: this.itemData.product_location,
+                product_condition: this.itemData.product_condition,
+                product_defect: this.itemData.product_defect,
+                product_years: this.itemData.product_years,
+                tag: this.itemData.tag,
+            })
         });
     }
 
@@ -89,7 +113,8 @@ export class EditDialogComponent implements OnInit {
     }
 
     onCancelClick(): void {
-        this.dialogRef.close();
+        this.delete(this.data.id);
+        // this.dialogRef.close();
     }
     selectedFile: File = null;
     onFileChange(event) {
@@ -105,11 +130,7 @@ export class EditDialogComponent implements OnInit {
     update(): void {
         this.flashMessage = null;
         this.flashErrorMessage = null;
-        // Return if the form is invalid
-        // if (this.formData.invalid) {
-        // return;
-        // }
-        // Open the confirmation dialog
+
         const confirmation = this._fuseConfirmationService.open({
             title: 'แก้ไขข้อมูล',
             message: 'คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ',
@@ -136,25 +157,13 @@ export class EditDialogComponent implements OnInit {
         confirmation.afterClosed().subscribe(async (result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                // if (this.files.length) {
-                // const formData1 = new FormData();
-                // formData1.append('file', this.files[0]);
-                // formData1.append('path', 'package');
-                // const ImgPath = await lastValueFrom(
-                // this._uploadService.uploadFile(formData1)
-                // );
-                // this.formData.patchValue({
-                // image: ImgPath,
-                // });
-                // }
+                this.editForm.value.status = 'ok';
 
-                const formData = new FormData();
-                Object.entries(this.editForm.value).forEach(
-                    ([key, value]: any[]) => {
-                        formData.append(key, value);
-                    }
-                );
-                this._Service.update(formData).subscribe({
+
+                this.editForm.value.status = 'ok';
+                console.log('formdata status ok', this.editForm.value.status);
+
+                this._Service.update( this.editForm.value ).subscribe({
                     next: (resp: any) => {
                         this.dialogRef.close();
                     },
@@ -185,20 +194,47 @@ export class EditDialogComponent implements OnInit {
             }
         });
     }
-    files: File[] = [];
-    url_logo: string;
-    onSelect(event: { addedFiles: File[] }): void {
-        this.files.push(...event.addedFiles);
-        const file = this.files[0];
-        this.editForm.patchValue({
-            image: file,
+
+
+    delete(itemid: any) {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'ลบข้อมูล',
+            message: 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: true,
+                name: 'heroicons_outline:exclamation-triangle',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'Remove',
+                    color: 'warn',
+                },
+                cancel: {
+                    show: true,
+                    label: 'Cancel',
+                },
+            },
+            dismissible: true,
+        });
+        confirmation.afterClosed().subscribe((result) => {
+            if (result === 'confirmed') {
+                this._Service.delete(this.itemData.id).subscribe((resp) => {
+                    // this.rerender();
+                    this.dialogRef.close();
+                });
+            }
+            error: (err: any) => {};
         });
     }
 
-    onRemove(file: File): void {
-        const index = this.files.indexOf(file);
-        if (index >= 0) {
-            this.files.splice(index, 1);
-        }
+    cancelclick(): void {
+        this.dialogRef.close();
     }
+
+    openImageInNewWindow(image: string): void {
+        window.open(image, '_blank');  // เปิดรูปในแท็บใหม่
+    }
+
 }

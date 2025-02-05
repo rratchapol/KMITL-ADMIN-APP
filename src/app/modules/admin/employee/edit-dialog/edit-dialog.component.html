@@ -1,80 +1,50 @@
-<div class="md:max-w-lg mx-auto rounded-sm">
-    <!-- {{this.addForm.value | json}} -->
-    <h1 mat-dialog-title class="text-xl font-semibold mb-4" *ngIf="!this.data">เพิ่มรายชื่อผู้ใช้งานระบบ</h1>
-    <h1 mat-dialog-title class="text-xl font-semibold mb-4" *ngIf="this.data">แก้ไขข้อมูลผู้ใช้งานระบบ</h1>
+<div class="md:max-w-lg mx-auto">
+    <h1 mat-dialog-title class="text-xl font-semibold mb-4">รายละเอียดโพสต์</h1>
     <div mat-dialog-content>
-        <form [formGroup]="editForm">
-            <div class="-mx-3 md:flex mb-3">
-                <div class="md:w-full px-3">
-                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                        <mat-label>ชื่อ - นามสกุล</mat-label>
-                        <input matInput [placeholder]="'ชื่อ - นามสกุล'" [formControlName]="'name'">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="-mx-3 md:flex mb-3">
-                <div class="md:w-full px-3">
-                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                        <mat-label>เบอร์ติดต่อ</mat-label>
-                        <input matInput [placeholder]="'เบอร์ติดต่อ'" [formControlName]="'phone'">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="-mx-3 md:flex mb-3">
-                <div class="md:w-full px-3">
-                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                        <mat-label>อีเมล</mat-label>
-                        <input matInput [placeholder]="'email'" [formControlName]="'email'">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="-mx-3 md:flex mb-3">
-                <div class="md:w-full px-3">
-                    <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                        <mat-label>Password</mat-label>
-                        <input matInput [placeholder]="'Password'" [formControlName]="'password'">
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="mb-4 ">
-                <label class="block text-md font-medium text-gray-700">ประจำสถานที่โรงงาน</label>
-                <div class="grid grid-cols-3">
-                    <div class="inline-flex items-center " *ngFor="let item of factory;">
-                        <label class="relative flex items-center p-3 rounded-full cursor-pointer" [for]="'factory' + item.id">
-                            <input type="checkbox"
-                                class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                                [id]="'factory' + item.id" (change)="addFactory(item.id)"/>
-                            <span
-                                class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20"
-                                    fill="currentColor" stroke="currentColor" stroke-width="1">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </span>
-                        </label>
-                        <label class="mt-px font-light text-gray-700 cursor-pointer select-none" htmlFor="check">
-                            {{item.name}}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4 mt-4">
-                <label class="block text-md font-medium text-gray-700">สิทธ์การเข้าใช้ระบบ</label>
-                <div class="mt-1 ">
-                    <mat-radio-group formControlName="type">
-                        <mat-radio-button value="Admin">Admin</mat-radio-button>
-                        <mat-radio-button value="Management">Management</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-            </div>
-
-        </form>
+        <html lang="th">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Product Display</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="bg-gray-100 flex items-center justify-center min-h-100">
+          <div class="max-w-sm w-full bg-white rounded-lg shadow-lg p-6 border border-gray-200 overflow-auto">
+              <button class="absolute top-2 right-5 text-gray-500 hover:text-red-400 text-5xl" (click)="cancelclick()">&times;</button>
+              <div class="w-full h-80 overflow-y-scroll border rounded-lg">
+                <img src="{{image}}" alt="สินค้า" class="w-full h-auto object-cover " (click)="openImageInNewWindow(image)">
+            </div>       
+              <div class="text-xl mt-4 space-y-2">
+                  <p class="text-gray-500 text-sm">รายละเอียด: <span class="text-gray-700">{{itemData.detail}}</span></p>
+                  <p class="text-gray-500 text-sm">หมวดหมู่: <span class="text-gray-700">{{itemData.category}}</span></p>
+                  <p class="text-gray-500 text-sm">tag สินค้า: <span class="text-gray-700">{{itemData.tag}}</span></p>
+                  <p class="text-gray-500 text-sm">ราคา: <span class="text-gray-700">{{itemData.price}}</span></p>
+                  <div *ngIf="itemData.status == 'wait'">
+                    <p class="text-gray-500 text-sm">สถานะ: <span class="text-yellow-500 font-semibold">รอการอนุมัติ</span></p>
+                  </div>
+                  <div *ngIf="itemData.status == 'ok'">
+                    <p class="text-gray-500 text-sm">สถานะ: <span class="text-green-500 font-semibold">ผ่านการอนุมัติ</span></p>
+                  </div>
+                  <p class="text-gray-500 text-sm">สร้างโดย: <span class="text-gray-700">{{itemData.user.name}}</span></p>
+              </div>
+          </div>
+      </body>
+        </html>
+        
     </div>
-    <div mat-dialog-actions class="flex justify-center mt-4"> <button mat-button class="px-4 py-2 bg-gray-50 text-gray-600 rounded hover:bg-gray-400 border-2 border-gray-500" mx-3 (click)="onCancelClick()">ยกเลิก</button> &nbsp;
-        <button mat-button class="px-4 py-2 mx-3 bg-[#0a1c3a] text-white rounded hover:bg-gray-600 ml-2" (click)="onSaveClick()">บันทึก</button>
+    <div *ngIf="itemData.status == 'wait'">
+      <div mat-dialog-actions class="flex justify-end mt-4">
+        <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
+        (click)="onSaveClick()">อนุมัติ</button>
+        &nbsp;
+        <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded hover:bg-gray-400"
+          (click)="onCancelClick()">ไม่อนุมัติ</button>
+      </div>
     </div>
-</div>
+    <div *ngIf="itemData.status == 'ok'">
+      <div mat-dialog-actions class="flex justify-end mt-4">
+        <button mat-button class="px-4 py-2 bg-red-500 text-gray-900 rounded hover:bg-red-400"
+          (click)="onCancelClick()">ลบ</button>
+      </div>
+    </div>
+  </div>

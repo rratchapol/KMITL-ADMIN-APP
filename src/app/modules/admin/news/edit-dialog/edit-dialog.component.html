@@ -1,80 +1,66 @@
 <div class="md:max-w-lg mx-auto">
-  <h1 mat-dialog-title class="text-xl font-semibold mb-4">แก้ไขข่าวสาร</h1>
+  <h1 mat-dialog-title class="text-xl font-semibold mb-4">รายละเอียดสินค้า</h1>
   <div mat-dialog-content>
-    <form [formGroup]="editForm">
-      <!-- <div class="mb-4">
-          <label for="no" class="block text-sm font-medium text-gray-700">No.</label>
-          <input type="text" id="no" class="mt-1 form-input rounded-md shadow-sm block w-full" formControlName="no" placeholder="No.">
-        </div> -->
-      <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-full px-3">
-          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-            <mat-label>ไอดี</mat-label>
-            <input matInput [placeholder]="'กรอกไอดี'" [formControlName]="'id'">
-            <!-- <mat-hint>This is a hint text</mat-hint> -->
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-full px-3">
-          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-            <mat-label>หัวข้อ</mat-label>
-            <input matInput [placeholder]="'กรอกหัวข้อ'" [formControlName]="'title'">
-            <!-- <mat-hint>This is a hint text</mat-hint> -->
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-full px-3">
-          <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-            <mat-label>รายละเอียด</mat-label>
-            <textarea type="text" matInput [placeholder]="'กรอกรายละเอียด'" [formControlName]="'detail'"></textarea>
-            <!-- <mat-hint>This is a hint text</mat-hint> -->
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">สถานะ</label>
-        <div class="mt-1">
-          <mat-radio-group formControlName="notify_status">
-            <mat-radio-button [value]="1">แจ้งเตือน</mat-radio-button>
-            <mat-radio-button [value]="0">ไม่แจ้งเตือน</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-      <div class="mb-4">
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700">สถานะ</label>
-          <div class="mt-1">
-            <mat-radio-group formControlName="status">
-              <mat-radio-button [value]="1">เข้าใช้งานได้</mat-radio-button>
-              <mat-radio-button [value]="0">ระงับการใช้งาน</mat-radio-button>
-            </mat-radio-group>
+      <html lang="th">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Product Display</title>
+          <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body class="bg-gray-100 flex items-center justify-center min-h-100">
+        <div class="max-w-sm w-full bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+            <button class="absolute top-2 right-5 text-gray-500 hover:text-red-400 text-5xl" (click)="cancelclick()">&times;</button>
+        <!-- กรอบสำหรับแสดงหลายภาพ -->
+        <div class="w-full h-auto overflow-y-scroll border rounded-lg space-y-2">
+          <!-- ใช้ ngFor เพื่อแสดงรูปภาพทั้งหมดใน list -->
+          <div *ngFor="let img of product_images; let i = index">
+              <img 
+                  [src]="img" 
+                  alt="สินค้า" 
+                  class="w-full h-auto object-cover rounded-lg cursor-pointer" 
+                  (click)="openImageInNewWindow(img)" 
+              />
           </div>
-        </div>
-      </div>
-      <div class="md:w-full px-3">
-        <div class="flex items-center justify-center w-full">
-
-          <ngx-dropzone (change)="onSelect($event)"
-            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <ngx-dropzone-label>เลือกรูปภาพ</ngx-dropzone-label>
-            <div *ngFor="let f of files">
-              <ngx-dropzone-image-preview [file]="f" [removable]="true" (removed)="onRemove(f)"
-                class="h-auto max-w-full"></ngx-dropzone-image-preview>
-
+      </div> 
+            <!-- <img src="https://s.isanook.com/ca/0/ui/279/1396205/download20190701165129_1562561119.jpg" alt="สินค้า" class="w-full h-48 object-cover rounded-lg space-y-5"> -->
+            <h2 class="text-2xl font-bold text-gray-800">สินค้า: <span class="text-gray-600">{{itemData.product_name}}</span></h2>
+            <div class="text-xl mt-4 space-y-2">
+                <p class="text-gray-500 text-sm">รายละเอียด: <span class="text-gray-700">{{itemData.product_description}}</span></p>
+                <p class="text-gray-500 text-sm">หมวดหมู่: <span class="text-gray-700">{{itemData.product_category}}</span></p>
+                <p class="text-gray-500 text-sm">ประเภท: <span class="text-gray-700">{{itemData.product_type}}</span></p>
+                <p class="text-gray-500 text-sm">tag สินค้า: <span class="text-gray-700">{{itemData.tag}}</span></p>
+                <p class="text-gray-500 text-sm">สภาพสินค้า: <span class="text-gray-700">{{itemData.product_condition}}</span></p>
+                <p class="text-gray-500 text-sm">อายุการใช้งาน: <span class="text-gray-700">{{itemData.product_years}}</span></p>
+                <p class="text-gray-500 text-sm">ตำหนิ: <span class="text-gray-700">{{itemData.product_defect}}</span></p>
+                <p class="text-gray-500 text-sm">จำนวน: <span class="text-gray-700">{{itemData.product_qty}}</span></p>
+                <p class="text-gray-500 text-sm">ราคา: <span class="text-gray-700">{{itemData.product_price}}</span></p>
+                <div *ngIf="itemData.status == 'wait'">
+                  <p class="text-gray-500 text-sm">สถานะ: <span class="text-yellow-500 font-semibold">รอการอนุมัติ</span></p>
+                </div>
+                <div *ngIf="itemData.status == 'ok'">
+                  <p class="text-gray-500 text-sm">สถานะ: <span class="text-green-500 font-semibold">ผ่านการอนุมัติ</span></p>
+                </div>
+                <p class="text-gray-500 text-sm">วันสิ้นสุดการขาย: <span class="text-gray-700">{{itemData.date_exp}}</span></p>
             </div>
-          </ngx-dropzone>
         </div>
-      </div>
-
-    </form>
+    </body>
+      </html>
+      
   </div>
-  <div mat-dialog-actions class="flex justify-end mt-4">
-    <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
-      >Save</button>
-    &nbsp;
-    <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded hover:bg-gray-400"
-      (click)="onCancelClick()">Cancel</button>
+  <div *ngIf="itemData.status == 'wait'">
+    <div mat-dialog-actions class="flex justify-end mt-4">
+      <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
+      (click)="update()">อนุมัติ</button>
+      &nbsp;
+      <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded hover:bg-gray-400"
+        (click)="onCancelClick()">ไม่อนุมัติ</button>
+    </div>
+  </div>
+  <div *ngIf="itemData.status == 'ok'">
+    <div mat-dialog-actions class="flex justify-end mt-4">
+      <button mat-button class="px-4 py-2 bg-red-500 text-gray-900 rounded hover:bg-red-400"
+        (click)="onCancelClick()">ลบ</button>
+    </div>
   </div>
 </div>

@@ -38,12 +38,10 @@
                 <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
                     <thead>
                         <tr class="text-center bg-black mt-10 text-white">
-                            <th class="border-bottom-0 w-50">รายระเอียดสินค้า</th>
-                            <th class="border-bottom-0 w-50">รายระเอียด</th>
-                            <th class="border-bottom-0 w-50">Tag</th>
-                            <!-- <th class="border-bottom-0 w-50">สังกัดโรงงาน</th>
-                            <th class="border-bottom-0 w-50">สถานะ</th> -->
-                            <th class="border-bottom-0 w-50"></th>
+                            <th class="border-bottom-0 w-70">รายระเอียด</th>
+                            <th class="border-bottom-0 w-30">หมวดหมู่</th>
+                            <th class="border-bottom-0 w-30">Tag</th>
+                            <th class="border-bottom-0 w-30">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody *ngIf="dataRow?.length != 0">

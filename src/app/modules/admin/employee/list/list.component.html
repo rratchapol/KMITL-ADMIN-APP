@@ -39,12 +39,10 @@
                     <thead>
                         <tr class="text-center bg-black mt-10 text-white">
                             <!-- <th class="border-bottom-0 w-50">สินค้า</th> -->
-                            <th class="border-bottom-0 w-50">รายระเอียด</th>
-                            <th class="border-bottom-0 w-50">หมวดหมู่</th>
-                            <th class="border-bottom-0 w-50">Tag</th>
-                            <!-- <th class="border-bottom-0 w-50">สังกัดโรงงาน</th>
-                            <th class="border-bottom-0 w-50">สถานะ</th> -->
-                            <th class="border-bottom-0 w-50"></th>
+                            <th class="border-bottom-0 w-70">รายระเอียด</th>
+                            <th class="border-bottom-0 w-30">หมวดหมู่</th>
+                            <th class="border-bottom-0 w-30">Tag</th>
+                            <th class="border-bottom-0 w-30">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody *ngIf="dataRow?.length != 0">
@@ -57,7 +55,7 @@
 
                             <td>
                                 <button class="border-2 border-green-200 w-full rounded-md p-2 font-black hover:bg-slate-50" (click)="editDialog(item)">
-                                    <span class="ml-2 mr-1">ดู</span>
+                                    <span class="ml-2 mr-1">ตรวจสอบ</span>
                                 </button>
                             </td>
                         </tr>

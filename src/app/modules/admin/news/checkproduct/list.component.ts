@@ -148,7 +148,7 @@ export class CheckproductComponent implements OnInit {
 
     editElement(element: any) {
         const dialogRef = this.dialog.open(EditDialogComponent, {
-            width: '400px', // กำหนดความกว้างของ Dialog
+            width: '600px', // กำหนดความกว้างของ Dialog
             height: 'auto',
             data: element, // ส่งข้อมูลเริ่มต้นไปยัง Dialog
         });
@@ -163,7 +163,7 @@ export class CheckproductComponent implements OnInit {
     editDailog(id: any): void {
         this.dialog
             .open(EditDialogComponent, {
-                width: '500px', // กำหนดความกว้างของ Dialog
+                width: '600px', // กำหนดความกว้างของ Dialog
                 height: 'auto',
 
                 disableClose: false,

@@ -127,17 +127,42 @@ export class NewsService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `/api/news/${Id}`)
+            .get(environment.baseURL + `/api/product/${Id}`)
             .pipe(
                 switchMap((response: any) => {
-                    return of(response.data);
+                    return of(response);
                 })
             );
     }
 
-    update(formData: FormData): Observable<any> {
+    updates(formData: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + `/api/update_news`, formData)
+            .put(environment.baseURL + `/api/products/`, formData)
+            .pipe();
+    }
+
+    update(form: any): Observable<any> {
+        console.log("ssssss", form);
+        console.log("Form data before request:", form);
+        return this._httpClient
+            .put(environment.baseURL + `/api/product/${form.id}`, {
+                product_name: form.product_name,
+                product_images: form.product_images,
+                product_qty: form.product_qty,
+                product_price: form.product_price,
+                product_description: form.product_description,
+                product_category: form.product_category,
+                product_type: form.product_type,
+                seller_id: form.seller_id,
+                date_exp: form.date_exp,
+                product_location: form.product_location,
+                product_condition: form.product_condition,
+                product_defect: form.product_defect,
+                product_years: form.product_years,
+                tag: form.tag,
+                status: form.status,
+
+            })
             .pipe();
     }
 
@@ -149,7 +174,7 @@ export class NewsService {
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/news/${Id}`)
+            .delete(environment.baseURL + `/api/product/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);

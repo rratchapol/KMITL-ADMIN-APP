@@ -63,6 +63,8 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 export class CheckComponent implements OnInit, AfterViewInit {
     isLoading: boolean = false;
     dtOptions: DataTables.Settings = {};
+    @ViewChild(DataTableDirective)
+    dtElement!: DataTableDirective;
     positions: any[];
     public dataRow: any[];
     formFieldHelpers: string[] = ['fuse-mat-dense'];
@@ -84,6 +86,12 @@ export class CheckComponent implements OnInit, AfterViewInit {
         this._changeDetectorRef.detectChanges();
     }
 
+    rerender(): void {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.ajax.reload();
+        });
+    }
+
     // เพิ่มเมธอด editElement(element) และ deleteElement(element)
     editDialog(element: any) {
         const dialogRef = this.dialog.open(EditDialogComponent, {
@@ -97,9 +105,12 @@ export class CheckComponent implements OnInit, AfterViewInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
+            // if (result) {
+                console.log("form close",result);
+
                 // เมื่อ Dialog ถูกปิด ดำเนินการตามผลลัพธ์ที่คุณได้รับจาก Dialog
-            }
+                this.rerender();
+            // }
         });
     }
     addElement() {
@@ -162,13 +173,8 @@ export class CheckComponent implements OnInit, AfterViewInit {
             ],
         };
     }
-    @ViewChild(DataTableDirective)
-    dtElement!: DataTableDirective;
-    rerender(): void {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.ajax.reload();
-        });
-    }
+
+
     deleteElement() {
         // เขียนโค้ดสำหรับการลบออกองคุณ
     }

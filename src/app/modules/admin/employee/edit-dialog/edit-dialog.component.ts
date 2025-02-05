@@ -55,6 +55,7 @@ export class EditDialogComponent implements OnInit {
     editForm: FormGroup;
     positions: any[];
     factory: any[] = [];
+    itemData: any;
     status: any[] = [
         {
             id: 1,
@@ -69,6 +70,7 @@ checked = false;
 disabled = false;
 isInputDisabled: boolean = true;
 permissions: any[] = [];
+image: any;
     constructor(private dialogRef: MatDialogRef<EditDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private formBuilder: FormBuilder,
@@ -76,24 +78,28 @@ permissions: any[] = [];
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: PageService
     ) {
-        this._service.get_factory().subscribe((resp: any) => {
-            this.factory = resp;
+        console.log("ดู data",this.data.data.id);
+        this._service.getById(this.data.data.id).subscribe((resp: any) => {
+            this.itemData = resp;
+            console.log("ดู data",this.itemData);
+            this.image = "http://127.0.0.1:8000/storage/" + this.itemData.image;
+            console.log('ดู รูป',this.image);
         });
         this.editForm = this.formBuilder.group({
             id: '',
-            name: [''],
-            phone: [''],
-            email: [''],
-            type: [''],
-            password: [''],
-            factories: this.formBuilder.array([]),
+            category: [''],
+            detail: [''],
+            tag: [''],
+            status: [''],
+            image: [''],
+            price: [''],
         });
      }
 
     ngOnInit(): void {
         this.editForm.patchValue({
             ...this.data.data,
-            image : ''
+            // image : ''
         })
         console.log(this.editForm.value)
     }
@@ -125,6 +131,8 @@ permissions: any[] = [];
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
             if (result === 'confirmed') {
+                this.editForm.value.status = 'ok';
+
                 const updatedData = this.editForm.value;
                 this._service.update(updatedData, this.data.data.id).subscribe({
                     next: (resp: any) => {
@@ -166,8 +174,8 @@ permissions: any[] = [];
     }
 
     onCancelClick(): void {
-
-        this.dialogRef.close();
+        this.delete(this.data);
+        // this.dialogRef.close();
     }
 
     showFlashMessage(type: 'success' | 'error'): void {
@@ -215,4 +223,48 @@ permissions: any[] = [];
           factories.removeAt(index);
         }
       }
+
+
+      cancelclick(): void {
+        this.dialogRef.close();
+      }
+
+      delete(itemid: any) {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'ลบข้อมูล',
+            message: 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: true,
+                name: 'heroicons_outline:exclamation-triangle',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'Remove',
+                    color: 'warn',
+                },
+                cancel: {
+                    show: true,
+                    label: 'Cancel',
+                },
+            },
+            dismissible: true,
+        });
+        confirmation.afterClosed().subscribe((result) => {
+            if (result === 'confirmed') {
+                
+                this._service.delete(this.itemData.id).subscribe((resp) => {
+                    // this.rerender();
+                    this.dialogRef.close();
+                });
+            }
+            error: (err: any) => {};
+        });
+    }
+
+    openImageInNewWindow(image: string): void {
+        window.open(image, '_blank');  // เปิดรูปในแท็บใหม่
+    }
+
 }
