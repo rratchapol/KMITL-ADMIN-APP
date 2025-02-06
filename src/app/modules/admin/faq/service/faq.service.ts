@@ -124,7 +124,7 @@ export class FaqService {
 
     delete(Id: any): Observable<any> {
         return this._httpClient
-            .delete(environment.baseURL + `/api/faq/${Id}`)
+            .delete(environment.baseURL + `/api/customer/${Id}`)
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
