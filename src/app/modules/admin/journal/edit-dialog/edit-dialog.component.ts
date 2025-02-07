@@ -28,55 +28,31 @@ export class EditDialogComponent implements OnInit {
         private formBuilder: FormBuilder,
         private _Service: JournalService,
         private _fuseConfirmationService: FuseConfirmationService
-    ) {}
+    ) {console.log("doo id",localStorage.getItem('user')); }
 
     ngOnInit(): void {
+        console.log("doo id",this.data);
         this.editForm = this.formBuilder.group({
-            id: [this.data.id],
-            title: [this.data.title],
-            detail: [this.data.detail],
-            image: [this.url_pro],
-            notify_status: [this.data.notify_status],
-            status: [this.data.status],
+            id: [localStorage.getItem('user')],
+            name: ['', [Validators.required]],
+            username: ['', [Validators.required]],
+            password: ['', [Validators.required]],
         });
-        this._Service.getById(this.data).subscribe((resp: any) => {
+        this._Service.getById(localStorage.getItem('user')).subscribe((resp: any) => {
             this.itemData = resp;
-
+            console.log("this.itemData",this.itemData[0].name);
             this.editForm.patchValue({
-                id: this.itemData.id,
-                title: this.itemData.title,
-                detail: this.itemData.detail,
-                image: this.itemData.image,
-                notify_status: this.itemData.notify_status,
-                status: this.itemData.status,
+                id: this.itemData[0].id,
+                name: this.itemData[0].name,
+                username: this.itemData[0].username,
+                // password: this.itemData.password,
+
             });
             console.log(this.editForm.value);
-            this.url_pro = this.itemData.image;
         });
     }
 
-    async onChange(event: any): Promise<void> {
-        // //console.log('')
-        var reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]);
-        setTimeout(() => {
-            this._changeDetectorRef.detectChanges();
-        }, 150);
-        reader.onload = (e: any) => (this.url_pro = e.target.result);
-        const file = event.target.files[0];
-        //console.log('file', file);
-
-        const formData1 = new FormData();
-        formData1.append('file', file);
-        formData1.append('path', 'package');
-        const ImagePath = await lastValueFrom(
-            this._uploadService.uploadFile(formData1)
-        );
-        this.editForm.patchValue({
-            image: ImagePath,
-        });
-        this._changeDetectorRef.markForCheck();
-    }
+ 
 
     onSaveClick(): void {
         if (this.editForm.valid) {
@@ -85,31 +61,16 @@ export class EditDialogComponent implements OnInit {
             // แสดง SweetAlert2 ข้อความ "complete"
         }
 
-        // แสดง Snackbar ข้อความ "complete"
     }
 
     onCancelClick(): void {
         this.dialogRef.close();
     }
-    selectedFile: File = null;
-    onFileChange(event) {
-        this.selectedFile = (event.target as HTMLInputElement).files[0];
-
-        if (this.selectedFile) {
-            // ปรับให้เก็บข้อมูลที่คุณต้องการ ในที่นี้เป็นชื่อไฟล์
-            this.editForm.patchValue({ image: this.selectedFile.name });
-        }
-        this.editForm.get('image').updateValueAndValidity();
-    }
 
     update(): void {
         this.flashMessage = null;
         this.flashErrorMessage = null;
-        // Return if the form is invalid
-        // if (this.formData.invalid) {
-        // return;
-        // }
-        // Open the confirmation dialog
+    
         const confirmation = this._fuseConfirmationService.open({
             title: 'แก้ไขข้อมูล',
             message: 'คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ',
@@ -131,30 +92,16 @@ export class EditDialogComponent implements OnInit {
             },
             dismissible: true,
         });
-
+    
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe(async (result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                // if (this.files.length) {
-                // const formData1 = new FormData();
-                // formData1.append('file', this.files[0]);
-                // formData1.append('path', 'package');
-                // const ImgPath = await lastValueFrom(
-                // this._uploadService.uploadFile(formData1)
-                // );
-                // this.formData.patchValue({
-                // image: ImgPath,
-                // });
-                // }
-
-                const formData = new FormData();
-                Object.entries(this.editForm.value).forEach(
-                    ([key, value]: any[]) => {
-                        formData.append(key, value);
-                    }
-                );
-                this._Service.update(formData).subscribe({
+                // Extract individual values from formData
+                const { name, username, password, id } = this.editForm.value;
+    
+                // Pass the individual values to the update method
+                this._Service.updates(name, username, password, id).subscribe({
                     next: (resp: any) => {
                         this.dialogRef.close();
                     },
@@ -185,20 +132,7 @@ export class EditDialogComponent implements OnInit {
             }
         });
     }
-    files: File[] = [];
-    url_logo: string;
-    onSelect(event: { addedFiles: File[] }): void {
-        this.files.push(...event.addedFiles);
-        const file = this.files[0];
-        this.editForm.patchValue({
-            image: file,
-        });
-    }
+    
 
-    onRemove(file: File): void {
-        const index = this.files.indexOf(file);
-        if (index >= 0) {
-            this.files.splice(index, 1);
-        }
-    }
+
 }

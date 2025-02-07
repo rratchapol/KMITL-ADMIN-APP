@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { user } from 'app/mock-api/common/user/data';
 import { environment } from 'environments/environment.development';
 import { Observable, map, of, switchMap } from 'rxjs';
 
@@ -125,17 +126,29 @@ export class JournalService {
     }
     getById(Id: any): Observable<any> {
         return this._httpClient
-            .get(environment.baseURL + `/api/journal/${Id}`)
+            .get(environment.baseURL + `/api/admin/${Id}`)
             .pipe(
                 switchMap((response: any) => {
-                    return of(response.data);
+                    return of(response);
                 })
             );
     }
 
-    update(formData: FormData): Observable<any> {
+    update(formData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + `/api/update_journal`, formData)
+            .put(environment.baseURL + `/api/admin`, formData)
+            .pipe();
+    }
+
+    updates(name: any,username: any,password: any,Id:any): Observable<any> {
+        console.log("ssssss");
+        return this._httpClient
+            .put(environment.baseURL + `/api/admin/${Id}`, {
+                name: name,
+                username: username,
+                password: password
+
+            })
             .pipe();
     }
 

@@ -83,8 +83,10 @@ export class AuthService
             switchMap((response: any) =>
             {
                 // Store the access token in the local storage
+                console.log("loginnn",response);
                 this.accessToken = response.token;
-                localStorage.setItem('user', JSON.stringify(response.data));
+                localStorage.setItem('user', JSON.stringify(response.admin_id));
+                localStorage.setItem('role', JSON.stringify(response.role));
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -145,6 +147,7 @@ export class AuthService
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
         localStorage.removeItem('user');
+        localStorage.removeItem('role');
         // Set the authenticated flag to false
         this._authenticated = false;
 

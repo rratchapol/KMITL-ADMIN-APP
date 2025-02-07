@@ -42,6 +42,7 @@ export class ListComponent implements OnInit {
     dtElement!: DataTableDirective;
     dataRow: any = [];
     isLoading: boolean = false;
+    role: any;
 
     displayedColumns: string[] = [
         'manage',
@@ -68,6 +69,7 @@ export class ListComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadTable();
+        this.role = localStorage.getItem('role');
     }
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;

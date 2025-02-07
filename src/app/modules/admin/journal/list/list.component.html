@@ -24,10 +24,19 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field> -->
-                <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
-                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                    <span class="ml-2 mr-1">เพิ่ม admin</span>
-                </button>
+                <div *ngIf="role == 'admin'" class="mr-10 ">
+                    <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2 mr-1">เพิ่ม admin</span>
+                    </button>
+                </div>
+                <div *ngIf="role != 'admin'" class="mr-10 ">
+                    <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="editElement()">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        <span class="ml-2 mr-1">แก้ไขข้อมูล</span>
+                    </button>
+                    
+                </div>
             </div>
         </div>
 
