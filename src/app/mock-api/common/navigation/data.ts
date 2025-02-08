@@ -156,6 +156,9 @@ export const defaultNavigation: FuseNavigationItem[] = [
     // },
 
 ];
+
+
+
 export const compactNavigation: FuseNavigationItem[] = [
     {
         id: 'dashboards',

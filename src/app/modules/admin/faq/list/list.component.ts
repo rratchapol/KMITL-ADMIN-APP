@@ -13,6 +13,7 @@ import { EditComponent } from '../edit/edit.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PictureComponent } from '../picture/picture.component';
 import { FormControl } from '@angular/forms';
+import { Location } from '@angular/common';
 declare var jQuery: any;
 export interface PeriodicElement {
     no: number;
@@ -95,10 +96,12 @@ export class ListComponent implements OnInit {
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef,
         private _Service: FaqService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private location: Location
     ) {}
 
     ngOnInit(): void {
+        this.location.replaceState('/admin/user/list');
         this.loadTable();
     }
     ngAfterViewInit() {
