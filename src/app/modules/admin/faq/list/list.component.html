@@ -28,7 +28,7 @@
                         <th class="border-bottom-0 w-20">จัดการ</th>
                     </tr>
                 </thead>
-                <tbody *ngIf="dataRow?.length != 0" class="whitespace-nowrap">  
+                <tbody  class="whitespace-nowrap">  
                     <tr *ngFor="let item of dataRow; let i = index">
                         <td>{{item.No}}</td>
                         <td>{{item.name}}</td>
@@ -47,7 +47,7 @@
                 </tbody>
                 <tbody *ngIf="dataRow?.length == 0">
                     <tr>
-                        <td colspan="5" class="no-data-available text-center">ไม่มีข้อมูล !</td>
+                        <td colspan="6" class="no-data-available text-center">ไม่มีข้อมูล !</td>
                     </tr>
                 </tbody>
             </table>

@@ -38,7 +38,7 @@
                         <th class="border-bottom-0 " style="width: 20%;">จัดการ</th>
                     </tr>
                 </thead>
-                <tbody *ngIf="dataRow?.length != 0">
+                <tbody >
                     <tr *ngFor="let item of dataRow; let i = index">
                         <td> {{i}}</td>
                         <td>{{item?.name || '-'}}</td>
