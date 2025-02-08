@@ -70,6 +70,14 @@ export class ListComponent implements OnInit {
     ngOnInit(): void {
         this.loadTable();
         this.role = localStorage.getItem('role');
+        console.log("this.role: ",this.role);
+        if(this.role == "admin"){
+            this.role = 'admin';
+        }
+        if(this.role == null){
+            this.role = 'user';
+        }
+        console.log("this.role: ",this.role);
     }
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;

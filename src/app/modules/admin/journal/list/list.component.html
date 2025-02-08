@@ -11,26 +11,19 @@
             <div class="m-5 mb-5 text-xl font-extrabold tracking-tight">admin</div>
 
             <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 justify-center">
-                <!-- <mat-form-field [ngClass]="formFieldHelpers" class="fuse-mat-dense min-w-56 px-2 items-center mt-5">
-                    <mat-select [formControl]="status">
-                        <mat-option [value]="''">
-                            เลือกสถานะ
-                        </mat-option>
-                        <mat-option [value]="'active'">
-                            Active
-                        </mat-option>
-                        <mat-option [value]="'inactive'">
-                            Inactive
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
-                <div *ngIf="role == 'admin'" class="mr-10 ">
+                <div *ngIf="role != 'null'" class="fuse-mat-dense min-w-56 px-2 items-center ">
+                    <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="editElement()">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        <span class="ml-2 mr-1">แก้ไขข้อมูล</span>
+                    </button>
+                </div>
+                <div *ngIf="role != 'null' " class="mr-10 ">
                     <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addElement()">
                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                         <span class="ml-2 mr-1">เพิ่ม admin</span>
                     </button>
                 </div>
-                <div *ngIf="role != 'admin'" class="mr-10 ">
+                <div *ngIf="role == 'null'" class="mr-10 ">
                     <button class="ml-4 w-full mr-5 rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="editElement()">
                         <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
                         <span class="ml-2 mr-1">แก้ไขข้อมูล</span>
