@@ -69,12 +69,23 @@ export class ConfignotiService {
 
 getDate(name: string): Observable<any> {
     return this.http
-        .get(environment.baseURL +  `/api/get_date/${name}`)
+        .get(environment.baseURL +  `/api/categorie/${name}`)
         .pipe(
             switchMap((response: any) => {
                 return of(response.data);
             })
         );
+}
+
+getPage(dataTablesParameters: any): Observable<any> {
+  return this.http
+      // .post('https://asha-tech.co.th/trr-api/public/api/contractor_page', dataTablesParameters)
+      .get(environment.baseURL + '/api/categorie', dataTablesParameters)
+      .pipe(
+          switchMap((response: any) => {
+              return of(response.data);
+          })
+      );
 }
 
 

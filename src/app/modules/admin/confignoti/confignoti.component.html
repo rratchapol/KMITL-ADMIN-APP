@@ -1,166 +1,63 @@
-<div class="flex flex-col flex-auto min-w-0">
-    <!-- Header -->
-    <!-- Loader -->
-    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
-        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
-    </div>
-    <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
-        <div class="flex-1 flemin-w-0">
-            <!-- Title -->
-            <div class="flex flex-row mt-2 justify-between">
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    แจ้งเตือน
-                </h2>
-            </div>
-        </div>
-    </div>
-    <!-- Main -->
-    <form [formGroup]="addForm">
-        <div class="flex-auto p-6 sm:p-10">
-            <div class="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1">
-                <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+<div class=" sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden dark:bg-transparent">
 
+  <div class="bg-card m-5 p-5 rounded-lg">
+      <div class="flex justify-between">
+          <div class="text-xl font-extrabold tracking-tight sm:ml-4">Tag ทั้งหมด</div>
+          <!-- <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
 
-                    <div class="-mx-3 md:flex mb-6">
-                        <div class="md:w-1/2 px-3">
-                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                                <mat-label>ประเภทแจ้งเตือน</mat-label>
-                                <mat-select [formControlName]="'title'" (selectionChange)="onSelectNoti($event.value)">
-                                    <mat-option value="กิจกรรมเพาะปลูก">กิจกรรมเพาะปลูก</mat-option>
-                                    <mat-option value="คิวอ้อย">คิวอ้อย</mat-option>
-                                    <mat-option value="แจ้งรับคิว">แจ้งรับคิว</mat-option>
-                                    <mat-option value="บิลอ้อย">บิลอ้อย</mat-option>
-                                    <mat-option value="วิทยุ">วิทยุ</mat-option>
-                                    <mat-option value="วารสาร">วารสาร</mat-option>
-                                    <mat-option value="ข่าวสาร">ข่าวสาร</mat-option>
-                                    <mat-option value="เงินค่าอ้อยออก">เงินค่าอ้อยออก</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="-mx-3 md:flex mb-6">
-                        <div class="md:w-1/2 px-3">
-                            <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                                <mat-label>รายละเอียด</mat-label>
-                                <input matInput [placeholder]="'กรอกรายละเอียด'" [formControlName]="'body'">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="p-fluid" [formArrayName]="'date'">
-                        <div class="flex justify-content-between">
-                          <h1 class="mt-2 text-2xl"><b>วันที่ต้องการแจ้งเตือน</b></h1>
+              <button class="ml-4 w-full rounded-md bg-[#0a1c3a] text-white" mat-flat-button (click)="addDialog()">
+                  <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                  <span class="ml-2 mr-1">เพิ่ม Tag</span>
+              </button>
+          </div> -->
+      </div>
+      <div class="flex flex-auto overflow-auto rounded-lg sm:rounded-lg mt-5">
+          <div class="flex flex-col flex-auto p-5  sm:overflow-y-auto">
+              <table datatable [dtOptions]="dtOptions" class="table row-border hover w-full">
+                  <thead>
+                      <tr class="text-center bg-black mt-10 text-white">
+                          <th class="border-bottom-0 w-10">ลำดับ</th>
+                          <th class="border-bottom-0 w-60">ชื่อ หมวดหมู่</th>
+                          <th class="border-bottom-0 w-10">จัดการ</th>
+                      </tr>
+                  </thead>
+                  <tbody class="whitespace-nowrap">
+                      <tr *ngFor="let item of dataRow; let i = index">
+                          <td>{{i}}</td>
+                          <td>{{item.category_name}}</td>
+                          
+                          <!-- <td class=" space-x-8">
+                              <button class="w-20 bg-green-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200" 
+                                  (click)="editDialog(item)">
+                                  <span class="ml-1">แก้ไข</span>
+                              </button>
+                              <button class="p-1 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600 transition duration-200" 
+                                  (click)="delete(item.id)">
+                                  <mat-icon class="text-white ">delete</mat-icon>
+                              </button>
+                          </td> -->
 
-                          <button class="ml-12 mb-10" mat-flat-button [color]="'primary'" (click)="addDate()">
-                            เพิ่มวันที่  </button>
-
-                        </div>
-
-                        <div class="bg-card rounded-2xl md:shadow overflow-hidden px-8 pt-6 pb-8 mb-4 flex flex-col my-2" *ngFor="let day of date.controls; let i = index" [formGroupName]="i">
-                            <div class="flex justify-between items-center">
-                                <!-- ฟอร์มเลือกวันที่ -->
-                                <mat-form-field appearance="fill" class="md:w-1/2 px-3">
-                                  <mat-label>วันที่แจ้งเตือน</mat-label>
-                                  <input matInput [matDatepicker]="picker" formControlName="day">
-                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                  <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-
-                                <!-- ปุ่มลบวันที่ -->
-                                <div class="field col-3 pt-5">
-                                  <button mat-flat-button [color]="'warn'" (click)="removeDate(i)">
-                                    ลบ
-                                  </button>
-                                </div>
-
-                        </div>
-                     <div class="p-fluid" [formArrayName]="'time'">
-                        <div class="flex justify-content-between">
-                          <h1 class="mt-2 text-xl"><b>เวลา</b></h1>
-                          <button class="ml-12 mb-10" mat-flat-button [color]="'primary'" (click)="addTime(day)">
-                            เพิ่มเวลา  </button>
-
-                        </div>
-
-                        <div class="card" *ngFor="let time of day.controls.time.controls; let j = index" [formGroupName]="j">
-                            <div class="flex justify-between items-center">
-                            <div class="md:w-1/2 px-3">
-                                <mat-form-field [ngClass]="formFieldHelpers" class="w-full">
-                                    <mat-label>เวลาที่แจ้งเตือน</mat-label>
-                                    <input matInput type="time"  [formControlName]="'hour'">
-                                </mat-form-field>
-                            </div>
-                            <div class="field col-3 pt-5">
-                                <button mat-flat-button [color]="'warn'" (click)="removeTime(day,j)">
-                                  ลบ
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-
-
-
-                    </div>
-
-
-                        </div>
-
-                    </div>
-                    <table class="table row-border hover w-full text-center whitespace-nowrap">
-                        <thead class="bg-gray-700 text-black">
-                          <tr class="bg-gray-200">
-                            <th class="border-b-2 w-1/9 p-3">วันที่</th>
-                            <th class="border-b-2 w-1/9 p-3">จำนวนการแจ้งเตือน</th>
-                            <th class="border-b-2 w-1/9 p-3">รายละเอียดการแจ้งเตือน</th>
-                            <th class="border-b-2 w-1/9 p-3">จัดการ</th>
-
-                          </tr>
-                        </thead>
-
-                        <tbody *ngIf="datenoti?.length > 0">
-                          <tr *ngFor="let item of datenoti; let i = index" class="hover:bg-gray-100 whitespace-nowrap">
-                            <td class="p-3">{{ item.date | date: 'dd/MM/yyyy' }}</td>
-                            <td class="p-3">{{ item.total ?? '-' }}</td>
-                            <td class="p-3">
-                              <!-- Loop through item.days array -->
-                              <div *ngFor="let day of item.days" class="bg-gray-100 p-2 rounded mb-1 flex justify-between">
-                               <div>
-                                <div>
-                                  <strong>เวลาแจ้งเตือน: </strong>{{ day.time ?? '-' }}  <!-- Replace someField with the correct field from days array -->
-                                </div>
-                                <div>
-                                  <strong>รายละเอียด: </strong>{{ day.title ?? '-' }}  <!-- Replace detail with the appropriate data you want to display -->
-                                </div>
-                            </div>
-                            <div>
-                                <button mat-icon-button color="accent" (click)="deletesub(item.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                              </div>
-                            </td>
-                            <td class="">
-                                <button mat-icon-button color="accent" (click)="delete(item.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                          </tr>
-                        </tbody>
-
-                        <tbody *ngIf="datenoti?.length == 0">
-                          <tr>
-                            <td colspan="3" class="no-data-available align-center text-center">ไม่มีข้อมูล !</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                    <div mat-dialog-actions class="flex justify-end mt-2">
-                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Submit()">
-                                บันทึกข้อมูล
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+                          <td style="white-space: nowrap;" class="text-center">
+                              <button mat-icon-button color="accent" (click)="editDialog(item)">
+                                  <mat-icon>edit</mat-icon>
+                              </button>
+                              <button mat-icon-button color="accent" (click)="delete(item.id)">
+                                  <mat-icon>delete</mat-icon>
+                              </button>
+  
+                              
+                          </td>
+                          
+                      </tr>
+                  </tbody>
+                  <tbody *ngIf="dataRow?.length == 0">
+                      <tr>
+                          <td colspan="13" class="no-data-available text-center">
+                              ไม่มีข้อมูล !
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>

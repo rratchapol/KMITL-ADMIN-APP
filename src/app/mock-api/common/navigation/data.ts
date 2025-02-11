@@ -77,6 +77,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'admin.chat',
+        title: 'หมวดหมู่',
+        type: 'basic',
+        icon: 'heroicons_outline:chat-bubble-left-right',
+        link: '/admin/confignoti',
+    },
+    {
+        id: 'admin.chat',
         title: 'Tags',
         type: 'basic',
         icon: 'heroicons_outline:chat-bubble-left-right',

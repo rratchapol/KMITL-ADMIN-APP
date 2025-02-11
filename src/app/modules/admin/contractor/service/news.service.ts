@@ -34,6 +34,50 @@ export class NewsService {
             );
     }
 
+
+    getcategories(): Observable<any> {
+        const params = {
+            status: null,
+            draw: 1,
+            columns: [],
+            order: JSON.stringify([
+                {
+                    "column": 0,
+                    "dir": "asc"
+                }
+            ]),
+            start: 0,
+            length: 10,
+            search: JSON.stringify({
+                "value": "",
+                "regex": false
+            })
+        };
+    
+        return this._httpClient
+            .get(environment.baseURL + '/api/categorie', { params })
+            .pipe(
+                switchMap((response: any) => {
+                    console.log("categorie :::",response);
+                    return of(response.data);
+                    
+                })
+                
+            );
+    }
+    
+
+    getcategory(dataTablesParameters: any): Observable<any> {
+        return this._httpClient
+            // .post('https://asha-tech.co.th/trr-api/public/api/contractor_page', dataTablesParameters)
+            .get(environment.baseURL + '/api/categories', dataTablesParameters)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     updatedata(formData: any): Observable<any> {
         return this._httpClient
             .put(environment.baseURL + '/api/tags/' + formData.id, formData)

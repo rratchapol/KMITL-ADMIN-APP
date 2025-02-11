@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { NewsService } from '../service/news.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
     selector: 'app-form-dialog-news',
@@ -10,6 +12,12 @@ import { NewsService } from '../service/news.service';
     styleUrls: ['./form-dialog.component.scss'],
 })
 export class FormDialogComponent implements OnInit {
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    dtOptions: DataTables.Settings = {};
+    @ViewChild(DataTableDirective)
+    dtElement!: DataTableDirective;
+    dataRow: any = [];   
 
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     addForm: FormGroup;
@@ -30,6 +38,8 @@ export class FormDialogComponent implements OnInit {
       
     ];
 
+    category:any;
+
 
     constructor(
         private dialogRef: MatDialogRef<FormDialogComponent>,
@@ -42,13 +52,26 @@ export class FormDialogComponent implements OnInit {
 
         this.addForm = this.formBuilder.group({
             id: '',
+            category_id: '',
             name: [''],
 
         });
+        this.loadTable();
+
+        this._service.getcategories().subscribe({
+            next: (resp: any) => {
+                console.log("categorie:::::::::",resp.data);
+                this.category = resp.data;
+                
+            },
+           
+        });
+
+
     }
 
     ngOnInit(): void {
-
+        console.log("console.log(this.category)",this.category)
         if(this.data) {
             this.addForm.patchValue({
                 ...this.data
@@ -273,5 +296,55 @@ export class FormDialogComponent implements OnInit {
         const features = this.addForm.get('features') as FormArray;
         return features.value.some((value: any) => value.feature_id === featureId);
       }
+
+      pages = { current_page: 1, last_page: 1, per_page: 10, begin: 0 };loadTable(): void {
+        console.log("sssssssssssss");
+    
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 10,
+            serverSide: true,
+            processing: true,
+            order: [[0, 'desc']],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
+            },
+            ajax: (dataTablesParameters: any, callback) => {
+                console.log('dataTablesParameters:', dataTablesParameters); 
+                this._service.getcategory(dataTablesParameters).subscribe((resp) => {
+                    console.log("ดู getpage");
+    
+                    // อัพเดทข้อมูลหน้าและจำนวนรายการ
+                    this.pages.current_page = resp.current_page;
+                    this.pages.last_page = resp.last_page;
+                    this.pages.per_page = resp.per_page;
+    
+                    // คำนวณตำแหน่งเริ่มต้นของหน้าปัจจุบัน
+                    if (parseInt(resp.current_page) > 1) {
+                        this.pages.begin =
+                            parseInt(resp.per_page) *
+                            (parseInt(resp.current_page) - 1);
+                    } else {
+                        this.pages.begin = 0;
+                    }
+    
+                    // เก็บข้อมูล category
+                    this.category = resp.data;
+    
+                    // ส่งข้อมูลให้ DataTables
+                    callback({
+                        recordsTotal: resp.total,
+                        recordsFiltered: resp.total,
+                        data: resp.data, // ส่งข้อมูลที่ได้จาก API
+                    });
+                });
+            },
+            columns: [
+                { data: 'actioon', orderable: false },
+                { data: 'no', orderable: false },
+                { data: 'code', orderable: false },
+            ],
+        };
+    }
 }
 
