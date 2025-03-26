@@ -256,12 +256,12 @@ export class ListComponent implements OnInit {
                         });
                     });
             },
-            columns: [
-                { data: 'actioon', orderable: false },
-                { data: 'no', orderable: false },
-                { data: 'code', orderable: false },
-                // { data: 'name', orderable: false },
-            ],
+            // columns: [
+            //     // { data: 'actioon', orderable: false },
+            //     // { data: 'no', orderable: false },
+            //     // { data: 'code', orderable: false },
+            //     // { data: 'name', orderable: false },
+            // ],
         };
     }
     showPicture(imgObject: any): void {

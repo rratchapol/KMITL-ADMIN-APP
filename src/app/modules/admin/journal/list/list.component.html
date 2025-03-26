@@ -39,7 +39,7 @@
                     <tr class="text-center bg-black mt-10 text-white">
                         <th class="border-bottom-0 w-20">ลำดับ</th>
                         <th class="border-bottom-0 w-150">ชื่อ</th>
-                        <th class="border-bottom-0 w-30">จัดการ</th>
+                        <th class="border-bottom-0 w-30"  *ngIf="role != 'null'">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="dataRow?.length != 0" class="whitespace-nowrap">
@@ -48,7 +48,7 @@
                         </td>
                         <td>{{item.name}}
                         </td>
-                        <td>
+                        <td *ngIf="role != 'null'">
                             <!-- <button mat-icon-button color="accent" (click)="edit(item.id)">
                                 <mat-icon>edit</mat-icon>
                             </button> -->
