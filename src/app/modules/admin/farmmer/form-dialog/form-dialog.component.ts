@@ -81,12 +81,12 @@ export class FormDialogComponent implements OnInit {
             actions: {
                 confirm: {
                     show: true,
-                    label: 'Confirm',
+                    label: 'ตกลง',
                     color: 'primary',
                 },
                 cancel: {
                     show: true,
-                    label: 'Cancel',
+                    label: 'ยกเลิก',
                 },
             },
             dismissible: true,

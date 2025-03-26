@@ -176,7 +176,7 @@ export class ConfignotiComponent implements OnInit {
              columns: [
                  { data: 'actioon', orderable: false },
                  { data: 'no', orderable: false },
-                 { data: 'code', orderable: false },
+                //  { data: 'code', orderable: false },
              ],
          };
      }

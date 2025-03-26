@@ -16,10 +16,17 @@
     </form>
   </div>
   <div mat-dialog-actions class="flex justify-end mt-4">
-    <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
+    <!-- <button mat-button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
     (click)="update()">Save</button>
     &nbsp;
     <button mat-button class="px-4 py-2 bg-gray-300 text-gray-600 rounded hover:bg-gray-400"
-      (click)="onCancelClick()">Cancel</button>
+      (click)="onCancelClick()">Cancel</button> -->
+
+    <button mat-button
+      class="px-4 py-2 bg-gray-50 text-gray-600 rounded hover:bg-gray-400 border-2 border-gray-500" mx-3
+      (click)="onCancelClick()">ยกเลิก</button>
+  &nbsp;
+  <button  mat-button class="px-4 py-2 mx-3 bg-[#0a1c3a] text-white rounded hover:bg-gray-600 ml-2"
+      (click)="update()">บันทึก</button>
   </div>
 </div>

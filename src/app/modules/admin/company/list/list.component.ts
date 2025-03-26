@@ -190,7 +190,7 @@ export class ListComponent implements OnInit {
                 confirm: {
                     show: true,
                     label: 'Remove',
-                    color: 'primary',
+                    color: 'warn',
                 },
                 cancel: {
                     show: true,
