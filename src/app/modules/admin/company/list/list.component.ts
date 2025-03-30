@@ -12,6 +12,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PictureComponent } from '../picture/picture.component';
 import { FormControl } from '@angular/forms';
+import { Location } from '@angular/common';
 declare var jQuery: any;
 export interface PeriodicElement {
     no: number;
@@ -62,10 +63,12 @@ export class ListComponent implements OnInit {
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef,
         private _Service: JournalService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private location: Location
     ) {}
 
     ngOnInit(): void {
+        this.location.replaceState('/admin/checkword');
         this.loadTable();
     }
     ngAfterViewInit() {
@@ -217,7 +220,7 @@ export class ListComponent implements OnInit {
             pageLength: 10,
             serverSide: true,
             processing: true,
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/th.json',
             },

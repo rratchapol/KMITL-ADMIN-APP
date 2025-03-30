@@ -35,7 +35,7 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { tap } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { co } from '@fullcalendar/core/internal-common';
-
+import { Location } from '@angular/common';
 @Component({
     selector: 'employee-list',
     templateUrl: './list.component.html',
@@ -73,10 +73,12 @@ export class ListComponent implements OnInit, AfterViewInit {
     constructor(
         private dialog: MatDialog,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _service: PageService
+        private _service: PageService,
+        private location: Location
     ) {}
 
     ngOnInit() {
+        this.location.replaceState('/admin/post');
         this.loadTable();
         // this._service.getPosition().subscribe((resp: any)=>{
         //     this.positions = resp.data

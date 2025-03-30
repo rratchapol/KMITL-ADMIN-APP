@@ -101,7 +101,7 @@ export class ListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.location.replaceState('/admin/user/list');
+        this.location.replaceState('/admin/user');
         this.loadTable();
     }
     ngAfterViewInit() {

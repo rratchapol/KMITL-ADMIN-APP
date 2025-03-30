@@ -112,10 +112,10 @@ export class EditDialogComponent implements OnInit {
         // แสดง Snackbar ข้อความ "complete"
     }
 
-    onCancelClick(): void {
-        this.delete(this.data.id);
-        // this.dialogRef.close();
-    }
+    // onCancelClick(): void {
+    //     this.delete(this.data.id);
+    //     // this.dialogRef.close();
+    // }
     selectedFile: File = null;
     onFileChange(event) {
         this.selectedFile = (event.target as HTMLInputElement).files[0];
@@ -226,6 +226,75 @@ export class EditDialogComponent implements OnInit {
                 });
             }
             error: (err: any) => {};
+        });
+    }
+
+
+    onCancelClick(): void {
+        this.flashMessage = null;
+        this.flashErrorMessage = null;
+
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'แก้ไขข้อมูล',
+            message: 'คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ยืนยัน',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe(async (result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                // this.editForm.value.status = 'reject';
+
+
+                this.editForm.value.status = 'reject';
+                console.log('formdata status ok', this.editForm.value.status);
+
+                this._Service.update( this.editForm.value ).subscribe({
+                    next: (resp: any) => {
+                        this.dialogRef.close();
+                    },
+                    error: (err: any) => {
+                        this._fuseConfirmationService.open({
+                            title: 'กรุณาระบุข้อมูล',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: false,
+                                    label: 'ยืนยัน',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                    },
+                });
+            }
         });
     }
 

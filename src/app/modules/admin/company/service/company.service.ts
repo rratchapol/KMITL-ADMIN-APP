@@ -15,8 +15,8 @@ export class JournalService {
 
     getPage(dataTablesParameters: any): Observable<any> {
         return this._httpClient
-            .get(
-                environment.baseURL + '/api/checkpoduct',
+            .post(
+                environment.baseURL + '/api/getcheckpoduct',
                 dataTablesParameters
             )
             .pipe(

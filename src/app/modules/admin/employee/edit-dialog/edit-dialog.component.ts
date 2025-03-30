@@ -174,10 +174,80 @@ image: any;
 
     }
 
+
     onCancelClick(): void {
-        this.delete(this.data);
-        // this.dialogRef.close();
+        this.flashMessage = null;
+        const confirmation = this._fuseConfirmationService.open({
+            "title": "แก้ไขข้อมูล",
+            "message": "คุณต้องการแก้ไขข้อมูลใช่หรือไม่ ",
+            "icon": {
+                "show": false,
+                "name": "heroicons_outline:exclamation",
+                "color": "warning"
+            },
+            "actions": {
+                "confirm": {
+                    "show": true,
+                    "label": "ยืนยัน",
+                    "color": "primary"
+                },
+                "cancel": {
+                    "show": true,
+                    "label": "ยกเลิก"
+                }
+            },
+            "dismissible": true
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            if (result === 'confirmed') {
+                this.editForm.value.status = 'reject';
+
+                const updatedData = this.editForm.value;
+                this._service.update(updatedData, this.data.data.id).subscribe({
+                    next: (resp: any) => {
+                        this.showFlashMessage('success');
+                        this.dialogRef.close(resp);
+                    },
+                    error: (err: any) => {
+                        this.editForm.enable();
+                        this._fuseConfirmationService.open({
+                            "title": "กรุณาระบุข้อมูล",
+                            "message": err.error.message,
+                            "icon": {
+                                "show": true,
+                                "name": "heroicons_outline:exclamation",
+                                "color": "warning"
+                            },
+                            "actions": {
+                                "confirm": {
+                                    "show": false,
+                                    "label": "ยืนยัน",
+                                    "color": "primary"
+                                },
+                                "cancel": {
+                                    "show": false,
+                                    "label": "ยกเลิก",
+
+                                }
+                            },
+                            "dismissible": true
+                        });
+                    }
+                })
+            }
+        })
+
+
+        // แสดง Snackbar ข้อความ "complete"
+
     }
+
+    // onCancelClick(): void {
+    //     this.delete(this.data);
+    //     // this.dialogRef.close();
+    // }
 
     showFlashMessage(type: 'success' | 'error'): void {
         // Show the message

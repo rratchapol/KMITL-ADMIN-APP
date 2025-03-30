@@ -14,6 +14,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PictureComponent } from '../picture/picture.component';
 import { FormControl } from '@angular/forms';
 declare var jQuery: any;
+import { Location } from '@angular/common';
+
 export interface PeriodicElement {
     no: number;
     name: string;
@@ -64,10 +66,12 @@ export class ListComponent implements OnInit {
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef,
         private _Service: JournalService,
-        private _fuseConfirmationService: FuseConfirmationService
+        private _fuseConfirmationService: FuseConfirmationService,
+        private location: Location
     ) {}
 
     ngOnInit(): void {
+        this.location.replaceState('/admin/admin');
         this.loadTable();
         this.role = localStorage.getItem('role');
         console.log("this.role: ",this.role);
@@ -132,6 +136,7 @@ export class ListComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
+            this.rerender();
             if (result) {
                 alert(1);
                 // เมื่อ Dialog ถูกปิด ดำเนินการตามผลลัพธ์ที่คุณได้รับจาก Dialog
