@@ -213,12 +213,12 @@ export class ListComponent implements OnInit {
             actions: {
                 confirm: {
                     show: true,
-                    label: 'Remove',
+                    label: 'ลบ',
                     color: 'warn',
                 },
                 cancel: {
                     show: true,
-                    label: 'Cancel',
+                    label: 'ยกเลิก',
                 },
             },
             dismissible: true,

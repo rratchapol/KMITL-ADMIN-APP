@@ -108,7 +108,7 @@ export class EditDialogComponent implements OnInit {
                     error: (err: any) => {
                         this._fuseConfirmationService.open({
                             title: 'กรุณาระบุข้อมูล',
-                            message: err.error.message,
+                            message: "กรุณาตรวจสอบข้อมูลให้ถูกต้อง",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',

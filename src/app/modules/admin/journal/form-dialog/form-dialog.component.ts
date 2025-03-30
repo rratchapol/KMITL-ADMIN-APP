@@ -82,12 +82,12 @@ export class FormDialogComponent implements OnInit {
             actions: {
                 confirm: {
                     show: true,
-                    label: 'Confirm',
+                    label: 'บันทึก',
                     color: 'primary',
                 },
                 cancel: {
                     show: true,
-                    label: 'Cancel',
+                    label: 'ยกเลิก',
                 },
             },
             dismissible: true,
@@ -116,7 +116,8 @@ export class FormDialogComponent implements OnInit {
                         this.addForm.enable();
                         this._fuseConfirmationService.open({
                             title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
+                            // message: err.error.message,
+                            message: "กรุณาตรวจสอบข้อมูลให้ถูกต้อง",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',
@@ -125,12 +126,12 @@ export class FormDialogComponent implements OnInit {
                             actions: {
                                 confirm: {
                                     show: false,
-                                    label: 'Confirm',
+                                    label: 'บันทึก',
                                     color: 'primary',
                                 },
                                 cancel: {
                                     show: false,
-                                    label: 'Cancel',
+                                    label: 'ยกเลิก',
                                 },
                             },
                             dismissible: true,

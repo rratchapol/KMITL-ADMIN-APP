@@ -157,7 +157,7 @@ export class FormDialogComponent implements OnInit {
                         this.addForm.enable();
                         this._fuseConfirmationService.open({
                             title: 'เกิดข้อผิดพลาด',
-                            message: "เบอร์โทรศัพท์นี้มีแล้วในระบบ",
+                            message: "ห้ามเว้นว่างหรือมีข้อมูลนี้ในระบบแล้ว",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',
@@ -224,7 +224,7 @@ export class FormDialogComponent implements OnInit {
                         this.addForm.enable();
                         this._fuseConfirmationService.open({
                             title: 'เกิดข้อผิดพลาด',
-                            message: "เบอร์โทรศัพท์นี้มีแล้วในระบบ",
+                            message: "ห้ามเว้นว่างหรือมีข้อมูลนี้ในระบบแล้ว",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',

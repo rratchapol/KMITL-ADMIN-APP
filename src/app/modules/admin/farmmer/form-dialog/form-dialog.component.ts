@@ -115,7 +115,7 @@ export class FormDialogComponent implements OnInit {
                         this.addForm.enable();
                         this._fuseConfirmationService.open({
                             title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
+                            message: "กรุณาตรวจสอบข้อมูลให้ถูกต้องและต้องไม่ซ้ำกับในระบบ",
                             icon: {
                                 show: true,
                                 name: 'heroicons_outline:exclamation',
