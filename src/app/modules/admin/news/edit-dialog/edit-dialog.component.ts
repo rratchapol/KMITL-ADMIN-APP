@@ -54,9 +54,9 @@ export class EditDialogComponent implements OnInit {
             this.itemData = resp;
             console.log("ดูข้อมูลที่ส่งมา",this.itemData);
             console.log("ดูข้อมูลที่ส่งมา",this.itemData.product_images);
-            this.image = "http://127.0.0.1:8000/storage/" + this.itemData.product_images;
+            this.image = "http://backend.kxchanges.online/storage/" + this.itemData.product_images;
             // this.product_images= this.image.split(',');
-            this.product_images = this.itemData.product_images.map(img => "http://127.0.0.1:8000/storage/" + img);
+            this.product_images = this.itemData.product_images.map(img => "http://backend.kxchanges.online/storage/" + img);
 
             console.log("ดูข้อมูลที่ส่งมา",this.image);
             this.editForm.patchValue({

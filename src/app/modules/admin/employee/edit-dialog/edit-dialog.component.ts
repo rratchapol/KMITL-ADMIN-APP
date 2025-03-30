@@ -82,7 +82,7 @@ image: any;
         this._service.getById(this.data.data.id).subscribe((resp: any) => {
             this.itemData = resp;
             console.log("ดู data",this.itemData);
-            this.image = "http://127.0.0.1:8000/storage/" + this.itemData.image;
+            this.image = "http://backend.kxchanges.online/storage/" + this.itemData.image;
             // this.image = "https://cdn.ennxo.com/uploads/products/640/b9761f2a77c74a399d5bdbd114d5642b.jpg";
             console.log('ดู รูป',this.image);
         });
